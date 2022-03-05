@@ -23,13 +23,18 @@
                                     <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" alt="">
                                 </div>
                                 <div class="ml-4">
-                                    <div class="text-sm font-medium text-gray-900">{{ $row->name }}</div>
+                                    <div>
+                                        <span class="text-sm font-medium text-gray-900">{{ $row->name }}</span>
+                                        <a href="{{ route('impersonate', $row->id) }}" class="ml-1 text-xs text-indigo-500 hover:text-indigo-900 font-bold underline">impersonate <span aria-hidden="true">&rarr;</span></a>
+                                    </div>
+
                                     <div class="text-sm text-gray-500">{{ $row->email }}</div>
                                 </div>
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-900">Regional Paradigm Technician</div>
+                            <div class="text-sm text-gray-900">Regional Paradigm Technician
+                            </div>
                             <div class="text-sm text-gray-500">Optimization</div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
@@ -37,7 +42,7 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $row->id }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                            <a href="#" wire:click="test" class="text-indigo-600 hover:text-indigo-900">Edit</a>
                         </td>
                     </tr>
                     @empty

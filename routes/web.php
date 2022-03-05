@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ImpersonationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,8 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::impersonate();
-
+Route::get('/impersonate/leave', [ImpersonationController::class, 'leave'])->name('impersonate.leave');
+Route::get('/impersonate/take/{id}', [ImpersonationController::class, 'take'])->name('impersonate');
 
 Route::get('/', function () {
     return view('welcome');

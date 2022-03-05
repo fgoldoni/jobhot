@@ -39,7 +39,12 @@
 
                 <x-slot name="content">
                     <div class="block px-4 py-2 text-xs text-gray-400">
-                        {{ __('Manage Account') }}
+                        <p class="text-sm" role="none">
+                            Signed in as
+                        </p>
+                        <p class="text-sm font-medium text-gray-900 truncate" role="none">
+                            {{ Auth::user()->email }}
+                        </p>
                     </div>
 
                     <x-dropdown-link href="{{ route('admin.users') }}">
