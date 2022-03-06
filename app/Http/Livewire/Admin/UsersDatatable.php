@@ -15,7 +15,7 @@ class UsersDatatable extends Component
     public function render()
     {
         return view('livewire.admin.users-datatable', [
-            'rows' => User::paginate(5),
+            'rows' => User::with(['roles:id,name'])->paginate(5),
         ]);
     }
 }

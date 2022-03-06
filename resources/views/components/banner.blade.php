@@ -17,7 +17,9 @@
                 <span class="md:hidden" x-text="message"></span>
                 <span class="hidden md:inline" x-text="message"></span>
                 <span class="block sm:ml-2 sm:inline-block">
+                    @impersonating($guard = null)
                         <a href="{{ route('impersonate.leave') }}" class="text-white font-bold underline"> Leave impersonate <span aria-hidden="true">&rarr;</span></a>
+                    @endImpersonating
                 </span>
             </p>
         </div>

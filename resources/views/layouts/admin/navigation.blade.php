@@ -47,6 +47,12 @@
                         </p>
                     </div>
 
+                    @impersonating($guard = null)
+                        <x-dropdown-link href="{{ route('impersonate.leave') }}">
+                            {{ __('Leave impersonation') }}
+                        </x-dropdown-link>
+                    @endImpersonating
+
                     <x-dropdown-link href="{{ route('admin.users') }}">
                         {{ __('Admin') }}
                     </x-dropdown-link>

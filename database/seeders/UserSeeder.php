@@ -14,7 +14,22 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-         User::factory()->create(['email' => 'admin@admin.com']);;
-         User::factory(10)->create();
+        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+
+        $user = User::factory()->create(['name' => 'Admin SG', 'email' => 'admin@admin.com', 'tenant_id' => null]);
+
+        $user->assignRole('Administrator');
+
+        $user = User::factory()->create(['email' => 'fotsa.goldoni@yahoo.fr']);
+
+        $user->assignRole('Executive');
+
+        User::factory(50)->create();
+
+        $users = User::where('id', '>', 2)->get();
+
+        foreach ($users as $user) {
+            $user->assignRole('User');
+        }
     }
 }

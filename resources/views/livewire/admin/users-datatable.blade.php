@@ -25,7 +25,11 @@
                                 <div class="ml-4">
                                     <div>
                                         <span class="text-sm font-medium text-gray-900">{{ $row->name }}</span>
-                                        <a href="{{ route('impersonate', $row->id) }}" class="ml-1 text-xs text-indigo-500 hover:text-indigo-900 font-bold underline">impersonate <span aria-hidden="true">&rarr;</span></a>
+                                        @canImpersonate($guard = null)
+                                            @canBeImpersonated($row, $guard = null)
+                                                <a href="{{ route('impersonate', $row->id) }}" class="ml-1 text-xs text-indigo-500 hover:text-indigo-900 font-bold underline">impersonate <span aria-hidden="true">&rarr;</span></a>
+                                            @endCanImpersonate
+                                        @endCanImpersonate
                                     </div>
 
                                     <div class="text-sm text-gray-500">{{ $row->email }}</div>
@@ -38,7 +42,14 @@
                             <div class="text-sm text-gray-500">Optimization</div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"> Active </span>
+                            @foreach ($row->roles as $role)
+                                <a href="#" class="relative inline-flex items-center rounded-full border border-gray-300 px-3 py-0.5 m-1">
+                                    <div class="absolute flex-shrink-0 flex items-center justify-center">
+                                        <span class="h-1.5 w-1.5 rounded-full bg-indigo-500" aria-hidden="true"></span>
+                                    </div>
+                                    <div class="ml-3.5 font-medium text-gray-500">{{ $role->name }}</div>
+                                </a>
+                            @endforeach
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $row->id }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
