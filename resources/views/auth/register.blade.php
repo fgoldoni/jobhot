@@ -44,7 +44,7 @@
 
                     <div class="flex flex-wrap items-center">
                         <div class="w-full sm:flex-1">
-                            <input type="submit" value="Register" class="w-full sm:w-auto bg-indigo-500 text-indigo-100 px-6 py-2 rounded hover:bg-indigo-600 focus:outline-none cursor-pointer">
+                            <input type="submit" value="Register" class="btn w-full sm:w-auto px-6 py-2">
                         </div>
                     </div>
 

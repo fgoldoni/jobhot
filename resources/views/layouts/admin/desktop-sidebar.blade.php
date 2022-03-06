@@ -14,6 +14,11 @@
             <x-icon.folder :active="request()->routeIs('admin.companies')"/>
             {{ __('Companies') }}
         </x-sidebar-link>
+
+        <x-sidebar-link href="{{ route('admin.categories') }}" :active="request()->routeIs('admin.categories')">
+            <x-icon.view-list :active="request()->routeIs('admin.categories')"/>
+            {{ __('Categories') }}
+        </x-sidebar-link>
     </div>
 
     <div class="space-y-1">
@@ -32,6 +37,11 @@
             <x-sidebar-link href="{{ route('admin.companies') }}" :active="request()->routeIs('admin.companies')">
                 <x-icon.folder :active="request()->routeIs('admin.companies')"/>
                 {{ __('Companies') }}
+            </x-sidebar-link>
+
+            <x-sidebar-link href="{{ route('admin.categories') }}" :active="request()->routeIs('admin.categories')">
+                <x-icon.view-list :active="request()->routeIs('admin.categories')"/>
+                {{ __('Categories') }}
             </x-sidebar-link>
         </div>
         <div class="space-y-1" x-data="{ open: false }">

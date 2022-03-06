@@ -19,4 +19,8 @@ Route::middleware(['auth', 'verified', 'password.confirm', 'role:Administrator|E
     Route::get('/companies', function () {
         return view('admin.companies.index');
     })->name('companies');
+
+    Route::get('/categories', function () {
+        return view('admin.categories.index');
+    })->name('categories');
 });
