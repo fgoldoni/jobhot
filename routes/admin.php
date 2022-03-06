@@ -3,7 +3,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth', 'verified', 'password.confirm'])->prefix('admin')->as('admin.')->group(function () {
+Route::middleware(['auth', 'verified', 'password.confirm', 'role:Administrator|Executive'])->prefix('admin')->as('admin.')->group(function () {
     Route::get('/dashboard', function () {
         return view('admin.users.index');
     })->name('dashboard');

@@ -24,9 +24,13 @@ class UserSeeder extends Seeder
 
         $user->assignRole('Executive');
 
-        User::factory(50)->create();
+        $users = User::factory(100)->create();
 
-        $users = User::where('id', '>', 2)->get();
+        foreach ($users as $user) {
+            $user->assignRole('Executive');
+        }
+
+        $users = User::factory(100)->create();
 
         foreach ($users as $user) {
             $user->assignRole('User');
