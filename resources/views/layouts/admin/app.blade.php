@@ -166,8 +166,10 @@
     </div>
 </div>
 
-@livewireScripts
+    @livewireScripts
     <script src="https://unpkg.com/moment"></script>
     <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
+
+    @stack('scripts')
 </body>
 </html>

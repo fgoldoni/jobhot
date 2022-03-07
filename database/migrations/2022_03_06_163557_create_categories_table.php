@@ -17,15 +17,17 @@ return new class extends Migration
             $table->id();
 
             $table->json('name');
-            $table->json('description')->nullable();
             $table->string('slug');
-            $table->string('icon')->nullable();
+            $table->string('icon')->default('folder');
             $table->integer('position')->unsigned()->nullable();
             $table->integer('parent_id')->nullable()->unsigned()->index();
             $table->boolean('online')->default(true);
 
             $table->softDeletes();
             $table->timestamps();
+
+            // Indexes
+            $table->unique('slug');
         });
     }
 

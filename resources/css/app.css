@@ -9,6 +9,6 @@
 
 @layer components {
     .btn {
-        @apply bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 shadow-lg shadow-blue-500/50 text-indigo-100 hover:bg-gradient-to-br rounded focus:outline-none cursor-pointer;
+        @apply bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 shadow-lg shadow-blue-500/50 text-indigo-100 hover:bg-gradient-to-br rounded focus:outline-none cursor-pointer transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110  duration-300;
     }
 }
