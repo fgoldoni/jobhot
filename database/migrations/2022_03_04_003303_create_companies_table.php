@@ -16,9 +16,22 @@ return new class extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('tenant_id')->index()->nullable();
-            $table->foreign('tenant_id')->references('id')->on('tenants')->onDelete('cascade');
+            $table->string('name');
+            $table->longText('content')->nullable();
+            $table->string('email')->unique()->nullable();
+            $table->string('phone')->nullable();
+            $table->string('state')->default('draft');
+
+            $table->string('logo')->nullable();
+
+
+            $table->foreignId('tenant_id')->nullable()->unsigned()->index()->references('id')->on('tenants')->onDelete('cascade');
+            $table->softDeletes();
             $table->timestamps();
+        });
+
+        Schema::table('companies', function (Blueprint $table) {
+            $table->foreignId('user_id')->unsigned()->index()->references('id')->on('users')->onDelete('cascade');
         });
     }
 
