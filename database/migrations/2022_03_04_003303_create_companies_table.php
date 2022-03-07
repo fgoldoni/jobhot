@@ -24,14 +24,10 @@ return new class extends Migration
 
             $table->string('logo')->nullable();
 
-
+            $table->foreignId('user_id')->unsigned()->index()->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('tenant_id')->nullable()->unsigned()->index()->references('id')->on('tenants')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
-        });
-
-        Schema::table('companies', function (Blueprint $table) {
-            $table->foreignId('user_id')->unsigned()->index()->references('id')->on('users')->onDelete('cascade');
         });
     }
 
