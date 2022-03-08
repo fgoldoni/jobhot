@@ -94,6 +94,6 @@ class CompaniesDatatable extends Component
 
     private function loadCategories()
     {
-       return Category::limit(4)->get(['id', 'name', 'icon']);
+       return Category::get(['id', 'name', 'icon']);
     }
 }

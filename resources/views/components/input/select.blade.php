@@ -80,67 +80,74 @@
             From: "opacity-100"
             To: "opacity-0"
         -->
-        <ul
-            x-show="open"
-            x-transition:leave="transition ease-in duration-100"
-            x-transition:leave-start="opacity-100"
-            x-transition:leave-end="opacity-0"
-            @keydown.arrow-up.prevent="onArrowUp()"
-            @keydown.arrow-down.prevent="onArrowDown()"
-            @keydown.enter.stop.prevent="onOptionSelect()"
-            @keydown.space.stop.prevent="onOptionSelect()"
-            @keydown.escape="onEscape()"
-            @click.away="open = false"
-            x-cloak
-            x-ref="listbox"
-            class="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
-            tabindex="-1"
-            role="listbox"
-            aria-labelledby="listbox-label"
-            aria-activedescendant="listbox-option-3">
-            <!--
-              Select option, manage highlight styles based on mouseenter/mouseleave and keyboard navigation.
+        <div class=""
+             x-show="open"
+             x-transition:leave="transition ease-in duration-100"
+             x-transition:leave-start="opacity-100"
+             x-transition:leave-end="opacity-0"
+             @keydown.arrow-up.prevent="onArrowUp()"
+             @keydown.arrow-down.prevent="onArrowDown()"
+             @keydown.enter.stop.prevent="onOptionSelect()"
+             @keydown.space.stop.prevent="onOptionSelect()"
+             @keydown.escape="onEscape()"
+             @click.away="open = false"
+             x-cloak
+             class="mt-1 w-full  bg-white py-1 text-base overflow-hidden focus:outline-none sm:text-sm transform transition-all"
+            >
 
-              Highlighted: "text-white bg-indigo-600", Not Highlighted: "text-gray-900"
-            -->
-            <template x-for="(item, index) in items" :key="item.id">
-                <li
-                    :id="$id('listbox-option')"
-                    :class="{ 'text-white bg-indigo-600': activeIndex === item.id, 'text-gray-900': !(activeIndex === item.id) }"
-                    class="cursor-default select-none relative py-2 pl-3 pr-9"
-                    role="option"
-                    @click="choose(item.id)"
-                    @mouseenter="activeIndex = item.id"
-                    @mouseleave="activeIndex = null"
+            <ul
+                x-ref="listbox"
+                class="absolute bg-gray-50 border border-gray-300 w-full z-10 ring-1 focus:outline-none ring-black rounded-md ring-opacity-5 shadow-lg overflow-y-auto"
+                style="max-height: 265px;"
+                tabindex="-1"
+                role="listbox"
+                aria-labelledby="listbox-label"
+                aria-activedescendant="listbox-option-3">
+                <!--
+                  Select option, manage highlight styles based on mouseenter/mouseleave and keyboard navigation.
+
+                  Highlighted: "text-white bg-indigo-600", Not Highlighted: "text-gray-900"
+                -->
+                <template x-for="(item, index) in items" :key="item.id">
+                    <li
+                        :id="$id('listbox-option')"
+                        :class="{ 'text-white bg-indigo-600': activeIndex === item.id, 'text-gray-900': !(activeIndex === item.id) }"
+                        class="cursor-default select-none relative py-2 pl-3 pr-9"
+                        role="option"
+                        @click="choose(item.id)"
+                        @mouseenter="activeIndex = item.id"
+                        @mouseleave="activeIndex = null"
                     >
-                    <div class="flex items-center">
-                        <x-icon.solid
-                            :class="{ 'font-semibold text-white': selectedIndex === item.id, 'text-gray-600': !(selectedIndex === item.id) }"
-                            type="item.icon" class="mr-1.5 h-6 w-6"/>
-                        <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
+                        <div class="flex items-center">
+                            <x-icon.solid
+                                :class="{ 'font-semibold text-white': selectedIndex === item.id, 'text-gray-600': !(selectedIndex === item.id) }"
+                                type="item.icon" class="mr-1.5 h-6 w-6"/>
+                            <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
+                            <span
+                                :class="{ 'font-semibold': selectedIndex === item.id, 'font-normal': !(selectedIndex === item.id) }"
+                                class="ml-3 block truncate" x-text="item.name"></span>
+                        </div>
+
+                        <!--
+                          Checkmark, only display for selected option.
+
+                          Highlighted: "text-white", Not Highlighted: "text-indigo-600"
+                        -->
                         <span
-                            :class="{ 'font-semibold': selectedIndex === item.id, 'font-normal': !(selectedIndex === item.id) }"
-                            class="ml-3 block truncate" x-text="item.name"></span>
-                    </div>
-
-                    <!--
-                      Checkmark, only display for selected option.
-
-                      Highlighted: "text-white", Not Highlighted: "text-indigo-600"
-                    -->
-                    <span
-                        x-cloak
-                        x-show="selectedIndex === item.id"
-                        :class="{ 'text-white': activeIndex === item.id, 'text-indigo-600': !(activeIndex === item.id) }"
-                        class="absolute inset-y-0 right-0 flex items-center pr-4">
+                            x-cloak
+                            x-show="selectedIndex === item.id"
+                            :class="{ 'text-white': activeIndex === item.id, 'text-indigo-600': !(activeIndex === item.id) }"
+                            class="absolute inset-y-0 right-0 flex items-center pr-4">
                         <!-- Heroicon name: solid/check -->
                         <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
                         </svg>
                     </span>
-                </li>
-            </template>
-            <!-- More items... -->
-        </ul>
+                    </li>
+                </template>
+                <!-- More items... -->
+            </ul>
+        </div>
+
     </div>
 </div>
