@@ -1,12 +1,14 @@
-@props(['items'])
+@props(['items', 'selected'])
 <!-- This example requires Tailwind CSS v2.0+ -->
 <div>
-    <div class="relative" x-data="{
-        open: true,
-        items: ['Red', 'Orange', 'Yellow']
-        selectedIndex: 1,
-        activeIndex: 1,
-        optionCount: this.$refs.listbox.children.length,
+    <div class="relative" wire:ignore x-data="{
+        open: false,
+        selectedIndex: @entangle($attributes->wire('model')),
+        activeIndex: @entangle($attributes->wire('model')),
+        name: '',
+        icon: '',
+        items: {{ collect($items) }},
+        optionCount: {{ collect($items)->count() }},
         onButtonClick()
         {
             this.open ||
@@ -19,12 +21,12 @@
                 }))
             )
         },
-        onOptionSelect(){
+         onOptionSelect(){
             null!==this.activeIndex && (this.selectedIndex=this.activeIndex),
             this.open=!1,
             this.$refs.button.focus()
         },
-        onEscape(){
+         onEscape(){
             this.open = !1,
             this.$refs.button.focus()
         },
@@ -35,7 +37,17 @@
        onArrowDown(){
             this.activeIndex = this.activeIndex + 1 > this.optionCount -1 ? 0 : this.activeIndex + 1,
             this.$refs.listbox.children[this.activeIndex].scrollIntoView({ block: 'nearest' })
-       }">
+       },
+       choose(e) {
+           this.selectedIndex = e,
+           this.open = !1
+       },
+       setValue() {
+            this.name = this.items.find(item => item.id === this.selectedIndex).name
+            this.icon = this.items.find(item => item.id === this.selectedIndex).icon
+        },
+       }"
+        x-init="setValue(); $watch('selectedIndex', () => setValue())">
         <button
             @keydown.arrow-up.stop.prevent="onButtonClick()"
             @keydown.arrow-down.stop.prevent="onButtonClick()"
@@ -47,8 +59,8 @@
             aria-expanded="true"
             aria-labelledby="listbox-label">
       <span class="flex items-center">
-        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" class="flex-shrink-0 h-6 w-6 rounded-full">
-        <span class="ml-3 block truncate">Wade Cooper</span>
+        <x-icon.solid type="folder" class="mr-1.5 h-6 w-6 text-gray-600"/>
+        <span class="ml-3 block truncate" x-text="name"></span>
       </span>
             <span class="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
         <!-- Heroicon name: solid/selector -->
@@ -91,15 +103,23 @@
 
               Highlighted: "text-white bg-indigo-600", Not Highlighted: "text-gray-900"
             -->
-            <template x-for="(item, index) in items">
+            <template x-for="(item, index) in items" :key="item.id">
                 <li
-                    :class="{ 'text-white bg-indigo-600': activeIndex === index, 'text-gray-900': !(activeIndex === index) }"
-                    class="cursor-default select-none relative py-2 pl-3 pr-9" id="listbox-option-0" role="option">
+                    :id="$id('listbox-option')"
+                    :class="{ 'text-white bg-indigo-600': activeIndex === item.id, 'text-gray-900': !(activeIndex === item.id) }"
+                    class="cursor-default select-none relative py-2 pl-3 pr-9"
+                    role="option"
+                    @click="choose(item.id)"
+                    @mouseenter="activeIndex = item.id"
+                    @mouseleave="activeIndex = null"
+                    >
                     <div class="flex items-center">
-                        <x-icon.solid type="item.icon" class="mr-1.5 h-6 w-6 text-gray-600"/>
+                        <x-icon.solid
+                            :class="{ 'font-semibold text-white': selectedIndex === item.id, 'text-gray-600': !(selectedIndex === item.id) }"
+                            type="item.icon" class="mr-1.5 h-6 w-6"/>
                         <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
                         <span
-                            :class="{ 'font-semibold': selectedIndex === index, 'font-normal': !(selectedIndex === index) }"
+                            :class="{ 'font-semibold': selectedIndex === item.id, 'font-normal': !(selectedIndex === item.id) }"
                             class="ml-3 block truncate" x-text="item.name"></span>
                     </div>
 
@@ -110,8 +130,8 @@
                     -->
                     <span
                         x-cloak
-                        x-show="selectedIndex === index"
-                        :class="{ 'text-white': activeIndex === index, 'text-indigo-600': !(activeIndex === index) }"
+                        x-show="selectedIndex === item.id"
+                        :class="{ 'text-white': activeIndex === item.id, 'text-indigo-600': !(activeIndex === item.id) }"
                         class="absolute inset-y-0 right-0 flex items-center pr-4">
                         <!-- Heroicon name: solid/check -->
                         <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">

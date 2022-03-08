@@ -5,9 +5,11 @@ namespace App\Http\Livewire\Admin;
 use App\Http\Livewire\Admin\Datatable\WithBulkActions;
 use App\Http\Livewire\Admin\Datatable\WithCachedRows;
 use App\Http\Livewire\Admin\Datatable\WithSorting;
+use App\Models\Category;
 use App\Models\Company;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use phpDocumentor\Reflection\Types\Integer;
 
 class CompaniesDatatable extends Component
 {
@@ -23,6 +25,10 @@ class CompaniesDatatable extends Component
     public bool $showFilters = false;
 
     public bool $showEditor = false;
+
+    public  $selectedItem ;
+
+    public $categories;
 
     public $avatar;
 
@@ -41,7 +47,11 @@ class CompaniesDatatable extends Component
         ];
     }
 
-    public function mount() { $this->editing = $this->makeBlankCompany(); }
+    public function mount() {
+        $this->categories = $this->loadCategories();
+        $this->editing = $this->makeBlankCompany();
+        $this->selectedItem = $this->categories->random()->id;
+    }
 
     public function edit(Company $company)
     {
@@ -71,11 +81,19 @@ class CompaniesDatatable extends Component
 
     public function render()
     {
-        return view('livewire.admin.companies-datatable', ['rows' => $this->rows]);
+        return view('livewire.admin.companies-datatable', [
+            'rows' => $this->rows,
+            'categories' => $this->categories
+        ]);
     }
 
     private function makeBlankCompany()
     {
         return Company::make();
+    }
+
+    private function loadCategories()
+    {
+       return Category::limit(4)->get(['id', 'name', 'icon']);
     }
 }

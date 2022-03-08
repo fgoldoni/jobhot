@@ -9,6 +9,7 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Spatie\Translatable\HasTranslations;
 
+
 class Category extends Model
 {
     use HasFactory, HasSlug, HasTranslations, SearchableTrait;
@@ -55,4 +56,14 @@ class Category extends Model
             ->generateSlugsFrom('name')
             ->saveSlugsTo('slug');
     }
+
+    public function toArray(): array
+    {
+        $attributes = parent::toArray();
+        foreach ($this->getTranslatableAttributes() as $field) {
+            $attributes[$field] = $this->getTranslation($field, app()->getLocale());
+        }
+        return $attributes;
+    }
+
 }
