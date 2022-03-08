@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('state')->default('draft');
 
-            $table->string('logo')->nullable();
+            $table->string('avatar_path', 2048)->nullable();
 
             $table->foreignId('user_id')->unsigned()->index()->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('tenant_id')->nullable()->unsigned()->index()->references('id')->on('tenants')->onDelete('cascade');

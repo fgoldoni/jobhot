@@ -16,9 +16,46 @@ class CompaniesDatatable extends Component
     use WithCachedRows;
     use WithFileUploads;
 
+    public bool $showDeleteModal = false;
+
+    public bool $showEditModal = false;
+
+    public bool $showFilters = false;
+
+    public bool $showEditor = false;
+
+    public $avatar;
+
+    public Company $editing;
+
     public array $filters = [
         'search' => ''
     ];
+
+    public function rules(): array
+    {
+        return [
+            'editing.id' => 'required',
+            'editing.name' => 'required',
+            'editing.content' => 'required',
+        ];
+    }
+
+    public function mount() { $this->editing = $this->makeBlankCompany(); }
+
+    public function edit(Company $company)
+    {
+        $this->useCachedRows();
+
+        if ($this->editing->isNot($company)) $this->editing = $company;
+
+        $this->showEditModal = true;
+    }
+
+    public function save()
+    {
+       sleep(3);
+    }
 
     public function getRowsQueryProperty()
     {
@@ -35,5 +72,10 @@ class CompaniesDatatable extends Component
     public function render()
     {
         return view('livewire.admin.companies-datatable', ['rows' => $this->rows]);
+    }
+
+    private function makeBlankCompany()
+    {
+        return Company::make();
     }
 }

@@ -24,8 +24,7 @@ return new class extends Migration
 
         if (Schema::hasTable('users') && !Schema::hasColumn('users', 'tenant_id')) {
             Schema::table('users', function (Blueprint $table) {
-                $table->unsignedBigInteger('tenant_id')->after('email')->index()->nullable();
-                $table->foreign('tenant_id')->references('id')->on('tenants')->onDelete('cascade');
+                $table->foreignId('tenant_id')->after('email')->index()->nullable()->references('id')->on('tenants')->onDelete('cascade');
             });
         }
     }

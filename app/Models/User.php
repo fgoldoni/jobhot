@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\BelongsToTenant;
+use App\Traits\HasAvatar;
 use App\Traits\Impersonate;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,7 +14,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, BelongsToTenant, HasRoles, Impersonate;
+    use HasApiTokens, HasFactory, Notifiable, BelongsToTenant, HasRoles, Impersonate, HasAvatar;
 
     /**
      * The attributes that are mass assignable.
@@ -44,5 +45,14 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+    ];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'avatar_url',
     ];
 }
