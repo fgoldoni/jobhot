@@ -12,14 +12,26 @@
         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                 <div class="py-2 align-middle inline-block min-w-full">
-                    <div class="relative overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                    <div class="relative overflow-hidden shadow ring-1 ring-black ring-opacity-5">
                         @php
                             $isOneSelected = (is_array($selected) && count($selected) > 0) || (!is_array($selected) && count($selected->toArray()) > 0);
                         @endphp
                         @if($isOneSelected)
                             <div class="absolute top-0 left-12 flex h-12 items-center space-x-3 bg-gray-50 sm:left-16">
-                                <button type="button" class="inline-flex items-center rounded border border-gray-300 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-30">Bulk edit</button>
-                                <button type="button" class="inline-flex items-center rounded border border-gray-300 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-30">Delete all</button>
+                                <button type="button" class="btn-secondary inline-flex items-center px-2.5 py-1.5 text-xs font-medium disabled:cursor-not-allowed disabled:opacity-30">
+                                    <!-- Heroicon name: solid/mail -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="-ml-0.5 mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                    </svg>
+                                    <span>CSV</span>
+                                </button>
+                                <button type="button" class="btn-secondary inline-flex items-center px-2.5 py-1.5 text-xs font-medium disabled:cursor-not-allowed disabled:opacity-30">
+                                    <!-- Heroicon name: solid/mail -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="-ml-0.5 mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                    </svg>
+                                    <span>DELETE</span>
+                                </button>
                             </div>
                         @endif
 
@@ -28,6 +40,18 @@
                             <tr>
                                 <th scope="col" class="relative w-12 px-6 sm:w-16 sm:px-8">
                                     <input wire:model="selectPage" type="checkbox" class="absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 sm:left-6">
+                                </th>
+                                <th scope="col" class="w-12 sm:w-16 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-500 uppercase">
+                                    <a href="#" class="group inline-flex">
+                                        Id
+                                        <!-- Active: "bg-gray-200 text-gray-900 group-hover:bg-gray-300", Not Active: "invisible text-gray-400 group-hover:visible group-focus:visible" -->
+                                        <span class="invisible ml-2 flex-none rounded text-gray-400 group-hover:visible group-focus:visible">
+                                          <!-- Heroicon name: solid/chevron-down -->
+                                          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                          </svg>
+                                        </span>
+                                    </a>
                                 </th>
                                 <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-500 sm:pl-6 uppercase">
                                     <a href="#" class="group inline-flex">
@@ -63,11 +87,11 @@
                             <tbody class="bg-white divide-y divide-gray-200">
                             @if ($selectPage)
                                 <tr class="bg-gray-200" wire:key="row-message">
-                                    <td colspan="6" class="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
+                                    <td colspan="7" class="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
                                         @unless ($selectAll)
                                             <div>
                                                 <span>You have selected <strong>{{ $rows->count() }}</strong> items, do you want to select all <strong>{{ $rows->total() }}</strong>?</span>
-                                                <a href="#" wire:click="selectAll" class="ml-1 text-indigo-600 hover:text-indigo-900 hover:underline">Select All<span class="sr-only">, Lindsay Walton</span></a>
+                                                <button wire:click="selectAll" class="ml-1 text-indigo-600 hover:text-indigo-900 hover:underline">Select All<span class="sr-only">, Lindsay Walton</span></button>
                                             </div>
                                         @else
                                             <span>You are currently selecting all <strong>{{ $rows->total() }}</strong> items.</span>
@@ -87,6 +111,11 @@
                                         @endif
 
                                         <input wire:model="selected" value="{{ $row->id }}" type="checkbox" class="absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 sm:left-6">
+                                    </td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                        <button wire:click="edit({{ $row->id }})" class="ml-1 text-indigo-600 hover:text-indigo-900 hover:underline">
+                                            {{$row->id}}
+                                        </button>
                                     </td>
                                     <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
                                         <div class="flex items-center">
@@ -158,7 +187,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td class="whitespace-nowrap" colspan="6">
+                                    <td class="whitespace-nowrap" colspan="7">
                                         <div class="flex justify-center items-center space-x-2">
                                             <x-icon.inbox class="h-8 w-8 text-gray-400" />
                                             <span class="font-medium py-8 text-gray-400 text-xl">No items found...</span>

@@ -869,6 +869,12 @@ select {
 .-mt-2 {
   margin-top: -0.5rem;
 }
+.-ml-0\.5 {
+  margin-left: -0.125rem;
+}
+.-ml-0 {
+  margin-left: -0px;
+}
 .block {
   display: block;
 }
@@ -1574,6 +1580,9 @@ select {
 }
 .pl-4 {
   padding-left: 1rem;
+}
+.pl-1 {
+  padding-left: 0.25rem;
 }
 .text-left {
   text-align: left;
@@ -2510,6 +2519,10 @@ select {
 
   .sm\:pr-6 {
     padding-right: 1.5rem;
+  }
+
+  .sm\:pl-4 {
+    padding-left: 1rem;
   }
 
   .sm\:text-left {
