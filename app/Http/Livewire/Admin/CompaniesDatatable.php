@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Admin;
 
+use App\Enums\CategoryType;
+use App\Enums\CompanyState;
 use App\Http\Livewire\Admin\Datatable\WithBulkActions;
 use App\Http\Livewire\Admin\Datatable\WithCachedRows;
 use App\Http\Livewire\Admin\Datatable\WithPerPagePagination;
@@ -10,6 +12,7 @@ use App\Models\Category;
 use App\Models\Company;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection as StatesCollection;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -33,6 +36,10 @@ class CompaniesDatatable extends Component
 
     public  ?int $selectedItem = null;
 
+    public  int $selectedState = 1;
+
+    public StatesCollection $states;
+
     public $categories;
 
     public $avatar;
@@ -52,6 +59,7 @@ class CompaniesDatatable extends Component
             'editing.phone' => 'required',
             'editing.email' => 'required',
             'selectedItem' => 'required',
+            'selectedState' => 'required',
         ];
     }
 
@@ -63,6 +71,25 @@ class CompaniesDatatable extends Component
         $this->editing = $this->makeBlankCompany();
 
         $this->selectedItem = $this->categories->first()->id;
+
+        $this->states = collect([
+            [
+                'id' => 0,
+                'name' => CompanyState::Draft,
+            ],
+            [
+                'id' => 1,
+                'name' => CompanyState::Published,
+            ],
+            [
+                'id' => 2,
+                'name' => CompanyState::Archived,
+            ],
+            [
+                'id' => 3,
+                'name' => CompanyState::Hold,
+            ]
+        ]);
     }
 
     public function toggleShowFilters()
@@ -87,8 +114,12 @@ class CompaniesDatatable extends Component
         $this->useCachedRows();
 
         if ($this->editing->isNot($company)) {
+
             $this->editing = $company;
+
             $this->selectedItem = ($attachCategory = $this->editing->categories->first()) ? $attachCategory->id : $this->categories->first()->id;
+
+            $this->selectedState = $this->findIndexStateBy('name', $company->state->value);
         }
 
         $this->showEditModal = true;
@@ -97,6 +128,8 @@ class CompaniesDatatable extends Component
     public function save()
     {
         $this->validate();
+
+        $this->editing->state = $this->findStateBy('id', $this->selectedState)['name'];
 
         $this->editing->save();
 
@@ -140,5 +173,15 @@ class CompaniesDatatable extends Component
     {
        $this->useCachedRows();
        return $this->cache(fn () => Category::query()->industry()->orderBy('position')->get(['id', 'name', 'icon']), 'categories');
+    }
+
+    private function findStateBy(string $key, $value): array
+    {
+        return $this->states->filter(fn($s) => $s[$key] === $value)->first();
+    }
+
+    private function findIndexStateBy(string $key, $value)
+    {
+        return $this->states->search(fn($s) => $s[$key] === $value);
     }
 }

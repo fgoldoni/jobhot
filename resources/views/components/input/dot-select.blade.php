@@ -48,7 +48,7 @@
             this.icon = this.items.find(item => item.id === this.selectedIndex).icon
         },
        }"
-        x-init="setValue(); $watch('selectedIndex', () => setValue())">
+         x-init="setValue(); $watch('selectedIndex', () => setValue())">
         <button
             @keydown.arrow-up.stop.prevent="onButtonClick()"
             @keydown.arrow-down.stop.prevent="onButtonClick()"
@@ -59,11 +59,26 @@
             aria-haspopup="listbox"
             aria-expanded="true"
             aria-labelledby="listbox-label">
-            <span class="flex items-center">
-                <x-icon.solid type='icon' class="mr-1.5 h-6 w-6 text-gray-600" x-ignore/>
-                <span class="ml-3 block truncate" x-text="name"></span>
-             </span>
-            <span class="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+            <div class="flex items-center">
+                <template x-if="name === 'draft'">
+                    <span aria-label="Online" class="bg-rose-400 flex-shrink-0 inline-block h-2 w-2 rounded-full"></span>
+                </template>
+
+                <template x-if="name === 'published'">
+                    <span aria-label="Online" class="bg-green-400 flex-shrink-0 inline-block h-2 w-2 rounded-full"></span>
+                </template>
+
+                <template x-if="name === 'archived'">
+                    <span aria-label="Online" class="bg-gray-400 flex-shrink-0 inline-block h-2 w-2 rounded-full"></span>
+                </template>
+
+                <template x-if="name === 'hold'">
+                    <span aria-label="Online" class="bg-amber-400 flex-shrink-0 inline-block h-2 w-2 rounded-full"></span>
+                </template>
+
+                <span class="ml-3 block truncate" x-text="name"> </span>
+            </div>
+            <span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                 <!-- Heroicon name: solid/selector -->
                 <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                   <path fill-rule="evenodd" d="M10 3a1 1 0 01.707.293l3 3a1 1 0 01-1.414 1.414L10 5.414 7.707 7.707a1 1 0 01-1.414-1.414l3-3A1 1 0 0110 3zm-3.707 9.293a1 1 0 011.414 0L10 14.586l2.293-2.293a1 1 0 011.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -119,10 +134,22 @@
                         @mouseleave="activeIndex = null"
                     >
                         <div class="flex items-center">
-                            <x-icon.solid
-                                :class="{ 'font-semibold text-white': selectedIndex === item.id, 'text-gray-600': !(selectedIndex === item.id) }"
-                                type="item.icon" class="mr-1.5 h-6 w-6"/>
-                                <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
+                            <template x-if="item.name === 'draft'">
+                                <span aria-label="draft" class="bg-rose-400 flex-shrink-0 inline-block h-2 w-2 rounded-full"></span>
+                            </template>
+
+                            <template x-if="item.name === 'published'">
+                                <span aria-label="published" class="bg-green-400 flex-shrink-0 inline-block h-2 w-2 rounded-full"></span>
+                            </template>
+
+                            <template x-if="item.name === 'archived'">
+                                <span aria-label="archived" class="bg-gray-400 flex-shrink-0 inline-block h-2 w-2 rounded-full"></span>
+                            </template>
+
+                            <template x-if="item.name === 'hold'">
+                                <span aria-label="hold" class="bg-amber-400 flex-shrink-0 inline-block h-2 w-2 rounded-full"></span>
+                            </template>
+
                             <span
                                 :class="{ 'font-semibold': selectedIndex === item.id, 'font-normal': !(selectedIndex === item.id) }"
                                 class="ml-3 block truncate" x-text="item.name"></span>

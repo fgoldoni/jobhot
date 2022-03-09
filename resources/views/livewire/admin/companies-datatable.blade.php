@@ -44,9 +44,15 @@
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <a href="#" class="relative inline-flex items-center rounded-full border border-gray-300 px-3 py-0.5 m-1">
                                     <div class="absolute flex-shrink-0 flex items-center justify-center">
-                                        <span class="h-1.5 w-1.5 rounded-full bg-indigo-500" aria-hidden="true"></span>
+                                        <span class="h-1.5 w-1.5 rounded-full
+                                            {{ $row->state->value === 'draft' ? ' bg-rose-500' : '' }}
+                                            {{ $row->state->value === 'published' ? ' bg-green-500' : '' }}
+                                            {{ $row->state->value === 'archived' ? ' bg-gray-500' : '' }}
+                                            {{ $row->state->value === 'hold' ? ' bg-amber-500' : '' }}"
+                                            aria-hidden="true">
+                                        </span>
                                     </div>
-                                    <div class="ml-3.5 font-medium text-gray-500">{{ $row->state->value }}</div>
+                                    <div class="ml-3.5 font-medium text-gray-500">{{ ucfirst($row->state->value) }}</div>
                                 </a>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ is_null($row->user)  ? $row->user_id : $row->user->name }}</td>
