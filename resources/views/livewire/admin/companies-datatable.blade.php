@@ -1,4 +1,4 @@
-<div class="px-4 sm:px-6 lg:px-8">
+<div>
     <div class="sm:flex sm:items-center">
         <div class="sm:flex-auto">
             <h1 class="text-xl font-semibold text-gray-900">Users</h1>
@@ -9,105 +9,171 @@
         </div>
     </div>
     <div class="mt-8 flex flex-col">
-    <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-        <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-            <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                <table class="min-w-full divide-y divide-gray-200">
-                    <thead class="bg-gray-50">
-                    <tr>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
-                        <th scope="col" class="relative px-6 py-3">
-                            <span class="sr-only">Edit</span>
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
-                    @forelse ($rows as $row)
-                        <tr>
-                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
-                                <div class="flex items-center">
-                                    <div class="h-10 w-10 flex-shrink-0">
-                                        <img class="h-10 w-10 rounded-full" src="{{ $row->avatar_url }}" alt="">
-                                    </div>
-                                    <div class="ml-4">
-                                        <div class="font-medium text-gray-900">{{ $row->name }}</div>
-                                        <div class="text-gray-500">{{ $row->email }}</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                @foreach ($row->categories as $category)
-                                    <p class="flex items-center text-gray-500">
-                                        <x-icon.solid type="{{$category->icon}}" class="mr-1.5 h-5 w-5 text-gray-600"/>
+        <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+                <div class="py-2 align-middle inline-block min-w-full">
+                    <div class="relative overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                        @php
+                            $isOneSelected = (is_array($selected) && count($selected) > 0) || (!is_array($selected) && count($selected->toArray()) > 0);
+                        @endphp
+                        @if($isOneSelected)
+                            <div class="absolute top-0 left-12 flex h-12 items-center space-x-3 bg-gray-50 sm:left-16">
+                                <button type="button" class="inline-flex items-center rounded border border-gray-300 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-30">Bulk edit</button>
+                                <button type="button" class="inline-flex items-center rounded border border-gray-300 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-30">Delete all</button>
+                            </div>
+                        @endif
 
-                                        <span class="truncate text-gray-900">{{ $category->name }}</span>
-                                    </p>
-                                @endforeach
-                               <div class="text-gray-500">{{ $row->phone }}</div>
-                            </td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                <div class="relative inline-flex items-center rounded-full border border-gray-300 px-3 py-0.5 m-1 cursor-pointer">
-                                    <div class="absolute flex-shrink-0 flex items-center justify-center">
-                                        <span class="h-1.5 w-1.5 rounded-full
-                                            {{ $row->state->value === 'draft' ? ' bg-rose-500' : '' }}
-                                            {{ $row->state->value === 'published' ? ' bg-green-500' : '' }}
-                                            {{ $row->state->value === 'archived' ? ' bg-gray-500' : '' }}
-                                            {{ $row->state->value === 'hold' ? ' bg-amber-500' : '' }}"
-                                            aria-hidden="true">
+                        <table class="min-w-full table-fixed divide-y divide-gray-300">
+                            <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="relative w-12 px-6 sm:w-16 sm:px-8">
+                                    <input wire:model="selectPage" type="checkbox" class="absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 sm:left-6">
+                                </th>
+                                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-500 sm:pl-6 uppercase">
+                                    <a href="#" class="group inline-flex">
+                                        Name
+                                        <!-- Active: "bg-gray-200 text-gray-900 group-hover:bg-gray-300", Not Active: "invisible text-gray-400 group-hover:visible group-focus:visible" -->
+                                        <span class="invisible ml-2 flex-none rounded text-gray-400 group-hover:visible group-focus:visible">
+                                          <!-- Heroicon name: solid/chevron-down -->
+                                          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                          </svg>
                                         </span>
-                                    </div>
-                                    <div class="ml-3.5 font-medium text-gray-500">{{ ucfirst($row->state->value) }}</div>
-                                </div>
-                            </td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $row->created_at->diffForHumans() }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                <x-dropdown align="right" width="w-32">
-                                    <x-slot name="trigger">
-                                        <button type="button" class="bg-gray-100 rounded-full flex items-center text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500" id="menu-button" aria-expanded="true" aria-haspopup="true">
-                                            <span class="sr-only">Open options</span>
-                                            <!-- Heroicon name: solid/dots-vertical -->
-                                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
-                                            </svg>
-                                        </button>
-                                    </x-slot>
+                                    </a>
+                                </th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-500 uppercase">
+                                    <a href="#" class="group inline-flex">
+                                        Industry
+                                        <!-- Active: "bg-gray-200 text-gray-900 group-hover:bg-gray-300", Not Active: "invisible text-gray-400 group-hover:visible group-focus:visible" -->
+                                        <span class="ml-2 flex-none rounded bg-gray-200 text-gray-900 group-hover:bg-gray-300">
+                                          <!-- Heroicon name: solid/chevron-down -->
+                                          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                          </svg>
+                                        </span>
+                                    </a>
+                                </th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-500 uppercase">Status</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-500 uppercase">Role</th>
+                                <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                                    <span class="sr-only">Edit</span>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                            @if ($selectPage)
+                                <tr class="bg-gray-200" wire:key="row-message">
+                                    <td colspan="6" class="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
+                                        @unless ($selectAll)
+                                            <div>
+                                                <span>You have selected <strong>{{ $rows->count() }}</strong> items, do you want to select all <strong>{{ $rows->total() }}</strong>?</span>
+                                                <a href="#" wire:click="selectAll" class="ml-1 text-indigo-600 hover:text-indigo-900 hover:underline">Select All<span class="sr-only">, Lindsay Walton</span></a>
+                                            </div>
+                                        @else
+                                            <span>You are currently selecting all <strong>{{ $rows->total() }}</strong> items.</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endif
+                            @forelse ($rows as $row)
+                                @php
+                                    $isSelected = (is_array($selected) && in_array($row->id, $selected)) || (!is_array($selected) && in_array($row->id, $selected->toArray()));
+                                @endphp
+                                <tr class="{{  $isSelected ? 'bg-gray-50' : '' }}">
+                                    <td class="relative w-12 px-6 sm:w-16 sm:px-8">
+                                        <!-- Selected row marker, only show when row is selected. -->
+                                        @if($isSelected)
+                                            <div class="absolute inset-y-0 left-0 w-0.5 bg-indigo-600"></div>
+                                        @endif
 
-                                    <x-slot name="content">
-                                        <x-dropdown-link wire:click="edit({{ $row->id }})" class="group flex items-center cursor-pointer">
-                                            <svg class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
-                                                <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" />
-                                            </svg>
-                                            Edit
-                                        </x-dropdown-link>
+                                        <input wire:model="selected" value="{{ $row->id }}" type="checkbox" class="absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 sm:left-6">
+                                    </td>
+                                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
+                                        <div class="flex items-center">
+                                            <div class="h-10 w-10 flex-shrink-0">
+                                                <img class="h-10 w-10 rounded-full" src="{{ $row->avatar_url }}" alt="">
+                                            </div>
+                                            <div class="ml-4">
+                                                <div class="font-medium text-gray-900">{{ $row->name  }}</div>
+                                                <div class="text-gray-500">{{ $row->email }}</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                        @foreach ($row->categories as $category)
+                                            <p class="flex items-center text-gray-500">
+                                                <x-icon.solid type="{{$category->icon}}" class="mr-1.5 h-5 w-5 text-gray-500"/>
 
-                                        <x-dropdown-link href="{{ route('impersonate', $row->id) }}" class="group flex items-center">
-                                            <!-- Heroicon name: solid/user-add -->
-                                            <svg class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z" />
-                                            </svg>
-                                            {{ __('Login As') }}
-                                        </x-dropdown-link>
-                                    </x-slot>
-                                </x-dropdown>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td class="whitespace-nowrap" colspan="6">
-                                acaca
-                            </td>
-                        </tr>
-                    @endforelse
+                                                <span class="truncate text-gray-900">{{ $category->name }}</span>
+                                            </p>
+                                        @endforeach
+                                        <div class="text-gray-500">{{ $row->phone }}</div>
+                                    </td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                        <div class="relative inline-flex items-center rounded-full border border-gray-300 px-3 py-0.5 m-1 cursor-pointer">
+                                            <div class="absolute flex-shrink-0 flex items-center justify-center">
+                                            <span class="h-1.5 w-1.5 rounded-full
+                                                {{ $row->state->value === 'draft' ? ' bg-rose-500' : '' }}
+                                                {{ $row->state->value === 'published' ? ' bg-green-500' : '' }}
+                                                {{ $row->state->value === 'archived' ? ' bg-gray-500' : '' }}
+                                                {{ $row->state->value === 'hold' ? ' bg-amber-500' : '' }}"
+                                                  aria-hidden="true">
+                                            </span>
+                                            </div>
+                                            <div class="ml-3.5 font-medium text-gray-500">{{ ucfirst($row->state->value) }}</div>
+                                        </div>
+                                    </td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $row->created_at->diffForHumans() }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <x-dropdown align="right" width="w-32">
+                                            <x-slot name="trigger">
+                                                <button type="button" class="bg-gray-100 rounded-full flex items-center text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500" id="menu-button" aria-expanded="true" aria-haspopup="true">
+                                                    <span class="sr-only">Open options</span>
+                                                    <!-- Heroicon name: solid/dots-vertical -->
+                                                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                        <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
+                                                    </svg>
+                                                </button>
+                                            </x-slot>
 
-                    <!-- More people... -->
-                    </tbody>
-                </table>
-                <div>
-                    {{ $rows->links() }}
+                                            <x-slot name="content">
+                                                <x-dropdown-link wire:click="edit({{ $row->id }})" class="group flex items-center cursor-pointer">
+                                                    <svg class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                        <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
+                                                        <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" />
+                                                    </svg>
+                                                    Edit
+                                                </x-dropdown-link>
+
+                                                <x-dropdown-link href="{{ route('impersonate', $row->id) }}" class="group flex items-center">
+                                                    <!-- Heroicon name: solid/user-add -->
+                                                    <svg class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                        <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z" />
+                                                    </svg>
+                                                    {{ __('Login As') }}
+                                                </x-dropdown-link>
+                                            </x-slot>
+                                        </x-dropdown>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td class="whitespace-nowrap" colspan="6">
+                                        <div class="flex justify-center items-center space-x-2">
+                                            <x-icon.inbox class="h-8 w-8 text-gray-400" />
+                                            <span class="font-medium py-8 text-gray-400 text-xl">No items found...</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforelse
+
+                            <!-- More people... -->
+                            </tbody>
+                        </table>
+                        <div>
+                            {{ $rows->links() }}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

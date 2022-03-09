@@ -117,6 +117,8 @@ class CompaniesDatatable extends Component
 
             $this->editing = $company;
 
+            $this->avatar = null;
+
             $this->selectedItem = ($attachCategory = $this->editing->categories->first()) ? $attachCategory->id : $this->categories->first()->id;
 
             $this->selectedState = $this->findIndexStateBy('name', $company->state->value);
