@@ -10,6 +10,7 @@ use App\Http\Livewire\Admin\Datatable\WithPerPagePagination;
 use App\Http\Livewire\Admin\Datatable\WithSorting;
 use App\Models\Category;
 use App\Models\Company;
+use Illuminate\Auth\AuthManager;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection as StatesCollection;
@@ -44,27 +45,37 @@ class CompaniesDatatable extends Component
 
     public $avatar;
 
+    private $auth;
+
     public Company $editing;
 
-    public array $filters = [
-        'search' => ''
+    protected $queryString = ['sorts', 'perPage'];
+
+    public $filters = [
+        'search' => '',
+        'status' => '',
+        'amount-min' => null,
+        'amount-max' => null,
+        'date-min' => null,
+        'date-max' => null,
     ];
 
     public function rules(): array
     {
         return [
-            'editing.id' => 'required',
             'editing.name' => 'required',
             'editing.content' => 'required',
             'editing.phone' => 'required',
             'editing.email' => 'required',
+            'editing.user_id' => 'required',
             'selectedItem' => 'required',
             'selectedState' => 'required',
         ];
     }
 
-    public function mount()
+    public function mount(AuthManager $auth)
     {
+        $this->auth = $auth;
 
         $this->categories = $this->loadCategories();
 
@@ -168,7 +179,7 @@ class CompaniesDatatable extends Component
 
     private function makeBlankCompany(): Model|Company
     {
-        return Company::make();
+        return Company::make(['user_id' => $this->auth->user()->id]);
     }
 
     private function loadCategories(): Collection|array

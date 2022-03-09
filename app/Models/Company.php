@@ -9,6 +9,7 @@ use App\Traits\Categorizable;
 use App\Traits\HasAvatar;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Nicolaslopezj\Searchable\SearchableTrait;
 
 /**
  * App\Models\Company
@@ -55,7 +56,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Company extends Model
 {
-    use HasFactory, Categorizable, BelongsToTenant, HasAvatar, BelongsToUser;
+    use HasFactory, Categorizable, BelongsToTenant, HasAvatar, BelongsToUser, SearchableTrait;
+
+    protected $guarded = [];
 
     protected $casts = [
         'state' => CompanyState::class
@@ -68,5 +71,26 @@ class Company extends Model
      */
     protected $appends = [
         'avatar_url',
+    ];
+
+    /**
+     * Searchable rules.
+     *
+     * @var array
+     */
+    protected $searchable = [
+        /**
+         * Columns and their priority in search results.
+         * Columns with higher values are more important.
+         * Columns with equal values have equal importance.
+         *
+         * @var array
+         */
+        'columns' => [
+            'companies.id' => 10,
+            'companies.name' => 10,
+            'companies.email' => 10,
+            'companies.content' => 10,
+        ]
     ];
 }
