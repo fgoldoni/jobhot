@@ -53,6 +53,7 @@ class RegisteredUserController extends Controller
             'tenant_id' => $tenant->id,
         ]);
 
+        $user->assignRole('User');
 
         event(new Registered($user));
 
