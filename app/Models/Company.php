@@ -10,6 +10,49 @@ use App\Traits\HasAvatar;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Models\Company
+ *
+ * @property int $id
+ * @property string $name
+ * @property string|null $content
+ * @property string|null $email
+ * @property string|null $phone
+ * @property CompanyState $state
+ * @property string|null $avatar_path
+ * @property int $user_id
+ * @property int|null $tenant_id
+ * @property string|null $deleted_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Database\Eloquent\Collection|\App\Models\Category[] $categories
+ * @property-read int|null $categories_count
+ * @property-read string $avatar_url
+ * @property-read \App\Models\Tenant|null $tenant
+ * @property-read \App\Models\User $user
+ * @method static \Database\Factories\CompanyFactory factory(...$parameters)
+ * @method static \Illuminate\Database\Eloquent\Builder|Company newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Company newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Company query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Company whereAvatarPath($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Company whereContent($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Company whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Company whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Company whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Company whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Company whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Company wherePhone($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Company whereState($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Company whereTenantId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Company whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Company whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Company withAllCategories($categories)
+ * @method static \Illuminate\Database\Eloquent\Builder|Company withAnyCategories($categories)
+ * @method static \Illuminate\Database\Eloquent\Builder|Company withCategories($categories)
+ * @method static \Illuminate\Database\Eloquent\Builder|Company withoutAnyCategories()
+ * @method static \Illuminate\Database\Eloquent\Builder|Company withoutCategories($categories)
+ * @mixin \Eloquent
+ */
 class Company extends Model
 {
     use HasFactory, Categorizable, BelongsToTenant, HasAvatar, BelongsToUser;

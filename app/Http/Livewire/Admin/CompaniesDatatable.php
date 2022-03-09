@@ -4,9 +4,13 @@ namespace App\Http\Livewire\Admin;
 
 use App\Http\Livewire\Admin\Datatable\WithBulkActions;
 use App\Http\Livewire\Admin\Datatable\WithCachedRows;
+use App\Http\Livewire\Admin\Datatable\WithPerPagePagination;
 use App\Http\Livewire\Admin\Datatable\WithSorting;
 use App\Models\Category;
 use App\Models\Company;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use phpDocumentor\Reflection\Types\Integer;
@@ -14,6 +18,7 @@ use phpDocumentor\Reflection\Types\Integer;
 class CompaniesDatatable extends Component
 {
     use WithSorting;
+    use WithPerPagePagination;
     use WithBulkActions;
     use WithCachedRows;
     use WithFileUploads;
@@ -50,17 +55,41 @@ class CompaniesDatatable extends Component
         ];
     }
 
-    public function mount() {
+    public function mount()
+    {
+
         $this->categories = $this->loadCategories();
+
         $this->editing = $this->makeBlankCompany();
-        $this->selectedItem = $this->categories->random()->id;
+
+        $this->selectedItem = $this->categories->first()->id;
     }
+
+    public function toggleShowFilters()
+    {
+        $this->useCachedRows();
+
+        $this->showFilters = ! $this->showFilters;
+    }
+
+    public function create()
+    {
+        $this->useCachedRows();
+
+        if ($this->editing->getKey()) $this->editing = $this->makeBlankCompany();
+
+        $this->showEditModal = true;
+    }
+
 
     public function edit(Company $company)
     {
         $this->useCachedRows();
 
-        if ($this->editing->isNot($company)) $this->editing = $company;
+        if ($this->editing->isNot($company)) {
+            $this->editing = $company;
+            $this->selectedItem = ($attachCategory = $this->editing->categories->first()) ? $attachCategory->id : $this->categories->first()->id;
+        }
 
         $this->showEditModal = true;
     }
@@ -85,30 +114,31 @@ class CompaniesDatatable extends Component
     public function getRowsQueryProperty()
     {
         return Company::query()
-            ->with(['user:id,name'])
+            ->with(['user:id,name', 'categories:id,name'])
             ->when($this->filters['search'], fn ($query, $search) => $query->search($search));
     }
 
     public function getRowsProperty()
     {
-        return $this->cache(fn () => $this->rowsQuery->paginate(5));
+        return $this->cache(fn () => $this->applyPagination($this->rowsQuery));
     }
 
     public function render()
     {
         return view('livewire.admin.companies-datatable', [
             'rows' => $this->rows,
-            'categories' => $this->categories
+            'categories' => $this->loadCategories()
         ]);
     }
 
-    private function makeBlankCompany()
+    private function makeBlankCompany(): Model|Company
     {
         return Company::make();
     }
 
-    private function loadCategories(): \Illuminate\Database\Eloquent\Collection|array
+    private function loadCategories(): Collection|array
     {
-       return Category::query()->industry()->orderBy('position', 'asc')->get(['id', 'name', 'icon']);
+       $this->useCachedRows();
+       return $this->cache(fn () => Category::query()->industry()->orderBy('position')->get(['id', 'name', 'icon']), 'categories');
     }
 }

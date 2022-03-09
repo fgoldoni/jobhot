@@ -32,9 +32,14 @@
                                 </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900">{{ $row->phone }}
-                                </div>
-                                <div class="text-sm text-gray-500">{{ $row->created_at->diffForHumans() }}</div>
+                                @foreach ($row->categories as $category)
+                                    <p class="flex items-center text-sm text-gray-500">
+                                        <x-icon.solid type="{{$category->icon}}" class="mr-1.5 h-6 w-6 text-gray-600"/>
+
+                                        <span class="truncate text-base">{{ $category->name }}</span>
+                                    </p>
+                                @endforeach
+                               <div class="text-sm text-gray-500">{{ $row->created_at->diffForHumans() }}</div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <a href="#" class="relative inline-flex items-center rounded-full border border-gray-300 px-3 py-0.5 m-1">

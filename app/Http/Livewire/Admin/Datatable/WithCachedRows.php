@@ -3,16 +3,16 @@ namespace App\Http\Livewire\Admin\Datatable;
 
 trait WithCachedRows
 {
-    protected $useCache = false;
+    protected bool $useCache = false;
 
     public function useCachedRows()
     {
         $this->useCache = true;
     }
 
-    public function cache($callback)
+    public function cache($callback, ?string $key = null)
     {
-        $cacheKey = $this->id;
+        $cacheKey = $key ?? $this->id;
 
         if ($this->useCache && cache()->has($cacheKey)) {
             return cache()->get($cacheKey);

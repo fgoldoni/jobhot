@@ -12,6 +12,42 @@ use Spatie\Sluggable\SlugOptions;
 use Spatie\Translatable\HasTranslations;
 
 
+/**
+ * App\Models\Category
+ *
+ * @property int $id
+ * @property array $name
+ * @property string $slug
+ * @property string $icon
+ * @property CategoryType $type
+ * @property int|null $position
+ * @property int|null $parent_id
+ * @property bool $online
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read array $translations
+ * @method static Builder|Category area()
+ * @method static \Database\Factories\CategoryFactory factory(...$parameters)
+ * @method static Builder|Category industry()
+ * @method static Builder|Category newModelQuery()
+ * @method static Builder|Category newQuery()
+ * @method static Builder|Category query()
+ * @method static Builder|Category search($search, $threshold = null, $entireText = false, $entireTextOnly = false)
+ * @method static Builder|Category searchRestricted($search, $restriction, $threshold = null, $entireText = false, $entireTextOnly = false)
+ * @method static Builder|Category whereCreatedAt($value)
+ * @method static Builder|Category whereDeletedAt($value)
+ * @method static Builder|Category whereIcon($value)
+ * @method static Builder|Category whereId($value)
+ * @method static Builder|Category whereName($value)
+ * @method static Builder|Category whereOnline($value)
+ * @method static Builder|Category whereParentId($value)
+ * @method static Builder|Category wherePosition($value)
+ * @method static Builder|Category whereSlug($value)
+ * @method static Builder|Category whereType($value)
+ * @method static Builder|Category whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class Category extends Model
 {
     use HasFactory, HasSlug, HasTranslations, SearchableTrait;

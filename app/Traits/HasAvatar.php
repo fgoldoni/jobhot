@@ -15,6 +15,7 @@ trait HasAvatar
      */
     public function updateAvatar(UploadedFile $photo)
     {
+
         tap($this->avatar_path, function ($previous) use ($photo) {
             $this->forceFill([
                 'avatar_path' => $photo->storePublicly(
