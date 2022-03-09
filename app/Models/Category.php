@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\CategoryType;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Nicolaslopezj\Searchable\SearchableTrait;
@@ -22,6 +24,7 @@ class Category extends Model
         'slug' => 'string',
         'online' => 'boolean',
         'deleted_at' => 'datetime',
+        'type' => CategoryType::class,
     ];
 
     /**
@@ -66,4 +69,15 @@ class Category extends Model
         return $attributes;
     }
 
+
+    public function scopeArea(Builder $query): Builder
+    {
+        return $query->where('type', CategoryType::Area);
+    }
+
+
+    public function scopeIndustry(Builder $query): Builder
+    {
+        return $query->where('type', CategoryType::Industry);
+    }
 }

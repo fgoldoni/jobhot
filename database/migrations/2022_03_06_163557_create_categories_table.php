@@ -19,6 +19,7 @@ return new class extends Migration
             $table->json('name');
             $table->string('slug');
             $table->string('icon')->default('folder');
+            $table->string('type')->default('area');
             $table->integer('position')->unsigned()->nullable();
             $table->integer('parent_id')->nullable()->unsigned()->index();
             $table->boolean('online')->default(true);

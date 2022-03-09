@@ -5,14 +5,26 @@
         <x-slot name="content">
             <div class="space-y-8 sm:space-y-5">
                 <div>
-                    <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start border-t border-gray-200 sm:pt-5">
-                        <x-label for="name" class="sm:mt-px sm:pt-2">{{ __('Name') }} </x-label>
-                        <div class="mt-1 sm:mt-0 sm:col-span-2">
-                            <x-input.select :items="$categories" wire:model.defer="selectedItem"></x-input.select>
-                        </div>
-                    </div>
                     <div class="mt-6 sm:mt-5 space-y-6 sm:space-y-5">
-                        <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start border-t border-gray-200 sm:pt-5">
+                        <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-center border-t border-gray-200 sm:pt-5">
+                            <x-label for="avatar" class="sm:mt-px sm:pt-2">{{ __('Logo') }} </x-label>
+                            <x-input.file-upload wire:model="avatar" id="avatar">
+                                @if ($avatar)
+                                    <img src="{{ $avatar->temporaryUrl() }}" alt="Avatar">
+                                @else
+                                    <img src="{{ $editing->avatar_url }}" alt="Avatar">
+                                @endif
+                            </x-input.file-upload>
+                        </div>
+
+                        <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
+                            <x-label for="name" class="sm:mt-px sm:pt-2">{{ __('Industry') }} </x-label>
+                            <div class="mt-1 sm:mt-0 sm:col-span-2">
+                                <x-input.select :items="$categories" wire:model.defer="selectedItem"></x-input.select>
+                            </div>
+                        </div>
+
+                        <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
                             <x-label for="name" class="sm:mt-px sm:pt-2">{{ __('Name') }} </x-label>
                             <div class="mt-1 sm:mt-0 sm:col-span-2">
                                 <x-input type="text" wire:model.defer="editing.name" id="name"  placeholder="Name" class="max-w-lg w-full"/>
@@ -36,19 +48,18 @@
                             </div>
                         @endif
 
+                        <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
+                            <x-label for="phone" class="sm:mt-px sm:pt-2">{{ __('Phone') }} </x-label>
+                            <div class="mt-1 sm:mt-0 sm:col-span-2">
+                                <x-input type="text" wire:model.defer="editing.phone" id="phone"  placeholder="Phone" class="max-w-lg w-full"/>
+                            </div>
+                        </div>
 
-
-
-
-                        <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-center sm:pt-5">
-                            <x-label for="avatar" class="sm:mt-px sm:pt-2">{{ __('Logo') }} </x-label>
-                            <x-input.file-upload wire:model="avatar" id="avatar">
-                                @if ($avatar)
-                                    <img src="{{ $avatar->temporaryUrl() }}" alt="Avatar">
-                                @else
-                                    <img src="{{ $editing->avatar_url }}" alt="Avatar">
-                                @endif
-                            </x-input.file-upload>
+                        <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
+                            <x-label for="email" class="sm:mt-px sm:pt-2">{{ __('Email') }} </x-label>
+                            <div class="mt-1 sm:mt-0 sm:col-span-2">
+                                <x-input type="email" wire:model.defer="editing.email" id="email"  placeholder="Email" class="max-w-lg w-full"/>
+                            </div>
                         </div>
                     </div>
                 </div>

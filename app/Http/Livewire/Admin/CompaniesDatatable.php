@@ -26,7 +26,7 @@ class CompaniesDatatable extends Component
 
     public bool $showEditor = false;
 
-    public  $selectedItem ;
+    public  ?int $selectedItem = null;
 
     public $categories;
 
@@ -44,6 +44,9 @@ class CompaniesDatatable extends Component
             'editing.id' => 'required',
             'editing.name' => 'required',
             'editing.content' => 'required',
+            'editing.phone' => 'required',
+            'editing.email' => 'required',
+            'selectedItem' => 'required',
         ];
     }
 
@@ -64,7 +67,19 @@ class CompaniesDatatable extends Component
 
     public function save()
     {
-       sleep(3);
+        $this->validate();
+
+        $this->editing->save();
+
+        if (isset($this->avatar)) {
+            $this->editing->updateAvatar($this->avatar);
+        }
+
+        $this->showEditModal = false;
+
+        $this->editing->syncCategories([$this->selectedItem]);
+
+        $this->notify('The user has been successfully updated');
     }
 
     public function getRowsQueryProperty()
@@ -92,8 +107,8 @@ class CompaniesDatatable extends Component
         return Company::make();
     }
 
-    private function loadCategories()
+    private function loadCategories(): \Illuminate\Database\Eloquent\Collection|array
     {
-       return Category::get(['id', 'name', 'icon']);
+       return Category::query()->industry()->orderBy('position', 'asc')->get(['id', 'name', 'icon']);
     }
 }

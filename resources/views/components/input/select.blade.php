@@ -82,7 +82,10 @@
         -->
         <div class=""
              x-show="open"
-             x-transition:leave="transition ease-in duration-100"
+             x-transition:enter="ease-out delay-200 duration-300"
+             x-transition:enter-start="opacity-0 -translate-y-12"
+             x-transition:enter-end="opacity-100 translate-y-0"
+             x-transition:leave="transition ease-in duration-150"
              x-transition:leave-start="opacity-100"
              x-transition:leave-end="opacity-0"
              @keydown.arrow-up.prevent="onArrowUp()"
@@ -92,13 +95,12 @@
              @keydown.escape="onEscape()"
              @click.away="open = false"
              x-cloak
-             class="mt-1 w-full  bg-white py-1 text-base overflow-hidden focus:outline-none sm:text-sm transform transition-all"
-            >
+             class="mt-1 bg-white py-1 focus:outline-none overflow-hidden">
 
             <ul
                 x-ref="listbox"
-                class="absolute bg-gray-50 border border-gray-300 w-full z-10 ring-1 focus:outline-none ring-black rounded-md ring-opacity-5 shadow-lg overflow-y-auto"
-                style="max-height: 265px;"
+                class="absolute bg-white text-base sm:text-sm transform transition-all border border-gray-300 w-full z-10 ring-1 focus:outline-none ring-black rounded-md ring-opacity-5 shadow-lg overflow-y-auto"
+                style="max-height: 200px;"
                 tabindex="-1"
                 role="listbox"
                 aria-labelledby="listbox-label"

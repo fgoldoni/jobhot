@@ -164,6 +164,7 @@
                 </div>
             </div>
         </main>
+        <x-notification />
     </div>
 </div>
 
