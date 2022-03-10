@@ -13,6 +13,7 @@ use App\Models\Company;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection as StatesCollection;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
@@ -51,9 +52,11 @@ class CompaniesDatatable extends Component
 
     protected $queryString = ['sorts', 'perPage'];
 
+    protected $listeners = ['refreshTransactions' => '$refresh'];
+
     public $filters = [
         'search' => '',
-        'status' => '',
+        'state' => null,
         'amount-min' => null,
         'amount-max' => null,
         'date-min' => null,
@@ -86,19 +89,19 @@ class CompaniesDatatable extends Component
         $this->states = collect([
             [
                 'id' => 0,
-                'name' => CompanyState::Draft,
+                'name' => ucfirst((CompanyState::Draft)->value),
             ],
             [
                 'id' => 1,
-                'name' => CompanyState::Published,
+                'name' => ucfirst((CompanyState::Published)->value),
             ],
             [
                 'id' => 2,
-                'name' => CompanyState::Archived,
+                'name' => ucfirst((CompanyState::Archived)->value),
             ],
             [
                 'id' => 3,
-                'name' => CompanyState::Hold,
+                'name' => ucfirst((CompanyState::Hold)->value),
             ]
         ]);
     }
@@ -109,6 +112,8 @@ class CompaniesDatatable extends Component
 
         $this->showFilters = ! $this->showFilters;
     }
+
+    public function resetFilters() { $this->reset('filters'); }
 
     public function create()
     {
@@ -132,7 +137,7 @@ class CompaniesDatatable extends Component
 
             $this->selectedItem = ($attachCategory = $this->editing->categories->first()) ? $attachCategory->id : $this->categories->first()->id;
 
-            $this->selectedState = $this->findIndexStateBy('name', $company->state->value);
+            $this->selectedState = strtolower($this->findIndexStateBy('name', $company->state->value));
         }
 
         $this->showEditModal = true;
@@ -142,7 +147,7 @@ class CompaniesDatatable extends Component
     {
         $this->validate();
 
-        $this->editing->state = $this->findStateBy('id', $this->selectedState)['name'];
+        $this->editing->state = strtolower($this->findStateBy('id', $this->selectedState)['name']);
 
         $this->editing->save();
 
@@ -161,7 +166,10 @@ class CompaniesDatatable extends Component
     {
         return Company::query()
             ->with(['user:id,name', 'categories:id,name'])
-            ->when($this->filters['search'], fn ($query, $search) => $query->search($search));
+            ->when($this->filters['search'], fn ($query, $search) => $query->search($search))
+            ->when($this->filters['state'], fn($query, $state) => $query->where('state', $state))
+            ->when($this->filters['date-min'], fn($query, $date) => $query->where('created_at', '>=', Carbon::parse($date)))
+            ->when($this->filters['date-max'], fn($query, $date) => $query->where('created_at', '<=', Carbon::parse($date)));
     }
 
     public function getRowsProperty()
@@ -195,6 +203,8 @@ class CompaniesDatatable extends Component
 
     private function findIndexStateBy(string $key, $value)
     {
+        $value = is_string($value) ? ucfirst($value) : $value;
+
         return $this->states->search(fn($s) => $s[$key] === $value);
     }
 }

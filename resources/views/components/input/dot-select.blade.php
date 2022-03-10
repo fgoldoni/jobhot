@@ -60,20 +60,20 @@
             aria-expanded="true"
             aria-labelledby="listbox-label">
             <div class="flex items-center">
-                <template x-if="name === 'draft'">
-                    <span aria-label="Online" class="bg-rose-400 flex-shrink-0 inline-block h-2 w-2 rounded-full"></span>
+                <template x-if="name === 'Draft'">
+                    <span aria-label="Draft" class="bg-rose-400 flex-shrink-0 inline-block h-2 w-2 rounded-full"></span>
                 </template>
 
-                <template x-if="name === 'published'">
-                    <span aria-label="Online" class="bg-green-400 flex-shrink-0 inline-block h-2 w-2 rounded-full"></span>
+                <template x-if="name === 'Published'">
+                    <span aria-label="Published" class="bg-green-400 flex-shrink-0 inline-block h-2 w-2 rounded-full"></span>
                 </template>
 
-                <template x-if="name === 'archived'">
-                    <span aria-label="Online" class="bg-gray-400 flex-shrink-0 inline-block h-2 w-2 rounded-full"></span>
+                <template x-if="name === 'Archived'">
+                    <span aria-label="Archived" class="bg-gray-400 flex-shrink-0 inline-block h-2 w-2 rounded-full"></span>
                 </template>
 
-                <template x-if="name === 'hold'">
-                    <span aria-label="Online" class="bg-amber-400 flex-shrink-0 inline-block h-2 w-2 rounded-full"></span>
+                <template x-if="name === 'Hold'">
+                    <span aria-label="Hold" class="bg-amber-400 flex-shrink-0 inline-block h-2 w-2 rounded-full"></span>
                 </template>
 
                 <span class="ml-3 block truncate" x-text="name"> </span>
@@ -134,20 +134,20 @@
                         @mouseleave="activeIndex = null"
                     >
                         <div class="flex items-center">
-                            <template x-if="item.name === 'draft'">
-                                <span aria-label="draft" class="bg-rose-400 flex-shrink-0 inline-block h-2 w-2 rounded-full"></span>
+                            <template x-if="item.name === 'Draft'">
+                                <span aria-label="Draft" class="bg-rose-400 flex-shrink-0 inline-block h-2 w-2 rounded-full"></span>
                             </template>
 
-                            <template x-if="item.name === 'published'">
-                                <span aria-label="published" class="bg-green-400 flex-shrink-0 inline-block h-2 w-2 rounded-full"></span>
+                            <template x-if="item.name === 'Published'">
+                                <span aria-label="Published" class="bg-green-400 flex-shrink-0 inline-block h-2 w-2 rounded-full"></span>
                             </template>
 
-                            <template x-if="item.name === 'archived'">
-                                <span aria-label="archived" class="bg-gray-400 flex-shrink-0 inline-block h-2 w-2 rounded-full"></span>
+                            <template x-if="item.name === 'Archived'">
+                                <span aria-label="Archived" class="bg-gray-400 flex-shrink-0 inline-block h-2 w-2 rounded-full"></span>
                             </template>
 
-                            <template x-if="item.name === 'hold'">
-                                <span aria-label="hold" class="bg-amber-400 flex-shrink-0 inline-block h-2 w-2 rounded-full"></span>
+                            <template x-if="item.name === 'Hold'">
+                                <span aria-label="Hold" class="bg-amber-400 flex-shrink-0 inline-block h-2 w-2 rounded-full"></span>
                             </template>
 
                             <span

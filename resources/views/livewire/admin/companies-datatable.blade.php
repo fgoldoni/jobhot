@@ -38,12 +38,15 @@
                         @if ($showFilters)
                             <div class="flex relative bg-gray-200 p-4 rounded shadow-inner">
                                 <div class="w-1/2 pr-2 space-y-4">
-                                    <x-input.group inline for="filter-amount-min" label="Minimum Amount">
-                                        <x-input.money type="text" wire:model.lazy="filters.amount-min" id="filter-amount-min" />
-                                    </x-input.group>
+                                    <x-input.group inline for="filter-state" label="Status">
+                                        <x-input.base-select wire:model="filters.state" id="filter-state">
+                                            <option value="" selected>Select Status...</option>
 
-                                    <x-input.group inline for="filter-amount-max" label="Maximum Amount">
-                                        <x-input.money  type="text" wire:model.lazy="filters.amount-max" id="filter-amount-max" />
+                                            <option value="{{ (\App\Enums\CompanyState::Draft)->value }}">{{ (\App\Enums\CompanyState::Draft)->value }}</option>
+                                            <option value="{{ (\App\Enums\CompanyState::Published)->value }}">{{ (\App\Enums\CompanyState::Published)->value }}</option>
+                                            <option value="{{ (\App\Enums\CompanyState::Archived)->value }}">{{ (\App\Enums\CompanyState::Archived)->value }}</option>
+                                            <option value="{{ (\App\Enums\CompanyState::Hold)->value }}">{{ (\App\Enums\CompanyState::Hold)->value }}</option>
+                                        </x-input.base-select>
                                     </x-input.group>
                                 </div>
 
