@@ -5,39 +5,36 @@
                 <div class="py-2 align-middle inline-block min-w-full">
 
                     <!-- Top Bar -->
-                    <div class="text-gray-900 bg-gray-200  text-sm shadow">
-                        <nav class="text-gray-900 px-4 py-2 flex items-center justify-between">
-                            <div class="flex items-center space-x-4">
-                                <x-input.search wire:model="filters.search" placeholder="Search Items ..."></x-input.search>
-                                <ul class="flex items-center font-demibold space-x-4">
-                                    <li>
-                                        <x-button.link wire:click="toggleShowFilters">@if ($showFilters) Hide @endif Advanced Search...
-                                        </x-button.link>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="flex items-center space-x-5 text-gray-900 text-gray-600">
-                                <x-button wire:click="create">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="-ml-0.5 mr-2 h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
-                                    </svg>
-                                    <span>CREATE</span>
-                                </x-button>
-                                <x-input.base-select wire:model="perPage" id="perPage" class="bg-white">
-                                    <option value="5">05</option>
-                                    <option value="10">10</option>
-                                    <option value="25">25</option>
-                                    <option value="50">50</option>
-                                </x-input.base-select>
-                            </div>
-                        </nav>
-                    </div>
+                    <x-top-bar>
+                        <x-input.search wire:model="filters.search" placeholder="Search Items ..."></x-input.search>
+                        <ul class="flex items-center font-demibold space-x-4">
+                            <li>
+                                <x-button.link wire:click="toggleShowFilters">@if ($showFilters) Hide @endif Advanced Search...
+                                </x-button.link>
+                            </li>
+                        </ul>
+
+                        <x-slot name="actions">
+                            <x-button wire:click="create">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="-ml-0.5 mr-2 h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+                                </svg>
+                                <span>CREATE</span>
+                            </x-button>
+                            <x-input.base-select wire:model="perPage" id="perPage" class="bg-white">
+                                <option value="5">05</option>
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                            </x-input.base-select>
+                        </x-slot>
+                    </x-top-bar>
 
                     <!-- Advanced Search -->
                     <div>
                         @if ($showFilters)
-                            <div class="flex relative bg-gray-200 p-4 rounded shadow-inner">
-                                <div class="w-1/2 pr-2 space-y-4">
+                            <x-filters>
+                                <x-slot name="filtersRight">
                                     <x-input.group inline for="filter-state" label="Status">
                                         <x-input.base-select wire:model="filters.state" id="filter-state">
                                             <option value="" selected>Select Status...</option>
@@ -48,9 +45,9 @@
                                             <option value="{{ (\App\Enums\CompanyState::Hold)->value }}">{{ (\App\Enums\CompanyState::Hold)->value }}</option>
                                         </x-input.base-select>
                                     </x-input.group>
-                                </div>
+                                </x-slot>
 
-                                <div class="w-1/2 pl-2 space-y-4">
+                                <x-slot name="filtersLeft">
                                     <x-input.group inline for="filter-date-min" label="Minimum Date">
                                         <x-input.date  type="text" wire:model="filters.date-min" id="filter-date-min" placeholder="MM/DD/YYYY" />
                                     </x-input.group>
@@ -62,8 +59,8 @@
                                     <button wire:click="resetFilters" class="float-right text-indigo-600 hover:text-indigo-900 hover:underline">
                                         Reset Filters
                                     </button>
-                                </div>
-                            </div>
+                                </x-slot>
+                            </x-filters>
                         @endif
                     </div>
 
@@ -72,7 +69,8 @@
                             $isOneSelected = (is_array($selected) && count($selected) > 0) || (!is_array($selected) && count($selected->toArray()) > 0);
                         @endphp
                         @if($isOneSelected)
-                            <div class="absolute top-0 left-12 flex h-12 items-center space-x-3 bg-gray-50 sm:left-16">
+                            <!-- Row actions -->
+                            <x-row-actions>
                                 <button type="button" class="btn-secondary inline-flex items-center px-2.5 py-1.5 text-xs font-medium disabled:cursor-not-allowed disabled:opacity-30">
                                     <!-- Heroicon name: solid/mail -->
                                     <svg xmlns="http://www.w3.org/2000/svg" class="-ml-0.5 mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -87,9 +85,11 @@
                                     </svg>
                                     <span>DELETE</span>
                                 </button>
-                            </div>
+                            </x-row-actions>
                         @endif
 
+
+                        <!-- Companies Table -->
                         <table class="min-w-full table-fixed divide-y divide-gray-300">
                             <thead class="bg-gray-50">
                             <tr>
@@ -255,7 +255,7 @@
                             </tbody>
                         </table>
                         <div>
-                            {{ $rows->links() }}
+                            {{ $rows->links('livewire::pagination-links') }}
                         </div>
                     </div>
                 </div>
@@ -265,7 +265,6 @@
 
     <!-- Save Company Modal -->
     @include('admin.companies.save-company-modal')
-</div>
 </div>
 @push('scripts')
 
