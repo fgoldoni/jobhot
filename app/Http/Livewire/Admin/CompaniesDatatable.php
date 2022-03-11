@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection as StatesCollection;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use phpDocumentor\Reflection\Types\Integer;
@@ -66,13 +67,14 @@ class CompaniesDatatable extends Component
     public function rules(): array
     {
         return [
-            'editing.name' => 'required',
-            'editing.content' => 'required',
+            'editing.name' => ['required', 'string', 'max:255'],
+            'editing.content' => ['required', 'string', 'min:6'],
             'editing.phone' => 'required',
-            'editing.email' => 'required',
+            'editing.email' => ['required', 'email', 'max:255', Rule::unique('users','email')->ignore($this->editing->id)],
             'editing.user_id' => 'required',
             'selectedItem' => 'required',
             'selectedState' => 'required',
+            'avatar' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
         ];
     }
 
@@ -113,11 +115,13 @@ class CompaniesDatatable extends Component
         $this->showFilters = ! $this->showFilters;
     }
 
-    public function resetFilters() { $this->reset('filters'); }
+    public function resetFilters() { $this->reset('filters', 'sorts'); }
 
     public function create()
     {
         $this->useCachedRows();
+
+        $this->resetValidation();
 
         if ($this->editing->getKey()) $this->editing = $this->makeBlankCompany();
 
@@ -128,6 +132,8 @@ class CompaniesDatatable extends Component
     public function edit(Company $company)
     {
         $this->useCachedRows();
+
+        $this->resetValidation();
 
         if ($this->editing->isNot($company)) {
 
@@ -159,17 +165,33 @@ class CompaniesDatatable extends Component
 
         $this->editing->syncCategories([$this->selectedItem]);
 
-        $this->notify('The user has been successfully updated');
+        $this->notify('The company has been successfully updated');
+    }
+
+    public function deleteSelected()
+    {
+        $deleteCount = $this->selectedRowsQuery->count();
+
+        $this->selectedRowsQuery->delete();
+
+        $this->showDeleteModal = false;
+
+        $this->notify('You\'ve deleted '.$deleteCount.' companies');
     }
 
     public function getRowsQueryProperty()
     {
-        return Company::query()
+        $query = Company::query()
             ->with(['user:id,name', 'categories:id,name'])
-            ->when($this->filters['search'], fn ($query, $search) => $query->search($search))
+            ->when($this->filters['search'], function ($query, $search) {
+                $this->resetPage();
+                return $query->search($search);
+            })
             ->when($this->filters['state'], fn($query, $state) => $query->where('state', $state))
             ->when($this->filters['date-min'], fn($query, $date) => $query->where('created_at', '>=', Carbon::parse($date)))
             ->when($this->filters['date-max'], fn($query, $date) => $query->where('created_at', '<=', Carbon::parse($date)));
+
+        return $this->applySorting($query);
     }
 
     public function getRowsProperty()
@@ -187,7 +209,7 @@ class CompaniesDatatable extends Component
 
     private function makeBlankCompany(): Model|Company
     {
-        return Company::make(['user_id' => $this->auth->user()->id]);
+        return Company::make(['user_id' => auth()->user()->id]);
     }
 
     private function loadCategories(): Collection|array

@@ -1,3 +1,7 @@
+@props([
+    'error' => false,
+])
+
 <div class="mt-1 sm:mt-0 sm:col-span-2">
     <div class="flex items-center" x-data="{ focused: false }">
           <span class="h-12 w-12 rounded-full overflow-hidden bg-gray-100">
@@ -11,4 +15,7 @@
               Change
           </label>
     </div>
+     @if ($error)
+        <p class="mt-2 text-sm text-red-600">{{ $error }}</p>
+    @endif
 </div>
