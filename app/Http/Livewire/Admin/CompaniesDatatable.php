@@ -84,7 +84,15 @@ class CompaniesDatatable extends Component
 
     public function resetFilters()
     {
+        $this->resetPage();
         $this->reset('filters', 'sorts');
+    }
+
+    public function exportSelected()
+    {
+        return response()->streamDownload(function () {
+            echo $this->selectedRowsQuery->toCsv();
+        }, 'transactions.csv');
     }
 
     public function create()
