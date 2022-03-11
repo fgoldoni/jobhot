@@ -1,6 +1,4 @@
 <?php
-
-
 namespace App\Traits;
 
 use App\Models\User;
@@ -19,5 +17,4 @@ trait BelongsToUser
     {
         return $this->belongsTo(User::class);
     }
-
 }

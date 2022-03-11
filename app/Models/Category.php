@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use App\Enums\CategoryType;
@@ -10,7 +9,6 @@ use Nicolaslopezj\Searchable\SearchableTrait;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Spatie\Translatable\HasTranslations;
-
 
 /**
  * App\Models\Category
@@ -82,12 +80,10 @@ class Category extends Model
         ]
     ];
 
-
     public function entries(string $class): MorphToMany
     {
         return $this->morphedByMany($class, 'categorizable', 'categorizables', 'category_id', 'categorizable_id', 'id', 'id');
     }
-
 
     public function getSlugOptions() : SlugOptions
     {
@@ -105,12 +101,10 @@ class Category extends Model
         return $attributes;
     }
 
-
     public function scopeArea(Builder $query): Builder
     {
         return $query->where('type', CategoryType::Area);
     }
-
 
     public function scopeIndustry(Builder $query): Builder
     {

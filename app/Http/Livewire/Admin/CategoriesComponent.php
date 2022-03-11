@@ -1,14 +1,10 @@
 <?php
-
 namespace App\Http\Livewire\Admin;
 
 use App\Http\Livewire\Admin\Datatable\WithBulkActions;
 use App\Http\Livewire\Admin\Datatable\WithCachedRows;
-use App\Http\Livewire\Admin\Datatable\WithPerPagePagination;
 use App\Http\Livewire\Admin\Datatable\WithSorting;
 use App\Models\Category;
-use App\Models\User;
-use Illuminate\Support\Carbon;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 

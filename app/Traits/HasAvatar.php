@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Traits;
 
 use Illuminate\Http\UploadedFile;
@@ -10,12 +9,10 @@ trait HasAvatar
     /**
      * Update the user's avatar photo.
      *
-     * @param  \Illuminate\Http\UploadedFile  $photo
      * @return void
      */
     public function updateAvatar(UploadedFile $photo)
     {
-
         tap($this->avatar_path, function ($previous) use ($photo) {
             $this->forceFill([
                 'avatar_path' => $photo->storePublicly(
@@ -44,7 +41,6 @@ trait HasAvatar
         ])->save();
     }
 
-
     /**
      * Get the URL to the user's avatar photo.
      *
@@ -59,8 +55,6 @@ trait HasAvatar
 
     /**
      * Get the default avatar photo URL if no avatar photo has been uploaded.
-     *
-     * @return string
      */
     protected function defaultAvatarUrl(): string
     {
@@ -69,12 +63,9 @@ trait HasAvatar
 
     /**
      * Get the disk that avatar photos should be stored on.
-     *
-     * @return string
      */
     protected function avatarDisk(): string
     {
         return 'avatars';
     }
-
 }

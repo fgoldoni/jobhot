@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use App\Traits\BelongsToTenant;
@@ -25,7 +24,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|categorizable whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class categorizable extends Model
+class Categorizable extends Model
 {
     use HasFactory, BelongsToTenant;
 }

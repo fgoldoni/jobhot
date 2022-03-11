@@ -1,7 +1,6 @@
 <?php
 
 declare(strict_types=1);
-
 namespace App\Traits;
 
 use App\Models\Category;
@@ -17,20 +16,18 @@ trait Categorizable
     /**
      * Register a saved model event with the dispatcher.
      *
-     * @param \Closure|string $callback
      *
      * @return void
      */
-    abstract public static function saved($callback);
+    abstract public static function saved(\Closure|string $callback);
 
     /**
      * Register a deleted model event with the dispatcher.
      *
-     * @param \Closure|string $callback
      *
      * @return void
      */
-    abstract public static function deleted($callback);
+    abstract public static function deleted(\Closure|string $callback);
 
     /**
      * Define a polymorphic many-to-many relationship.
@@ -59,8 +56,6 @@ trait Categorizable
 
     /**
      * Get all attached categories to the model.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
      */
     public function categories(): MorphToMany
     {
@@ -71,11 +66,9 @@ trait Categorizable
     /**
      * Attach the given category(ies) to the model.
      *
-     * @param int|string|array|\ArrayAccess|\Rinvex\Categories\Models\Category $categories
      *
-     * @return void
      */
-    public function setCategoriesAttribute($categories): void
+    public function setCategoriesAttribute(array|\ArrayAccess|int|\Rinvex\Categories\Models\Category|string $categories): void
     {
         static::saved(function (self $model) use ($categories) {
             $model->syncCategories($categories);
@@ -91,26 +84,22 @@ trait Categorizable
     {
         static::deleted(function (self $model) {
             // Check if this is a soft delete or not by checking if `SoftDeletes::isForceDeleting` method exists
-            (method_exists($model, 'isForceDeleting') && ! $model->isForceDeleting()) || $model->categories()->detach();
+            (method_exists($model, 'isForceDeleting') && !$model->isForceDeleting()) || $model->categories()->detach();
         });
     }
 
     /**
      * Scope query with all the given categories.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $builder
      * @param mixed                                 $categories
      *
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeWithAllCategories(Builder $builder, $categories): Builder
     {
         $categories = $this->prepareCategoryIds($categories);
 
         collect($categories)->each(function ($category) use ($builder) {
-            $builder->whereHas('categories', function (Builder $builder) use ($category) {
-                return $builder->where('id', $category);
-            });
+            $builder->whereHas('categories', fn (Builder $builder) => $builder->where('id', $category));
         });
 
         return $builder;
@@ -119,10 +108,8 @@ trait Categorizable
     /**
      * Scope query with any of the given categories.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $builder
      * @param mixed                                 $categories
      *
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeWithAnyCategories(Builder $builder, $categories): Builder
     {
@@ -136,10 +123,8 @@ trait Categorizable
     /**
      * Scope query with any of the given categories.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $builder
      * @param mixed                                 $categories
      *
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeWithCategories(Builder $builder, $categories): Builder
     {
@@ -149,10 +134,8 @@ trait Categorizable
     /**
      * Scope query without any of the given categories.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $builder
      * @param mixed                                 $categories
      *
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeWithoutCategories(Builder $builder, $categories): Builder
     {
@@ -166,9 +149,7 @@ trait Categorizable
     /**
      * Scope query without any categories.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $builder
      *
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeWithoutAnyCategories(Builder $builder): Builder
     {
@@ -179,22 +160,18 @@ trait Categorizable
      * Determine if the model has any of the given categories.
      *
      * @param mixed $categories
-     *
-     * @return bool
      */
     public function hasCategories($categories): bool
     {
         $categories = $this->prepareCategoryIds($categories);
 
-        return ! $this->categories->pluck('id')->intersect($categories)->isEmpty();
+        return !$this->categories->pluck('id')->intersect($categories)->isEmpty();
     }
 
     /**
      * Determine if the model has any the given categories.
      *
      * @param mixed $categories
-     *
-     * @return bool
      */
     public function hasAnyCategories($categories): bool
     {
@@ -205,8 +182,6 @@ trait Categorizable
      * Determine if the model has all of the given categories.
      *
      * @param mixed $categories
-     *
-     * @return bool
      */
     public function hasAllCategories($categories): bool
     {
@@ -219,7 +194,6 @@ trait Categorizable
      * Sync model categories.
      *
      * @param mixed $categories
-     * @param bool  $detaching
      *
      * @return $this
      */
@@ -255,7 +229,7 @@ trait Categorizable
      */
     public function detachCategories($categories = null)
     {
-        $categories = ! is_null($categories) ? $this->prepareCategoryIds($categories) : null;
+        $categories = !is_null($categories) ? $this->prepareCategoryIds($categories) : null;
 
         // Sync model categories
         $this->categories()->detach($categories);
@@ -267,8 +241,6 @@ trait Categorizable
      * Prepare category IDs.
      *
      * @param mixed $categories
-     *
-     * @return array
      */
     protected function prepareCategoryIds($categories): array
     {

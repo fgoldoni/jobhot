@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use App\Enums\CompanyState;
@@ -53,6 +52,8 @@ use Nicolaslopezj\Searchable\SearchableTrait;
  * @method static \Illuminate\Database\Eloquent\Builder|Company withoutAnyCategories()
  * @method static \Illuminate\Database\Eloquent\Builder|Company withoutCategories($categories)
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|Company search($search, $threshold = null, $entireText = false, $entireTextOnly = false)
+ * @method static \Illuminate\Database\Eloquent\Builder|Company searchRestricted($search, $restriction, $threshold = null, $entireText = false, $entireTextOnly = false)
  */
 class Company extends Model
 {

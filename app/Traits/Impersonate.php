@@ -1,6 +1,4 @@
 <?php
-
-
 namespace App\Traits;
 
 /**
@@ -21,7 +19,7 @@ trait Impersonate
      * @param void
      * @return  bool
      */
-    public function canBeImpersonated()
+    public function canBeImpersonated(): bool
     {
         return $this->hasAnyRole(['Executive', 'User']);
     }
@@ -31,10 +29,8 @@ trait Impersonate
         return session()->has($this->getSessionKey());
     }
 
-
     public function getSessionKey(): string
     {
         return config('impersonate.session_key');
     }
-
 }

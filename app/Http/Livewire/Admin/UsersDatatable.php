@@ -1,14 +1,13 @@
 <?php
-
 namespace App\Http\Livewire\Admin;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class UsersDatatable extends Component
 {
-    public function test() {
+    public function test(): never
+    {
         dd('test');
     }
 

@@ -1,8 +1,6 @@
 <?php
-
 namespace App\Http\Livewire\Admin;
 
-use App\Enums\CategoryType;
 use App\Enums\CompanyState;
 use App\Http\Livewire\Admin\Datatable\WithBulkActions;
 use App\Http\Livewire\Admin\Datatable\WithCachedRows;
@@ -15,11 +13,9 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection as StatesCollection;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use phpDocumentor\Reflection\Types\Integer;
 
 class CompaniesDatatable extends Component
 {
@@ -37,9 +33,9 @@ class CompaniesDatatable extends Component
 
     public bool $showEditor = false;
 
-    public  ?int $selectedItem = null;
+    public ?int $selectedItem = null;
 
-    public  int $selectedState = 1;
+    public int $selectedState = 1;
 
     public StatesCollection $states;
 
@@ -47,15 +43,13 @@ class CompaniesDatatable extends Component
 
     public $avatar;
 
-    private $auth;
-
     public Company $editing;
 
     protected $queryString = ['sorts', 'perPage'];
 
     protected $listeners = ['refreshTransactions' => '$refresh'];
 
-    public $filters = [
+    public array $filters = [
         'search' => '',
         'state' => null,
         'amount-min' => null,
@@ -70,7 +64,7 @@ class CompaniesDatatable extends Component
             'editing.name' => ['required', 'string', 'max:255'],
             'editing.content' => ['required', 'string', 'min:6'],
             'editing.phone' => 'required',
-            'editing.email' => ['required', 'email', 'max:255', Rule::unique('users','email')->ignore($this->editing->id)],
+            'editing.email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')->ignore($this->editing->id)],
             'editing.user_id' => 'required',
             'selectedItem' => 'required',
             'selectedState' => 'required',
@@ -80,8 +74,6 @@ class CompaniesDatatable extends Component
 
     public function mount(AuthManager $auth)
     {
-        $this->auth = $auth;
-
         $this->categories = $this->loadCategories();
 
         $this->editing = $this->makeBlankCompany();
@@ -112,10 +104,13 @@ class CompaniesDatatable extends Component
     {
         $this->useCachedRows();
 
-        $this->showFilters = ! $this->showFilters;
+        $this->showFilters = !$this->showFilters;
     }
 
-    public function resetFilters() { $this->reset('filters', 'sorts'); }
+    public function resetFilters()
+    {
+        $this->reset('filters', 'sorts');
+    }
 
     public function create()
     {
@@ -123,11 +118,12 @@ class CompaniesDatatable extends Component
 
         $this->resetValidation();
 
-        if ($this->editing->getKey()) $this->editing = $this->makeBlankCompany();
+        if ($this->editing->getKey()) {
+            $this->editing = $this->makeBlankCompany();
+        }
 
         $this->showEditModal = true;
     }
-
 
     public function edit(Company $company)
     {
@@ -136,7 +132,6 @@ class CompaniesDatatable extends Component
         $this->resetValidation();
 
         if ($this->editing->isNot($company)) {
-
             $this->editing = $company;
 
             $this->avatar = null;
@@ -176,7 +171,7 @@ class CompaniesDatatable extends Component
 
         $this->showDeleteModal = false;
 
-        $this->notify('You\'ve deleted '.$deleteCount.' companies');
+        $this->notify('You\'ve deleted ' . $deleteCount . ' companies');
     }
 
     public function getRowsQueryProperty()
@@ -187,9 +182,9 @@ class CompaniesDatatable extends Component
                 $this->resetPage();
                 return $query->search($search);
             })
-            ->when($this->filters['state'], fn($query, $state) => $query->where('state', $state))
-            ->when($this->filters['date-min'], fn($query, $date) => $query->where('created_at', '>=', Carbon::parse($date)))
-            ->when($this->filters['date-max'], fn($query, $date) => $query->where('created_at', '<=', Carbon::parse($date)));
+            ->when($this->filters['state'], fn ($query, $state) => $query->where('state', $state))
+            ->when($this->filters['date-min'], fn ($query, $date) => $query->where('created_at', '>=', Carbon::parse($date)))
+            ->when($this->filters['date-max'], fn ($query, $date) => $query->where('created_at', '<=', Carbon::parse($date)));
 
         return $this->applySorting($query);
     }
@@ -199,14 +194,6 @@ class CompaniesDatatable extends Component
         return $this->cache(fn () => $this->applyPagination($this->rowsQuery));
     }
 
-    public function render()
-    {
-        return view('livewire.admin.companies-datatable', [
-            'rows' => $this->rows,
-            'categories' => $this->loadCategories()
-        ]);
-    }
-
     private function makeBlankCompany(): Model|Company
     {
         return Company::make(['user_id' => auth()->user()->id]);
@@ -214,19 +201,27 @@ class CompaniesDatatable extends Component
 
     private function loadCategories(): Collection|array
     {
-       $this->useCachedRows();
-       return $this->cache(fn () => Category::query()->industry()->orderBy('position')->get(['id', 'name', 'icon']), 'categories');
+        $this->useCachedRows();
+        return $this->cache(fn () => Category::query()->industry()->orderBy('position')->get(['id', 'name', 'icon']), 'categories');
     }
 
     private function findStateBy(string $key, $value): array
     {
-        return $this->states->filter(fn($s) => $s[$key] === $value)->first();
+        return $this->states->filter(fn ($s) => $s[$key] === $value)->first();
     }
 
     private function findIndexStateBy(string $key, $value)
     {
         $value = is_string($value) ? ucfirst($value) : $value;
 
-        return $this->states->search(fn($s) => $s[$key] === $value);
+        return $this->states->search(fn ($s) => $s[$key] === $value);
+    }
+
+    public function render()
+    {
+        return view('livewire.admin.companies-datatable', [
+            'rows' => $this->rows,
+            'categories' => $this->loadCategories()
+        ]);
     }
 }

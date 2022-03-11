@@ -20,10 +20,15 @@ help: ## Show this help.
 phpcs: ## PRS2 Validation
 	./vendor/bin/phpcbf Modules --extensions=php -s
 	./vendor/bin/phpcs Modules --extensions=php -s
-	./vendor/bin/php-cs-fixer Modules fix --diff
+	./vendor/bin/php-cs-fixer app/Http/Livewire fix --diff
 
 php-cs: ## PRS2 Validation
-	../tools/php-cs-fixer/vendor/bin/php-cs-fixer fix Modules
+	../tools/php-cs-fixer/vendor/bin/php-cs-fixer fix app/Http/Livewire --diff
+	../tools/php-cs-fixer/vendor/bin/php-cs-fixer fix app/Models --diff
+	../tools/php-cs-fixer/vendor/bin/php-cs-fixer fix app/Traits --diff
+	../tools/php-cs-fixer/vendor/bin/php-cs-fixer fix app/Enums --diff
+	../tools/php-cs-fixer/vendor/bin/php-cs-fixer fix app/Listeners --diff
+	../tools/php-cs-fixer/vendor/bin/php-cs-fixer fix app/View --diff
 
 rector: ## PRS2 Validation
 	./vendor/bin/rector process --dry-run
