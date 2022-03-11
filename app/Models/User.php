@@ -58,6 +58,7 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable, BelongsToTenant, HasRoles, Impersonate, HasAvatar;
 
+    const Administrator = 'Administrator';
     /**
      * The attributes that are mass assignable.
      *

@@ -29,6 +29,8 @@ php-cs: ## PRS2 Validation
 	../tools/php-cs-fixer/vendor/bin/php-cs-fixer fix app/Enums --diff
 	../tools/php-cs-fixer/vendor/bin/php-cs-fixer fix app/Listeners --diff
 	../tools/php-cs-fixer/vendor/bin/php-cs-fixer fix app/View --diff
+	../tools/php-cs-fixer/vendor/bin/php-cs-fixer fix app/Policies --diff
+	../tools/php-cs-fixer/vendor/bin/php-cs-fixer fix app/Observers --diff
 
 rector: ## PRS2 Validation
 	./vendor/bin/rector process --dry-run

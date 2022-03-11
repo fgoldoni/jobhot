@@ -4,12 +4,11 @@ namespace App\Http\Livewire\Admin;
 use App\Enums\CompanyState;
 use App\Http\Livewire\Admin\Datatable\WithBulkActions;
 use App\Http\Livewire\Admin\Datatable\WithCachedRows;
+use App\Http\Livewire\Admin\Datatable\WithCategories;
 use App\Http\Livewire\Admin\Datatable\WithPerPagePagination;
 use App\Http\Livewire\Admin\Datatable\WithSorting;
-use App\Models\Category;
 use App\Models\Company;
 use Illuminate\Auth\AuthManager;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection as StatesCollection;
@@ -24,6 +23,7 @@ class CompaniesDatatable extends Component
     use WithBulkActions;
     use WithCachedRows;
     use WithFileUploads;
+    use WithCategories;
 
     public bool $showDeleteModal = false;
 
@@ -33,13 +33,9 @@ class CompaniesDatatable extends Component
 
     public bool $showEditor = false;
 
-    public ?int $selectedItem = null;
-
     public int $selectedState = 1;
 
     public StatesCollection $states;
-
-    public $categories;
 
     public $avatar;
 
@@ -62,11 +58,11 @@ class CompaniesDatatable extends Component
     {
         return [
             'editing.name' => ['required', 'string', 'max:255'],
-            'editing.content' => ['required', 'string', 'min:6'],
+            'editing.content' => ['required', 'string', 'min:4'],
             'editing.phone' => 'required',
             'editing.email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')->ignore($this->editing->id)],
             'editing.user_id' => 'required',
-            'selectedItem' => 'required',
+            'selectedItem' => 'required|integer|exists:categories,id',
             'selectedState' => 'required',
             'avatar' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
         ];
@@ -74,30 +70,9 @@ class CompaniesDatatable extends Component
 
     public function mount(AuthManager $auth)
     {
-        $this->categories = $this->loadCategories();
-
         $this->editing = $this->makeBlankCompany();
 
-        $this->selectedItem = $this->categories->first()->id;
-
-        $this->states = collect([
-            [
-                'id' => 0,
-                'name' => ucfirst((CompanyState::Draft)->value),
-            ],
-            [
-                'id' => 1,
-                'name' => ucfirst((CompanyState::Published)->value),
-            ],
-            [
-                'id' => 2,
-                'name' => ucfirst((CompanyState::Archived)->value),
-            ],
-            [
-                'id' => 3,
-                'name' => ucfirst((CompanyState::Hold)->value),
-            ]
-        ]);
+        $this->states = $this->getStates();
     }
 
     public function toggleShowFilters()
@@ -120,6 +95,7 @@ class CompaniesDatatable extends Component
 
         if ($this->editing->getKey()) {
             $this->editing = $this->makeBlankCompany();
+            $this->avatar = null;
         }
 
         $this->showEditModal = true;
@@ -136,7 +112,7 @@ class CompaniesDatatable extends Component
 
             $this->avatar = null;
 
-            $this->selectedItem = ($attachCategory = $this->editing->categories->first()) ? $attachCategory->id : $this->categories->first()->id;
+            $this->setDefaultCategory();
 
             $this->selectedState = strtolower($this->findIndexStateBy('name', $company->state->value));
         }
@@ -199,12 +175,6 @@ class CompaniesDatatable extends Component
         return Company::make(['user_id' => auth()->user()->id]);
     }
 
-    private function loadCategories(): Collection|array
-    {
-        $this->useCachedRows();
-        return $this->cache(fn () => Category::query()->industry()->orderBy('position')->get(['id', 'name', 'icon']), 'categories');
-    }
-
     private function findStateBy(string $key, $value): array
     {
         return $this->states->filter(fn ($s) => $s[$key] === $value)->first();
@@ -215,6 +185,28 @@ class CompaniesDatatable extends Component
         $value = is_string($value) ? ucfirst($value) : $value;
 
         return $this->states->search(fn ($s) => $s[$key] === $value);
+    }
+
+    private function getStates(): StatesCollection
+    {
+        return collect([
+            [
+                'id' => 0,
+                'name' => ucfirst((CompanyState::Draft)->value),
+            ],
+            [
+                'id' => 1,
+                'name' => ucfirst((CompanyState::Published)->value),
+            ],
+            [
+                'id' => 2,
+                'name' => ucfirst((CompanyState::Archived)->value),
+            ],
+            [
+                'id' => 3,
+                'name' => ucfirst((CompanyState::Hold)->value),
+            ]
+        ]);
     }
 
     public function render()

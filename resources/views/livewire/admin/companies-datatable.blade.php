@@ -273,7 +273,7 @@
                             <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
                                 <x-label for="name" class="sm:mt-px sm:pt-2">{{ __('Industry') }} </x-label>
                                 <div class="mt-1 sm:mt-0 sm:col-span-2">
-                                    <x-input.select :items="$categories" :selected="$selectedItem" wire:model.defer="selectedItem" wire:key="categories-field-{{ $editing->id }}"></x-input.select>
+                                    <x-input.select :items="$industries" :selected="$selectedItem" wire:model.defer="selectedItem" wire:key="categories-field-{{ $editing->id }}"></x-input.select>
                                     @if ($errors->has('selectedItem'))
                                         <p class="mt-2 text-sm text-red-600">{{ $errors->first('selectedItem') }}</p>
                                      @endif

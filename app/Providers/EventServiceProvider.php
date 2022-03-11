@@ -6,6 +6,8 @@ use App\Listeners\LeaveTenantIdInSession;
 use App\Listeners\SetImpersonation;
 use App\Listeners\SetTakeImpersonation;
 use App\Listeners\SetTenantIdInSession;
+use App\Models\Company;
+use App\Observers\CompanyObserver;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Logout;
 use Illuminate\Auth\Events\Registered;
@@ -34,6 +36,15 @@ class EventServiceProvider extends ServiceProvider
         Logout::class => [
 
         ]
+    ];
+
+    /**
+     * The model observers for your application.
+     *
+     * @var array
+     */
+    protected $observers = [
+        Company::class => [CompanyObserver::class],
     ];
 
     /**
