@@ -65,6 +65,7 @@ use Spatie\Translatable\HasTranslations;
  * @method static \Illuminate\Database\Eloquent\Builder|Job withoutAnyCategories()
  * @method static \Illuminate\Database\Eloquent\Builder|Job withoutCategories($categories)
  * @method static \Illuminate\Database\Query\Builder|Job withoutTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Job whereState($value)
  */
 class Job extends Model
 {
@@ -113,4 +114,20 @@ class Job extends Model
             ->generateSlugsFrom('name')
             ->saveSlugsTo('slug');
     }
+
+    public function toArray(): array
+    {
+        $attributes = parent::toArray();
+        foreach ($this->getTranslatableAttributes() as $field) {
+            $attributes[$field] = $this->getTranslation($field, app()->getLocale());
+        }
+        return $attributes;
+    }
+
+
+    public function company(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Company::class);
+    }
+
 }

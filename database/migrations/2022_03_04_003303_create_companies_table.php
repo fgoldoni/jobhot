@@ -32,7 +32,7 @@ return new class extends Migration
 
         if (Schema::hasTable('jobs') && !Schema::hasColumn('jobs', 'company_id')) {
             Schema::table('jobs', function (Blueprint $table) {
-                $table->foreignId('company_id')->after('tenant_id')->unsigned()->index()->references('id')->on('companies')->onDelete('cascade');
+                $table->foreignId('company_id')->after('tenant_id')->nullable()->unsigned()->index()->references('id')->on('companies')->onDelete('cascade');
             });
         }
     }

@@ -15,6 +15,11 @@
             {{ __('Companies') }}
         </x-sidebar-link>
 
+        <x-sidebar-link href="{{ route('admin.jobs') }}" :active="request()->routeIs('admin.jobs')">
+            <x-icon.academic :active="request()->routeIs('admin.jobs')"/>
+            {{ __('Jobs') }}
+        </x-sidebar-link>
+
         <x-sidebar-link href="{{ route('admin.categories') }}" :active="request()->routeIs('admin.categories')">
             <x-icon.view-list :active="request()->routeIs('admin.categories')"/>
             {{ __('Categories') }}

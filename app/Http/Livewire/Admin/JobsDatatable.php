@@ -8,6 +8,7 @@ use App\Http\Livewire\Admin\Datatable\WithCategories;
 use App\Http\Livewire\Admin\Datatable\WithPerPagePagination;
 use App\Http\Livewire\Admin\Datatable\WithSorting;
 use App\Models\Company;
+use App\Models\Job;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
@@ -16,7 +17,7 @@ use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
-class CompaniesDatatable extends Component
+class JobsDatatable extends Component
 {
     use WithSorting;
     use WithPerPagePagination;
@@ -35,13 +36,13 @@ class CompaniesDatatable extends Component
 
     public int $selectedState = 1;
 
-    public StatesCollection $states;
+    public string $categoryType = 'area';
 
-    public string $categoryType = 'industry';
+    public StatesCollection $states;
 
     public $avatar;
 
-    public Company $editing;
+    public Job $editing;
 
     protected $queryString = ['sorts', 'perPage'];
 
@@ -72,7 +73,7 @@ class CompaniesDatatable extends Component
 
     public function mount(AuthManager $auth)
     {
-        $this->editing = $this->makeBlankCompany();
+        $this->editing = $this->makeBlankJob();
 
         $this->states = $this->getStates();
     }
@@ -104,27 +105,27 @@ class CompaniesDatatable extends Component
         $this->resetValidation();
 
         if ($this->editing->getKey()) {
-            $this->editing = $this->makeBlankCompany();
+            $this->editing = $this->makeBlankJob();
             $this->avatar = null;
         }
 
         $this->showEditModal = true;
     }
 
-    public function edit(Company $company)
+    public function edit(Job $job)
     {
         $this->useCachedRows();
 
         $this->resetValidation();
 
-        if ($this->editing->isNot($company)) {
-            $this->editing = $company;
+        if ($this->editing->isNot($job)) {
+            $this->editing = $job;
 
             $this->avatar = null;
 
             $this->setDefaultCategory();
 
-            $this->selectedState = strtolower($this->findIndexStateBy('name', $company->state->value));
+            $this->selectedState = strtolower($this->findIndexStateBy('name', $job->state->value));
         }
 
         $this->showEditModal = true;
@@ -162,8 +163,8 @@ class CompaniesDatatable extends Component
 
     public function getRowsQueryProperty()
     {
-        $query = Company::query()
-            ->with(['user:id,name', 'categories:id,name'])
+        $query = Job::query()
+            ->with(['user:id,name', 'company:id,name', 'categories:id,name'])
             ->when($this->filters['search'], function ($query, $search) {
                 $this->resetPage();
                 return $query->search($search);
@@ -180,9 +181,9 @@ class CompaniesDatatable extends Component
         return $this->cache(fn () => $this->applyPagination($this->rowsQuery));
     }
 
-    private function makeBlankCompany(): Model|Company
+    private function makeBlankJob(): Model|Job
     {
-        return Company::make(['user_id' => auth()->user()->id]);
+        return Job::make(['user_id' => auth()->user()->id]);
     }
 
     private function findStateBy(string $key, $value): array
@@ -221,7 +222,7 @@ class CompaniesDatatable extends Component
 
     public function render()
     {
-        return view('livewire.admin.companies-datatable', [
+        return view('livewire.admin.jobs-datatable', [
             'rows' => $this->rows,
             'categories' => $this->loadCategories()
         ]);

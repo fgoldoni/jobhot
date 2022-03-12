@@ -8,8 +8,8 @@ namespace App\Enums;
  */
 enum JobState: string
 {
-    case Draft = 'Draft';
-    case Published = 'Published';
-    case Archived = 'Archived';
-    case Hold = 'Hold';
+    case Draft = 'draft';
+    case Published = 'published';
+    case Archived = 'archived';
+    case Hold = 'hold';
 }
