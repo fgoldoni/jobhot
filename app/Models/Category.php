@@ -52,7 +52,7 @@ class Category extends Model
 
     public $guarded = [];
 
-    public $translatable = ['name'];
+    public array $translatable = ['name'];
 
     protected $casts = [
         'slug' => 'string',

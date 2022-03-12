@@ -29,6 +29,12 @@ return new class extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
+
+        if (Schema::hasTable('jobs') && !Schema::hasColumn('jobs', 'company_id')) {
+            Schema::table('jobs', function (Blueprint $table) {
+                $table->foreignId('company_id')->after('tenant_id')->unsigned()->index()->references('id')->on('companies')->onDelete('cascade');
+            });
+        }
     }
 
     /**
@@ -38,6 +44,8 @@ return new class extends Migration
      */
     public function down()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         Schema::dropIfExists('companies');
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 };

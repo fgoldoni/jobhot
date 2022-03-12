@@ -16,9 +16,20 @@ return new class extends Migration
         Schema::create('jobs', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('tenant_id')->index()->nullable();
-            $table->foreign('tenant_id')->references('id')->on('tenants')->onDelete('cascade');
+            $table->json('name');
+            $table->string('slug');
+            $table->longText('content')->nullable();
+            $table->string('state')->default((\App\Enums\JobState::Draft)->value);
+
+            $table->string('avatar_path', 2048)->nullable();
+
+
+            $table->foreignId('user_id')->unsigned()->index()->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('tenant_id')->index()->nullable()->references('id')->on('tenants')->onDelete('cascade');
+            $table->softDeletes();
             $table->timestamps();
+
+            $table->unique('slug');
         });
     }
 

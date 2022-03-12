@@ -1,9 +1,7 @@
 <?php
-
 namespace App\Http\Livewire\Admin\Dashboard;
 
 use App\Http\Livewire\Admin\Datatable\WithCachedRows;
-use App\Models\Category;
 use App\Models\Company;
 use Livewire\Component;
 

@@ -8,6 +8,7 @@ use App\Traits\Categorizable;
 use App\Traits\HasAvatar;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Nicolaslopezj\Searchable\SearchableTrait;
 
 /**
@@ -54,10 +55,13 @@ use Nicolaslopezj\Searchable\SearchableTrait;
  * @mixin \Eloquent
  * @method static \Illuminate\Database\Eloquent\Builder|Company search($search, $threshold = null, $entireText = false, $entireTextOnly = false)
  * @method static \Illuminate\Database\Eloquent\Builder|Company searchRestricted($search, $restriction, $threshold = null, $entireText = false, $entireTextOnly = false)
+ * @method static \Illuminate\Database\Query\Builder|Company onlyTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Company withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Company withoutTrashed()
  */
 class Company extends Model
 {
-    use HasFactory, Categorizable, BelongsToTenant, HasAvatar, BelongsToUser, SearchableTrait;
+    use HasFactory, Categorizable, BelongsToTenant, HasAvatar, BelongsToUser, SearchableTrait, SoftDeletes;
 
     protected $guarded = [];
 
