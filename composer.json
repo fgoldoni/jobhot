@@ -11,6 +11,7 @@
         "laravel/sanctum": "^2.14.1",
         "laravel/tinker": "^2.7",
         "livewire/livewire": "^2.10",
+        "mpociot/teamwork": "^7.0",
         "nicolaslopezj/searchable": "1.*",
         "overtrue/laravel-lang": "~6.0",
         "spatie/laravel-permission": "^5.5",
