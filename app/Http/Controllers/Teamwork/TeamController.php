@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Teamwork;
 
 use App\Models\Team;
@@ -88,7 +87,7 @@ class TeamController extends Controller
         $teamModel = config('teamwork.team_model');
         $team = $teamModel::findOrFail($id);
 
-        if (! auth()->user()->isOwnerOfTeam($team)) {
+        if (!auth()->user()->isOwnerOfTeam($team)) {
             abort(403);
         }
 
@@ -128,7 +127,7 @@ class TeamController extends Controller
         $teamModel = config('teamwork.team_model');
 
         $team = $teamModel::findOrFail($id);
-        if (! auth()->user()->isOwnerOfTeam($team)) {
+        if (!auth()->user()->isOwnerOfTeam($team)) {
             abort(403);
         }
 

@@ -1,9 +1,8 @@
 <?php
-
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\Tenant;
+use App\Models\Team;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -11,6 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use Illuminate\Validation\ValidationException;
+use Mpociot\Teamwork\Facades\Teamwork;
 
 class RegisteredUserController extends Controller
 {
@@ -34,30 +35,43 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
+        $invite = null;
+
+        if ($request->invite_token) {
+            $invite = Teamwork::getInviteFromAcceptToken($request->invite_token);
+            if (!$invite) {
+                throw ValidationException::withMessages(['token' => 'Bad token']);
+            }
+        }
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-
-        $tenant = Tenant::create([
-            'name' => explode(' ', $request->name, 2)[0]."'s Tenant"
-        ]);
-
-
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'tenant_id' => $tenant->id,
         ]);
 
-        $user->assignRole('User');
+        $user->assignRole(User::User);
 
         event(new Registered($user));
 
         Auth::login($user);
+
+        if ($invite) {
+            Teamwork::acceptInvite($invite);
+        } else {
+            $team = Team::create([
+                'owner_id' => $user->id,
+                'name' => $user->name . "'s Team",
+            ]);
+
+            $user->attachTeam($team);
+        }
 
         return redirect(RouteServiceProvider::HOME);
     }

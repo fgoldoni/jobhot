@@ -142,13 +142,13 @@ class TeamsDatatable extends Component
 
     public function deleteMember()
     {
-       dd('ok');
+        dd('ok');
     }
 
     public function getRowsQueryProperty()
     {
         $query = Team::query()
-            ->with(['owner:id,name', 'users:id,name'])
+            ->with(['owner:id,name', 'users:id,name', 'invites:id,team_id'])
             ->when($this->filters['search'], function ($query, $search) {
                 $this->resetPage();
                 return $query->search($search);

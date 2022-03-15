@@ -25,6 +25,7 @@ phpcs: ## PRS2 Validation
 
 php-cs: ## PRS2 Validation
 	../tools/php-cs-fixer/vendor/bin/php-cs-fixer fix app/Http/Livewire --diff
+	../tools/php-cs-fixer/vendor/bin/php-cs-fixer fix app/Http/Controllers --diff
 	../tools/php-cs-fixer/vendor/bin/php-cs-fixer fix app/Models --diff
 	../tools/php-cs-fixer/vendor/bin/php-cs-fixer fix app/Traits --diff
 	../tools/php-cs-fixer/vendor/bin/php-cs-fixer fix app/Enums --diff

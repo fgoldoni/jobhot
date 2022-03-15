@@ -175,7 +175,7 @@
                                         </x-table.cell>
                                         <x-table.cell>
                                             <button wire:click="members({{ $row->id }})" class="font-medium text-indigo-500 hover:text-indigo-900 hover:underline">
-                                                Members
+                                                {{ $row->users->count() }} Member(s) @if($row->invites->count()) | {{ $row->invites->count() }} Pending(s) @endif
                                             </button>
                                         </x-table.cell>
                                         <x-table.cell>

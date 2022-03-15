@@ -1,13 +1,9 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Scopes\TenantScope;
 use Illuminate\Auth\AuthManager;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
-use Lab404\Impersonate\Services\ImpersonateManager;
 
 class ImpersonationController extends Controller
 {
@@ -36,7 +32,7 @@ class ImpersonationController extends Controller
 
     public function leave()
     {
-        if (! session()->has($this->getSessionKey())) {
+        if (!session()->has($this->getSessionKey())) {
             abort(403);
         }
 

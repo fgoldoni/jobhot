@@ -4,6 +4,10 @@
             <form method="POST" action="{{ route('register') }}" class="flex items-stretch bg-white rounded-lg shadow-lg overflow-hidden border-t-4 border-indigo-500 sm:border-0">
                 @csrf
 
+                @if(request()->invite_token)
+                    <input type="hidden" name="invite_token" value="{{ request()->invite_token }}">
+                @endif
+
                 <div class="flex hidden overflow-hidden relative sm:block w-5/12 md:w-6/12 bg-gray-600 text-gray-300 py-4 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1477346611705-65d1883cee1e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80')">
                     <div class="flex-1 absolute bottom-0 text-white p-10">
                         <h3 class="text-4xl font-bold inline-block">Register</h3>

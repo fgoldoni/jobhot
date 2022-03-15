@@ -1,12 +1,8 @@
 <?php
-
 namespace App\Http\Controllers\Teamwork;
 
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Mail;
 use Mpociot\Teamwork\Facades\Teamwork;
-use Mpociot\Teamwork\TeamInvite;
 
 class AuthController extends Controller
 {
@@ -18,7 +14,7 @@ class AuthController extends Controller
     public function acceptInvite($token)
     {
         $invite = Teamwork::getInviteFromAcceptToken($token);
-        if (! $invite) {
+        if (!$invite) {
             abort(404);
         }
 

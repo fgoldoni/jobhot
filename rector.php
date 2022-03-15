@@ -12,9 +12,11 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters = $containerConfigurator->parameters();
     $parameters->set(Option::PATHS, [
         __DIR__ . '/app/Http/Livewire',
+        __DIR__ . '/app/Http/Controllers',
         __DIR__ . '/app/Traits',
         __DIR__ . '/app/Models',
         __DIR__ . '/app/Scopes',
+        __DIR__ . '/app/Providers',
     ]);
 
     // Define what rule sets will be applied

@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Config;
-use Laravel\Jetstream\Jetstream;
 use Laravel\Sanctum\HasApiTokens;
 use Mpociot\Teamwork\Traits\UserHasTeams;
 use Spatie\Permission\Traits\HasRoles;
@@ -122,7 +121,6 @@ class User extends Authenticatable implements MustVerifyEmail
         return $team->id === $this->currentTeam->id;
     }
 
-
     public function currentTeam(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         if (is_null($this->current_team_id) && $this->getKey()) {
@@ -131,7 +129,6 @@ class User extends Authenticatable implements MustVerifyEmail
 
         return $this->hasOne(Config::get('teamwork.team_model'), 'id', 'current_team_id');
     }
-
 
     public function personalTeam(): Team
     {

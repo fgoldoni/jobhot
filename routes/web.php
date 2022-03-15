@@ -31,6 +31,7 @@ require __DIR__.'/admin.php';
 
 Route::group(['prefix' => 'teams'], function() {
     Route::put('/current-team', [TeamController::class, 'update'])->name('teams.current-team.update')->middleware(['auth']);
+    Route::get('/accept/{token}', [TeamController::class, 'acceptInvite'])->name('teams.accept_invite')->middleware(['auth']);
 });
 
 
@@ -51,8 +52,6 @@ Route::group(['prefix' => 'teams', 'namespace' => 'Teamwork'], function()
     Route::get('members/resend/{invite_id}', [App\Http\Controllers\Teamwork\TeamMemberController::class, 'resendInvite'])->name('teams.members.resend_invite');
     Route::post('members/{id}', [App\Http\Controllers\Teamwork\TeamMemberController::class, 'invite'])->name('teams.members.invite');
     Route::delete('members/{id}/{user_id}', [App\Http\Controllers\Teamwork\TeamMemberController::class, 'destroy'])->name('teams.members.destroy');
-
-    Route::get('accept/{token}', [App\Http\Controllers\Teamwork\AuthController::class, 'acceptInvite'])->name('teams.accept_invite');
 });
 
 
