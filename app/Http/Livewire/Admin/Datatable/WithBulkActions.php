@@ -1,11 +1,13 @@
 <?php
 namespace App\Http\Livewire\Admin\Datatable;
 
+use Illuminate\Support\Collection;
+
 trait WithBulkActions
 {
     public bool $selectPage = false;
     public bool $selectAll = false;
-    public array $selected = [];
+    public Collection|array $selected = [];
 
     public function renderingWithBulkActions()
     {

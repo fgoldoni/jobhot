@@ -25,14 +25,13 @@ return new class extends Migration
             $table->string('avatar_path', 2048)->nullable();
 
             $table->foreignId('user_id')->unsigned()->index()->references('id')->on('users')->onDelete('cascade');
-            $table->foreignId('tenant_id')->nullable()->unsigned()->index()->references('id')->on('tenants')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
         });
 
         if (Schema::hasTable('jobs') && !Schema::hasColumn('jobs', 'company_id')) {
             Schema::table('jobs', function (Blueprint $table) {
-                $table->foreignId('company_id')->after('tenant_id')->nullable()->unsigned()->index()->references('id')->on('companies')->onDelete('cascade');
+                $table->foreignId('company_id')->after('avatar_path')->nullable()->unsigned()->index()->references('id')->on('companies')->onDelete('cascade');
             });
         }
     }

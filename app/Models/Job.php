@@ -2,7 +2,6 @@
 namespace App\Models;
 
 use App\Enums\JobState;
-use App\Traits\BelongsToTenant;
 use App\Traits\BelongsToUser;
 use App\Traits\Categorizable;
 use App\Traits\HasAvatar;
@@ -66,10 +65,11 @@ use Spatie\Translatable\HasTranslations;
  * @method static \Illuminate\Database\Eloquent\Builder|Job withoutCategories($categories)
  * @method static \Illuminate\Database\Query\Builder|Job withoutTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Job whereState($value)
+ * @property-read \App\Models\Company|null $company
  */
 class Job extends Model
 {
-    use HasFactory, HasSlug, HasTranslations, Categorizable, BelongsToTenant, HasAvatar, BelongsToUser, SearchableTrait, SoftDeletes;
+    use HasFactory, HasSlug, HasTranslations, Categorizable, HasAvatar, BelongsToUser, SearchableTrait, SoftDeletes;
 
     protected $guarded = [];
 
@@ -124,10 +124,8 @@ class Job extends Model
         return $attributes;
     }
 
-
     public function company(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Company::class);
     }
-
 }

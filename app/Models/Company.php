@@ -2,7 +2,6 @@
 namespace App\Models;
 
 use App\Enums\CompanyState;
-use App\Traits\BelongsToTenant;
 use App\Traits\BelongsToUser;
 use App\Traits\Categorizable;
 use App\Traits\HasAvatar;
@@ -61,7 +60,7 @@ use Nicolaslopezj\Searchable\SearchableTrait;
  */
 class Company extends Model
 {
-    use HasFactory, Categorizable, BelongsToTenant, HasAvatar, BelongsToUser, SearchableTrait, SoftDeletes;
+    use HasFactory, Categorizable, HasAvatar, BelongsToUser, SearchableTrait, SoftDeletes;
 
     protected $guarded = [];
 

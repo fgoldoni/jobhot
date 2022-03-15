@@ -16,15 +16,15 @@ class UserSeeder extends Seeder
     {
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        $user = User::factory()->create(['name' => 'Admin SG', 'email' => 'admin@admin.com', 'tenant_id' => null]);
+        $user = User::factory()->withPersonalTeam()->create(['name' => 'Admin SG', 'email' => 'admin@admin.com']);
 
-        $user->assignRole('Administrator');
+        $user->assignRole(User::Administrator);
 
-        $user = User::factory()->create(['email' => 'fotsa.goldoni@yahoo.fr']);
+        $user = User::factory()->withPersonalTeam()->create(['name' => 'Executive SG', 'email' => 'fotsa.goldoni@yahoo.fr']);
 
-        $user->assignRole('Executive');
+        $user->assignRole(User::Executive);
 
-        $users = User::factory(10)->create();
+        $users = User::factory(10)->withPersonalTeam()->create();
 
         foreach ($users as $user) {
             $user->assignRole('Executive');

@@ -1,6 +1,4 @@
 <?php
-
-
 namespace App\View\Composers;
 
 use App\Models\Category;
@@ -17,5 +15,4 @@ class AreasComposer
     {
         $view->with('areas', Category::area()->orderBy('position')->get(['id', 'name', 'icon']));
     }
-
 }

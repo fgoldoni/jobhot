@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
@@ -24,7 +25,6 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => bcrypt('00000000'),
             'remember_token' => Str::random(10),
-            'tenant_id' => $this->faker->numberBetween(1,5),
         ];
     }
 
@@ -40,5 +40,21 @@ class UserFactory extends Factory
                 'email_verified_at' => null,
             ];
         });
+    }
+
+    /**
+     * Indicate that the user should have a personal team.
+     *
+     * @return $this
+     */
+    public function withPersonalTeam()
+    {
+        return $this->has(
+            Team::factory()
+                ->state(function (array $attributes, User $user) {
+                    return ['name' => $user->name.'\'s Team', 'owner_id' => $user->id];
+                }),
+            'teams'
+        );
     }
 }

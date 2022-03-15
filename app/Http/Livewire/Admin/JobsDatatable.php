@@ -7,7 +7,6 @@ use App\Http\Livewire\Admin\Datatable\WithCachedRows;
 use App\Http\Livewire\Admin\Datatable\WithCategories;
 use App\Http\Livewire\Admin\Datatable\WithPerPagePagination;
 use App\Http\Livewire\Admin\Datatable\WithSorting;
-use App\Models\Company;
 use App\Models\Job;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Database\Eloquent\Model;

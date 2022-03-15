@@ -1,7 +1,6 @@
 <?php
 namespace App\Models;
 
-use App\Traits\BelongsToTenant;
 use App\Traits\HasAvatar;
 use App\Traits\Impersonate;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -9,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Mpociot\Teamwork\Traits\UserHasTeams;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
@@ -53,12 +53,23 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereTenantId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property int|null $current_team_id
+ * @property-read \App\Models\Team|null $currentTeam
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Mpociot\Teamwork\TeamInvite[] $invites
+ * @property-read int|null $invites_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Team[] $teams
+ * @property-read int|null $teams_count
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereCurrentTeamId($value)
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, BelongsToTenant, HasRoles, Impersonate, HasAvatar;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, Impersonate, HasAvatar, UserHasTeams;
 
     const Administrator = 'Administrator';
+
+    const Executive = 'Executive';
+
+    const User = 'User';
     /**
      * The attributes that are mass assignable.
      *
@@ -68,7 +79,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
-        'tenant_id',
     ];
 
     /**

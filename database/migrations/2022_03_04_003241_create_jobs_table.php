@@ -25,7 +25,6 @@ return new class extends Migration
 
 
             $table->foreignId('user_id')->unsigned()->index()->references('id')->on('users')->onDelete('cascade');
-            $table->foreignId('tenant_id')->index()->nullable()->references('id')->on('tenants')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
 

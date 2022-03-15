@@ -23,4 +23,8 @@ Route::middleware(['auth', 'verified', 'password.confirm', 'role:Administrator|E
     Route::get('/categories', function () {
         return view('admin.categories.index');
     })->name('categories');
+
+    Route::get('/teams', function () {
+        return view('admin.teams.index');
+    })->name('teams');
 });

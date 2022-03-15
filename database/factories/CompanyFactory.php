@@ -22,7 +22,6 @@ class CompanyFactory extends Factory
             'email' => $this->faker->email,
             'phone' => $this->faker->phoneNumber,
             'user_id' => $this->faker->numberBetween(1, 10),
-            'tenant_id' => $this->faker->numberBetween(1,5),
         ];
     }
 }
