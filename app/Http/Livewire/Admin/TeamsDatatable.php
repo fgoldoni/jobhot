@@ -1,16 +1,14 @@
 <?php
 namespace App\Http\Livewire\Admin;
 
-use App\Enums\TeamState;
 use App\Http\Livewire\Admin\Datatable\WithBulkActions;
 use App\Http\Livewire\Admin\Datatable\WithCachedRows;
-use App\Http\Livewire\Admin\Datatable\WithCategories;
 use App\Http\Livewire\Admin\Datatable\WithPerPagePagination;
 use App\Http\Livewire\Admin\Datatable\WithSorting;
+use App\Mail\TeamInvitation;
 use App\Models\Team;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Collection as StatesCollection;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -30,6 +28,8 @@ class TeamsDatatable extends Component
     public bool $showEditModal = false;
 
     public bool $showMemberModal = false;
+
+    public bool $showDeleteMemberModal = false;
 
     public bool $showFilters = false;
 
@@ -140,6 +140,11 @@ class TeamsDatatable extends Component
         $this->notify('You\'ve deleted ' . $deleteCount . ' companies');
     }
 
+    public function deleteMember()
+    {
+       dd('ok');
+    }
+
     public function getRowsQueryProperty()
     {
         $query = Team::query()
@@ -183,11 +188,9 @@ class TeamsDatatable extends Component
             'email' => 'required|email',
         ]);
 
-        if (! Teamwork::hasPendingInvite($this->email, $this->editing)) {
+        if (!Teamwork::hasPendingInvite($this->email, $this->editing)) {
             Teamwork::inviteToTeam($this->email, $this->editing, function ($invite) {
-                Mail::send('teamwork.emails.invite', ['team' => $invite->team, 'invite' => $invite], function ($m) use ($invite) {
-                    $m->to($invite->email)->subject('Invitation to join team '.$invite->team->name);
-                });
+                Mail::to($invite->email)->send(new TeamInvitation($invite));
             });
         } else {
             $this->notify('The email address is already invited to the team.');

@@ -18,9 +18,10 @@ help: ## Show this help.
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
 
 phpcs: ## PRS2 Validation
-	./vendor/bin/phpcbf Modules --extensions=php -s
-	./vendor/bin/phpcs Modules --extensions=php -s
+	./vendor/bin/phpcs app/Http/Livewire --extensions=php -s
+	./vendor/bin/phpcs app/Providers --extensions=php -s
 	./vendor/bin/php-cs-fixer app/Http/Livewire fix --diff
+	./vendor/bin/php-cs-fixer app/Providers fix --diff
 
 php-cs: ## PRS2 Validation
 	../tools/php-cs-fixer/vendor/bin/php-cs-fixer fix app/Http/Livewire --diff
@@ -31,6 +32,7 @@ php-cs: ## PRS2 Validation
 	../tools/php-cs-fixer/vendor/bin/php-cs-fixer fix app/View --diff
 	../tools/php-cs-fixer/vendor/bin/php-cs-fixer fix app/Policies --diff
 	../tools/php-cs-fixer/vendor/bin/php-cs-fixer fix app/Observers --diff
+	../tools/php-cs-fixer/vendor/bin/php-cs-fixer fix app/Providers --diff
 
 rector: ## PRS2 Validation
 	./vendor/bin/rector process --dry-run

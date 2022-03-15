@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Providers;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -31,7 +30,6 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Component::macro('banner', function ($message) {
-
             session()->put('flash.banner', $message);
 
             $this->dispatchBrowserEvent('banner-message', [

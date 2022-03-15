@@ -249,6 +249,7 @@
         </x-confirmation-modal>
     </form>
 
+
     <!-- Save Team Modal -->
     <form wire:submit.prevent="save">
         <x-modal.dialog wire:model.defer="showEditModal">
@@ -288,7 +289,7 @@
     <!-- Member Modal -->
     <form wire:submit.prevent="invite">
         <x-modal.dialog wire:model.defer="showMemberModal">
-            <x-slot name="title">Edit</x-slot>
+            <x-slot name="title">Team Setting</x-slot>
 
             <x-slot name="content">
                 <div class="space-y-8 sm:space-y-5">
@@ -299,7 +300,7 @@
                                     <table class="min-w-full divide-y divide-gray-300">
                                         <thead class="bg-gray-50">
                                         <tr>
-                                            <th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-6">Name</th>
+                                            <th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-6">Team Members</th>
                                             <th scope="col" class="relative py-3 pl-3 pr-4 sm:pr-6">
                                                 <span class="sr-only">Edit</span>
                                             </th>
@@ -308,11 +309,19 @@
                                         <tbody class="divide-y divide-gray-200 bg-white">
                                             @foreach($editing->users as $user)
                                                 <tr>
-                                                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                                                        {{ $user->name }}
+                                                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
+                                                        <div class="flex items-center">
+                                                            <div class="h-10 w-10 flex-shrink-0">
+                                                                <img class="h-10 w-10 rounded-full" src="{{ $user->avatar_url }}" alt="{{ $user->name }}">
+                                                            </div>
+                                                            <div class="ml-4">
+                                                                <div class="font-medium text-gray-900">{{ $user->name }}</div>
+                                                                <div class="text-gray-500">{{ $user->email }}</div>
+                                                            </div>
+                                                        </div>
                                                     </td>
                                                     <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                                        <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit<span class="sr-only">, Lindsay Walton</span></a>
+                                                        <a href="#" class="text-red-600 hover:text-red-900 hover:underline" wire:click="$toggle('showDeleteMemberModal')">Remove</a>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -339,11 +348,11 @@
                                         <tbody class="divide-y divide-gray-200 bg-white">
                                         @foreach($editing->invites as $invite)
                                             <tr>
-                                                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                                     {{ $invite->email }}
                                                 </td>
                                                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                                    <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit<span class="sr-only">, Lindsay Walton</span></a>
+                                                    <a href="#" class="text-red-600 hover:text-red-900 hover:underline">Cancel<span class="sr-only">, Lindsay Walton</span></a>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -376,7 +385,7 @@
                                                     @endif
                                                 </td>
                                                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                                    <a href="#" class="text-indigo-600 hover:text-indigo-900" wire:click="invite()">Invite To Team</a>
+                                                    <a href="#" class="text-indigo-600 hover:text-indigo-900 hover:underline" wire:click="invite()">Invite To Team</a>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -399,6 +408,27 @@
                 </x-button>
             </x-slot>
         </x-modal.dialog>
+    </form>
+
+    <!-- Delete Member Modal -->
+    <form wire:submit.prevent="deleteMember">
+        <x-confirmation-modal wire:model.defer="showDeleteMemberModal">
+            <x-slot name="title">Remove Team Member</x-slot>
+
+            <x-slot name="content">
+                <div class="py-8 text-cool-gray-700">Are you sure you would like to remove this person from the team ?</div>
+            </x-slot>
+
+            <x-slot name="footer">
+                <x-secondary-button wire:click="$set('showDeleteMemberModal', false)">
+                    {{ __('Cancel') }}
+                </x-secondary-button>
+
+                <x-button type="submit" class="ml-3" >
+                    {{ 'Delete' }}
+                </x-button>
+            </x-slot>
+        </x-confirmation-modal>
     </form>
 </div>
 @push('scripts')
