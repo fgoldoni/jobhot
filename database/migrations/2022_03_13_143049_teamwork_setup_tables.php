@@ -47,13 +47,13 @@ class TeamworkSetupTables extends Migration
 
         if (Schema::hasTable('jobs') && !Schema::hasColumn('jobs', 'team_id')) {
             Schema::table('jobs', function (Blueprint $table) {
-                $table->foreignId('team_id')->unsigned()->nullable()->index()->references('id')->on('teams')->onDelete('cascade');
+                $table->foreignId('team_id')->after('avatar_path')->unsigned()->nullable()->index()->references('id')->on('teams')->onDelete('cascade');
             });
         }
 
         if (Schema::hasTable('companies') && !Schema::hasColumn('companies', 'team_id')) {
             Schema::table('companies', function (Blueprint $table) {
-                $table->foreignId('team_id')->unsigned()->nullable()->index()->references('id')->on('teams')->onDelete('cascade');
+                $table->foreignId('team_id')->after('avatar_path')->unsigned()->nullable()->index()->references('id')->on('teams')->onDelete('cascade');
             });
         }
     }

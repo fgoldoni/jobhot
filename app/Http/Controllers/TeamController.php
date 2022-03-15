@@ -48,7 +48,6 @@ class TeamController extends Controller
         }
 
         if ($this->authManager->check()) {
-
             $this->teamwork->acceptInvite($invite);
 
             session()->put('flash.banner', __('Great! You have accepted the invitation to join the :team.', ['team' => $invite->team->name]));

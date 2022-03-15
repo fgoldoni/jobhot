@@ -321,7 +321,7 @@
                                                         </div>
                                                     </td>
                                                     <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                                        <a href="#" class="text-red-600 hover:text-red-900 hover:underline" wire:click="$toggle('showDeleteMemberModal')">Remove</a>
+                                                        <a href="#" class="text-red-600 hover:text-red-900 hover:underline" wire:click="removeMember({{ $user->id }})">Remove</a>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -352,7 +352,7 @@
                                                     {{ $invite->email }}
                                                 </td>
                                                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                                    <a href="#" class="text-red-600 hover:text-red-900 hover:underline">Cancel<span class="sr-only">, Lindsay Walton</span></a>
+                                                    <a href="#" class="text-red-600 hover:text-red-900 hover:underline" wire:click="cancelInvite({{ $invite->id }})">Cancel<span class="sr-only">, Lindsay Walton</span></a>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -411,7 +411,7 @@
     </form>
 
     <!-- Delete Member Modal -->
-    <form wire:submit.prevent="deleteMember">
+    <form wire:submit.prevent="removeTeamMember">
         <x-confirmation-modal wire:model.defer="showDeleteMemberModal">
             <x-slot name="title">Remove Team Member</x-slot>
 

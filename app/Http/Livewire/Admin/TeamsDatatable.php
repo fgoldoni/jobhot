@@ -7,6 +7,7 @@ use App\Http\Livewire\Admin\Datatable\WithPerPagePagination;
 use App\Http\Livewire\Admin\Datatable\WithSorting;
 use App\Mail\TeamInvitation;
 use App\Models\Team;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
@@ -14,13 +15,18 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Mpociot\Teamwork\Exceptions\UserNotInTeamException;
 use Mpociot\Teamwork\Facades\Teamwork;
+use Mpociot\Teamwork\TeamInvite;
 
 class TeamsDatatable extends Component
 {
     use WithSorting;
+
     use WithPerPagePagination;
+
     use WithBulkActions;
+
     use WithCachedRows;
+
     use WithFileUploads;
 
     public bool $showDeleteModal = false;
@@ -37,9 +43,11 @@ class TeamsDatatable extends Component
 
     public Team $editing;
 
+    public User|null $removeUser = null;
+
     protected $queryString = ['sorts'];
 
-    protected $listeners = ['refreshTransactions' => '$refresh'];
+    protected $listeners = [];
 
     public array $filters = [
         'search' => '',
@@ -101,7 +109,7 @@ class TeamsDatatable extends Component
         $this->resetValidation();
 
         if ($this->editing->isNot($team)) {
-            $this->editing = $team;
+            $this->editing = $team->load('owner', 'users', 'invites');
         }
 
         $this->showEditModal = true;
@@ -124,9 +132,11 @@ class TeamsDatatable extends Component
 
         $this->editing->save();
 
+        auth()->user()->attachTeam($this->editing);
+
         $this->showEditModal = false;
 
-        $this->notify('The team has been successfully updated');
+        $this->notify('The team has been successfully saved');
     }
 
     public function deleteSelected()
@@ -138,11 +148,6 @@ class TeamsDatatable extends Component
         $this->showDeleteModal = false;
 
         $this->notify('You\'ve deleted ' . $deleteCount . ' companies');
-    }
-
-    public function deleteMember()
-    {
-        dd('ok');
     }
 
     public function getRowsQueryProperty()
@@ -166,7 +171,7 @@ class TeamsDatatable extends Component
 
     private function makeBlankTeam(): Model|Team
     {
-        return Team::make(['user_id' => auth()->user()->id]);
+        return Team::make(['owner_id' => auth()->user()->id]);
     }
 
     public function members(Team $team)
@@ -176,7 +181,7 @@ class TeamsDatatable extends Component
         $this->resetValidation();
 
         if ($this->editing->isNot($team)) {
-            $this->editing = $team->load('users');
+            $this->editing = $team->load('owner', 'users', 'invites');
         }
 
         $this->showMemberModal = true;
@@ -195,6 +200,39 @@ class TeamsDatatable extends Component
         } else {
             $this->notify('The email address is already invited to the team.');
         }
+    }
+
+    public function removeMember(User $user)
+    {
+        $this->removeUser = $user;
+
+        $this->showDeleteMemberModal = true;
+    }
+
+    public function cancelInvite(TeamInvite $invite)
+    {
+        Teamwork::denyInvite($invite);
+
+        $this->editing->load('invites');
+    }
+
+    public function removeTeamMember()
+    {
+        if (!auth()->user()->isOwnerOfTeam($this->editing)) {
+            abort(403);
+        }
+
+        if ($this->removeUser->getKey() === auth()->user()->getKey()) {
+            abort(403);
+        }
+
+        $this->removeUser->detachTeam($this->editing);
+
+        $this->showDeleteMemberModal = false;
+
+        $this->editing->load('users');
+
+        $this->notify('You\'ve removed ' . $this->removeUser->name . ' from the team');
     }
 
     public function render()
