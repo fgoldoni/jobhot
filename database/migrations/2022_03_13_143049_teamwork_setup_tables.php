@@ -20,6 +20,7 @@ class TeamworkSetupTables extends Migration
             $table->id();
             $table->foreignId('owner_id')->constrained(\Config::get('teamwork.users_table'))->index();
             $table->string('name');
+            $table->boolean('personal_team')->default(true);
             $table->timestamps();
         });
 
@@ -43,6 +44,18 @@ class TeamworkSetupTables extends Migration
 
             $table->unique(['team_id', 'email']);
         });
+
+        if (Schema::hasTable('jobs') && !Schema::hasColumn('jobs', 'team_id')) {
+            Schema::table('jobs', function (Blueprint $table) {
+                $table->foreignId('team_id')->unsigned()->nullable()->index()->references('id')->on('teams')->onDelete('cascade');
+            });
+        }
+
+        if (Schema::hasTable('companies') && !Schema::hasColumn('companies', 'team_id')) {
+            Schema::table('companies', function (Blueprint $table) {
+                $table->foreignId('team_id')->unsigned()->nullable()->index()->references('id')->on('teams')->onDelete('cascade');
+            });
+        }
     }
 
     /**
@@ -52,6 +65,8 @@ class TeamworkSetupTables extends Migration
      */
     public function down()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+
         Schema::table(\Config::get('teamwork.users_table'), function (Blueprint $table) {
             $table->dropColumn('current_team_id');
         });
@@ -68,5 +83,7 @@ class TeamworkSetupTables extends Migration
         Schema::drop(\Config::get('teamwork.team_user_table'));
         Schema::drop(\Config::get('teamwork.team_invites_table'));
         Schema::drop(\Config::get('teamwork.teams_table'));
+
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }

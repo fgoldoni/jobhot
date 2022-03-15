@@ -25,7 +25,9 @@ class AuthController extends Controller
         if (auth()->check()) {
             Teamwork::acceptInvite($invite);
 
-            return redirect()->route('teams.index');
+            session()->put('flash.banner', 'Great! You have accepted the invitation to join the ' . $invite->team->name . ' team. ');
+
+            return redirect('/');
         } else {
             session(['invite_token' => $token]);
 

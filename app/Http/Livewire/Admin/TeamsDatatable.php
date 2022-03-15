@@ -37,7 +37,7 @@ class TeamsDatatable extends Component
 
     public Team $editing;
 
-    protected $queryString = ['sorts', 'perPage'];
+    protected $queryString = ['sorts'];
 
     protected $listeners = ['refreshTransactions' => '$refresh'];
 

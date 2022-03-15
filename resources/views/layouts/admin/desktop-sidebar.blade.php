@@ -5,13 +5,18 @@
             {{ __('Dashboard') }}
         </x-sidebar-link>
 
+        <x-sidebar-link href="{{ route('admin.teams') }}" :active="request()->routeIs('admin.teams')">
+            <x-icon.grid :active="request()->routeIs('admin.teams')"/>
+            {{ __('Teams') }}
+        </x-sidebar-link>
+
         <x-sidebar-link href="{{ route('admin.users') }}" :active="request()->routeIs('admin.users')">
             <x-icon.users :active="request()->routeIs('admin.users')"/>
             {{ __('Users') }}
         </x-sidebar-link>
 
         <x-sidebar-link href="{{ route('admin.companies') }}" :active="request()->routeIs('admin.companies')">
-            <x-icon.folder :active="request()->routeIs('admin.companies')"/>
+            <x-icon.cube :active="request()->routeIs('admin.companies')"/>
             {{ __('Companies') }}
         </x-sidebar-link>
 

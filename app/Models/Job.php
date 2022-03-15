@@ -8,6 +8,7 @@ use App\Traits\HasAvatar;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Mpociot\Teamwork\Traits\UsedByTeams;
 use Nicolaslopezj\Searchable\SearchableTrait;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -69,7 +70,7 @@ use Spatie\Translatable\HasTranslations;
  */
 class Job extends Model
 {
-    use HasFactory, HasSlug, HasTranslations, Categorizable, HasAvatar, BelongsToUser, SearchableTrait, SoftDeletes;
+    use HasFactory, HasSlug, HasTranslations, Categorizable, HasAvatar, BelongsToUser, SearchableTrait, SoftDeletes, UsedByTeams;
 
     protected $guarded = [];
 

@@ -26,7 +26,7 @@ class CompanyPolicy
 
     public function update(User $user, Company $company): bool
     {
-        return $user->id === (int) $company->user_id;
+        return $user->current_team_id === (int) $company->user_id;
     }
 
     public function delete(User $user, Company $company): bool

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Teamwork;
 
+use App\Models\Team;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Mpociot\Teamwork\Exceptions\UserNotInTeamException;
@@ -63,7 +64,7 @@ class TeamController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function switchTeam($id)
+    public function switchTeam(Team $team)
     {
         $teamModel = config('teamwork.team_model');
         $team = $teamModel::findOrFail($id);

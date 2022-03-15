@@ -21,6 +21,7 @@ class JobFactory extends Factory
             'content' => $this->faker->sentence,
             'user_id' => $this->faker->numberBetween(1, 10),
             'company_id' => $this->faker->numberBetween(1,5),
+            'team_id' => $this->faker->numberBetween(1, 5),
         ];
     }
 }
