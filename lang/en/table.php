@@ -13,4 +13,11 @@ return [
     'minimum_date' => 'Minimum Date',
     'maximum_date' => 'Maximum Date',
     'reset_filters' => 'Reset Filters',
+    'code' => 'Code',
+    'currency' => 'Currency',
+    'capital' => 'Capital',
+    'online' => 'Online',
+    'continent' => 'Continent',
+    'continents' => 'Continents',
+    'select_continents' => 'Select Continents ...',
 ];

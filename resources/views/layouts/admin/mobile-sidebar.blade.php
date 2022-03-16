@@ -34,25 +34,12 @@
     <div class="space-y-1">
         <h3 class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider" id="projects-headline">Projects</h3>
         <div class="space-y-1" role="group" aria-labelledby="projects-headline">
-            <x-sidebar-link href="{{ route('admin.dashboard') }}" :active="request()->routeIs('admin.dashboard')">
-                <x-icon.home :active="request()->routeIs('admin.dashboard')"/>
-                {{ __('Dashboard') }}
+
+            <x-sidebar-link href="{{ route('admin.countries') }}" :active="request()->routeIs('admin.countries')">
+                <x-icon.globe :active="request()->routeIs('admin.countries')"/>
+                {{ __('Countries') }}
             </x-sidebar-link>
 
-            <x-sidebar-link href="{{ route('admin.users') }}" :active="request()->routeIs('admin.users')">
-                <x-icon.users :active="request()->routeIs('admin.users')"/>
-                {{ __('Users') }}
-            </x-sidebar-link>
-
-            <x-sidebar-link href="{{ route('admin.companies') }}" :active="request()->routeIs('admin.companies')">
-                <x-icon.folder :active="request()->routeIs('admin.companies')"/>
-                {{ __('Companies') }}
-            </x-sidebar-link>
-
-            <x-sidebar-link href="{{ route('admin.categories') }}" :active="request()->routeIs('admin.categories')">
-                <x-icon.view-list :active="request()->routeIs('admin.categories')"/>
-                {{ __('Categories') }}
-            </x-sidebar-link>
         </div>
         <div class="space-y-1" x-data="{ open: false }">
             <!-- Current: "bg-gray-100 text-gray-900", Default: "bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
@@ -79,9 +66,6 @@
 
                 <a href="#" class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50"> Members </a>
 
-                <a href="#" class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50"> Calendar </a>
-
-                <a href="#" class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50"> Settings </a>
             </div>
         </div>
     </div>

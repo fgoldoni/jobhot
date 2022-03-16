@@ -27,4 +27,8 @@ Route::middleware(['auth', 'verified', 'password.confirm', 'role:Administrator|E
     Route::get('/teams', function () {
         return view('admin.teams.index');
     })->name('teams');
+
+    Route::get('/countries', function () {
+        return view('admin.countries.index');
+    })->name('countries');
 });

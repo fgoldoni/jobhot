@@ -5,6 +5,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Component;
+use Modules\Countries\Providers\CountriesServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(ViewServiceProvider::class);
+        $this->app->register(CountriesServiceProvider::class);
     }
 
     /**
