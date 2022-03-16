@@ -103,7 +103,6 @@ class Company extends Model
         ]
     ];
 
-
     public function jobs(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Job::class);

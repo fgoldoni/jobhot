@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Livewire\Admin\Datatable;
 
 use App\Models\Company;
@@ -16,7 +15,6 @@ trait WithCompanies
     {
         $this->editing->company_id = $this->editing->company_id ?? $this->loadCompanies()->first()->id;
     }
-
 
     private function loadCompanies(): Collection|array
     {

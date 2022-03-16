@@ -1,7 +1,6 @@
 <?php
 namespace App\Http\Livewire\Admin;
 
-use App\Enums\CompanyState;
 use App\Enums\JobState;
 use App\Http\Livewire\Admin\Datatable\WithBulkActions;
 use App\Http\Livewire\Admin\Datatable\WithCachedRows;
@@ -14,7 +13,6 @@ use Illuminate\Auth\AuthManager;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection as StatesCollection;
-use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -120,7 +118,6 @@ class JobsDatatable extends Component
         $this->resetValidation();
 
         if ($this->editing->isNot($job)) {
-
             $this->editing = $job->load('company');
 
             $this->avatar = null;

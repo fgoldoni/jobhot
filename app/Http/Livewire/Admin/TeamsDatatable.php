@@ -197,7 +197,7 @@ class TeamsDatatable extends Component
                 Mail::to($invite->email)->send(new TeamInvitation($invite));
             });
 
-            $this->editing->load( 'invites');
+            $this->editing->load('invites');
         } else {
             $this->notify('The email address is already invited to the team.');
         }
