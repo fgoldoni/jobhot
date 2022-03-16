@@ -67,6 +67,10 @@ use Spatie\Translatable\HasTranslations;
  * @method static \Illuminate\Database\Query\Builder|Job withoutTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Job whereState($value)
  * @property-read \App\Models\Company|null $company
+ * @property int|null $team_id
+ * @property-read \App\Models\Team|null $team
+ * @method static \Illuminate\Database\Eloquent\Builder|Job allTeams()
+ * @method static \Illuminate\Database\Eloquent\Builder|Job whereTeamId($value)
  */
 class Job extends Model
 {

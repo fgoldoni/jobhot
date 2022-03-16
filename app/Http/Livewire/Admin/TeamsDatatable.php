@@ -128,8 +128,6 @@ class TeamsDatatable extends Component
 
     public function save()
     {
-        $this->validate();
-
         $this->editing->save();
 
         auth()->user()->attachTeam($this->editing);
@@ -152,7 +150,7 @@ class TeamsDatatable extends Component
 
     public function getRowsQueryProperty()
     {
-        $query = Team::query()
+        $query = auth()->user()->teams()
             ->with(['owner:id,name', 'users:id,name', 'invites:id,team_id'])
             ->when($this->filters['search'], function ($query, $search) {
                 $this->resetPage();
@@ -182,6 +180,7 @@ class TeamsDatatable extends Component
 
         if ($this->editing->isNot($team)) {
             $this->editing = $team->load('owner', 'users', 'invites');
+            $this->reset('email');
         }
 
         $this->showMemberModal = true;
@@ -193,13 +192,24 @@ class TeamsDatatable extends Component
             'email' => 'required|email',
         ]);
 
-        if (!Teamwork::hasPendingInvite($this->email, $this->editing)) {
-            Teamwork::inviteToTeam($this->email, $this->editing, function ($invite) {
+        if (!Teamwork::hasPendingInvite($validatedData['email'], $this->editing)) {
+            Teamwork::inviteToTeam($validatedData['email'], $this->editing, function ($invite) {
                 Mail::to($invite->email)->send(new TeamInvitation($invite));
             });
+
+            $this->editing->load( 'invites');
         } else {
             $this->notify('The email address is already invited to the team.');
         }
+    }
+
+    public function resendInvite(TeamInvite $invite)
+    {
+        Mail::to($invite->email)->send(new TeamInvitation($invite));
+
+        $this->resetValidation();
+
+        $this->notify('The email address is already invited to the team.');
     }
 
     public function removeMember(User $user)

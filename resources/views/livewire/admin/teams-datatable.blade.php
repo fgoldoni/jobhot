@@ -321,7 +321,13 @@
                                                         </div>
                                                     </td>
                                                     <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                                        <a href="#" class="text-red-600 hover:text-red-900 hover:underline" wire:click="removeMember({{ $user->id }})">Remove</a>
+                                                        @if(auth()->user()->isOwnerOfTeam($editing))
+                                                            @if(auth()->user()->getKey() !== $user->getKey())
+                                                                <x-button.link type="button" class="text-red-600 hover:text-red-900 hover:underline" wire:click="removeMember({{ $user->id }})">
+                                                                    Remove
+                                                                </x-button.link>
+                                                            @endif
+                                                        @endif
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -352,7 +358,17 @@
                                                     {{ $invite->email }}
                                                 </td>
                                                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                                    <a href="#" class="text-red-600 hover:text-red-900 hover:underline" wire:click="cancelInvite({{ $invite->id }})">Cancel<span class="sr-only">, Lindsay Walton</span></a>
+                                                    <div class="flex items-center justify-end">
+                                                        <!-- Manage Team Member Role -->
+                                                        <x-button.link type="button" wire:click="resendInvite({{ $invite->id }})">
+                                                            Resend invite
+                                                        </x-button.link>
+
+                                                        <!-- Leave Team -->
+                                                        <x-button.link type="button" class="ml-2 text-red-600 hover:text-red-900 hover:underline" wire:click="cancelInvite({{ $invite->id }})">
+                                                            Cancel
+                                                        </x-button.link>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -385,7 +401,9 @@
                                                     @endif
                                                 </td>
                                                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                                    <a href="#" class="text-indigo-600 hover:text-indigo-900 hover:underline" wire:click="invite()">Invite To Team</a>
+                                                    <x-button.link type="button" wire:click="invite()">
+                                                        Invite To Team
+                                                    </x-button.link>
                                                 </td>
                                             </tr>
                                         </tbody>

@@ -58,6 +58,10 @@ use Nicolaslopezj\Searchable\SearchableTrait;
  * @method static \Illuminate\Database\Query\Builder|Company onlyTrashed()
  * @method static \Illuminate\Database\Query\Builder|Company withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Company withoutTrashed()
+ * @property int|null $team_id
+ * @property-read \App\Models\Team|null $team
+ * @method static \Illuminate\Database\Eloquent\Builder|Company allTeams()
+ * @method static \Illuminate\Database\Eloquent\Builder|Company whereTeamId($value)
  */
 class Company extends Model
 {

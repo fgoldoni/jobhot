@@ -31,6 +31,8 @@ use Nicolaslopezj\Searchable\SearchableTrait;
  * @method static \Illuminate\Database\Eloquent\Builder|Team whereOwnerId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Team whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property int $personal_team
+ * @method static \Illuminate\Database\Eloquent\Builder|Team wherePersonalTeam($value)
  */
 class Team extends TeamworkTeam
 {
