@@ -141,7 +141,7 @@ class TeamsDatatable extends Component
     {
         $deleteCount = $this->selectedRowsQuery->count();
 
-        $this->selectedRowsQuery->delete();
+        //$this->selectedRowsQuery->delete();
 
         $this->showDeleteModal = false;
 

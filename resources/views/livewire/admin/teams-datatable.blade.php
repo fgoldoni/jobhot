@@ -39,23 +39,12 @@
                         @if ($showFilters)
                             <x-filters>
                                 <x-slot name="filtersRight">
-                                    <x-input.group inline for="filter-state" label="Status">
-                                        <x-input.base-select wire:model="filters.state" id="filter-state">
-                                            <option value="" selected>{{ __('table.select_status') }}</option>
-
-                                            <option value="{{ (\App\Enums\CompanyState::Draft)->value }}">{{ (\App\Enums\CompanyState::Draft)->value }}</option>
-                                            <option value="{{ (\App\Enums\CompanyState::Published)->value }}">{{ (\App\Enums\CompanyState::Published)->value }}</option>
-                                            <option value="{{ (\App\Enums\CompanyState::Archived)->value }}">{{ (\App\Enums\CompanyState::Archived)->value }}</option>
-                                            <option value="{{ (\App\Enums\CompanyState::Hold)->value }}">{{ (\App\Enums\CompanyState::Hold)->value }}</option>
-                                        </x-input.base-select>
+                                    <x-input.group inline for="filter-date-min" label="{{ __('table.minimum_date') }}">
+                                        <x-input.date  type="text" wire:model="filters.date-min" id="filter-date-min" placeholder="MM/DD/YYYY" />
                                     </x-input.group>
                                 </x-slot>
 
                                 <x-slot name="filtersLeft">
-                                    <x-input.group inline for="filter-date-min" label="{{ __('table.minimum_date') }}">
-                                        <x-input.date  type="text" wire:model="filters.date-min" id="filter-date-min" placeholder="MM/DD/YYYY" />
-                                    </x-input.group>
-
                                     <x-input.group inline for="filter-date-max" label="{{ __('table.maximum_date') }}">
                                         <x-input.date  type="text" wire:model="filters.date-max" id="filter-date-max" placeholder="MM/DD/YYYY" />
                                     </x-input.group>
@@ -183,27 +172,9 @@
                                             <div class="text-gray-500">Last Modified: {{ $row->updated_at->diffForHumans() }}</div>
                                         </x-table.cell>
                                         <x-table.cell class="px-6 py-4">
-                                            <x-dropdown align="right" width="w-32">
-                                                <x-slot name="trigger">
-                                                    <button type="button" class="bg-gray-100 rounded-full flex items-center text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500" id="menu-button" aria-expanded="true" aria-haspopup="true">
-                                                        <span class="sr-only">Open options</span>
-                                                        <!-- Heroicon name: solid/dots-vertical -->
-                                                        <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                            <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
-                                                        </svg>
-                                                    </button>
-                                                </x-slot>
-
-                                                <x-slot name="content">
-                                                    <x-dropdown-link wire:click="edit({{ $row->id }})" class="group flex items-center cursor-pointer">
-                                                        <svg class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                            <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
-                                                            <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" />
-                                                        </svg>
-                                                        Edit
-                                                    </x-dropdown-link>
-                                                </x-slot>
-                                            </x-dropdown>
+                                            <x-button.link wire:click="edit({{ $row->id }})" class="font-medium text-indigo-500 hover:text-indigo-900 hover:underline">
+                                                Edit
+                                            </x-button.link>
                                         </x-table.cell>
                                     </x-table.row>
                                 @empty
