@@ -163,7 +163,7 @@ class CompaniesDatatable extends Component
     public function getRowsQueryProperty()
     {
         $query = Company::query()
-            ->with(['user:id,name', 'categories:id,name'])
+            ->with(['user:id,name', 'categories:id,name', 'jobs:id,company_id'])
             ->when($this->filters['search'], function ($query, $search) {
                 $this->resetPage();
                 return $query->search($search);

@@ -2,9 +2,11 @@
 namespace App\Http\Livewire\Admin;
 
 use App\Enums\CompanyState;
+use App\Enums\JobState;
 use App\Http\Livewire\Admin\Datatable\WithBulkActions;
 use App\Http\Livewire\Admin\Datatable\WithCachedRows;
 use App\Http\Livewire\Admin\Datatable\WithCategories;
+use App\Http\Livewire\Admin\Datatable\WithCompanies;
 use App\Http\Livewire\Admin\Datatable\WithPerPagePagination;
 use App\Http\Livewire\Admin\Datatable\WithSorting;
 use App\Models\Job;
@@ -24,6 +26,7 @@ class JobsDatatable extends Component
     use WithCachedRows;
     use WithFileUploads;
     use WithCategories;
+    use WithCompanies;
 
     public bool $showDeleteModal = false;
 
@@ -43,7 +46,7 @@ class JobsDatatable extends Component
 
     public Job $editing;
 
-    protected $queryString = ['sorts', 'perPage'];
+    protected $queryString = ['sorts'];
 
     protected $listeners = ['refreshTransactions' => '$refresh'];
 
@@ -61,9 +64,8 @@ class JobsDatatable extends Component
         return [
             'editing.name' => ['required', 'string', 'max:255'],
             'editing.content' => ['required', 'string', 'min:4'],
-            'editing.phone' => 'required',
-            'editing.email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')->ignore($this->editing->id)],
             'editing.user_id' => 'required',
+            'editing.company_id' => 'required',
             'selectedItem' => 'required|integer|exists:categories,id',
             'selectedState' => 'required',
             'avatar' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
@@ -118,11 +120,14 @@ class JobsDatatable extends Component
         $this->resetValidation();
 
         if ($this->editing->isNot($job)) {
-            $this->editing = $job;
+
+            $this->editing = $job->load('company');
 
             $this->avatar = null;
 
             $this->setDefaultCategory();
+
+            $this->setDefaultCompany();
 
             $this->selectedState = strtolower($this->findIndexStateBy('name', $job->state->value));
         }
@@ -202,19 +207,19 @@ class JobsDatatable extends Component
         return collect([
             [
                 'id' => 0,
-                'name' => ucfirst((CompanyState::Draft)->value),
+                'name' => ucfirst((JobState::Draft)->value),
             ],
             [
                 'id' => 1,
-                'name' => ucfirst((CompanyState::Published)->value),
+                'name' => ucfirst((JobState::Published)->value),
             ],
             [
                 'id' => 2,
-                'name' => ucfirst((CompanyState::Archived)->value),
+                'name' => ucfirst((JobState::Archived)->value),
             ],
             [
                 'id' => 3,
-                'name' => ucfirst((CompanyState::Hold)->value),
+                'name' => ucfirst((JobState::Hold)->value),
             ]
         ]);
     }

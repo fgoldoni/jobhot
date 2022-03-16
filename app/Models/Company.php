@@ -102,4 +102,10 @@ class Company extends Model
             'companies.content' => 10,
         ]
     ];
+
+
+    public function jobs(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Job::class);
+    }
 }

@@ -162,7 +162,7 @@
                                                     <span class="truncate text-gray-700">{{ $category->name }}</span>
                                                 </p>
                                             @endforeach
-                                            <div class="text-gray-500">{{ $row->name }}</div>
+                                            <div class="text-gray-500">{{ $row->company ? $row->company->name : '' }}</div>
                                         </x-table.cell>
                                         <x-table.cell>
                                             <div class="relative inline-flex items-center rounded-full border border-gray-300 px-3 py-0.5 m-1 cursor-pointer">
@@ -271,7 +271,20 @@
                             </div>
 
                             <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
-                                <x-label for="name" class="sm:mt-px sm:pt-2">{{ __('Industry') }} </x-label>
+                                <x-label for="name" class="sm:mt-px sm:pt-2">{{ __('Company') }} </x-label>
+                                <div class="mt-1 sm:mt-0 sm:col-span-2">
+                                    <x-input.company-select :items="$companies" :selected="$editing->company_id" wire:model.defer="editing.company_id" wire:key="companies-field-{{ $editing->id }}"></x-input.company-select>
+                                    @if ($errors->has('selectedCompany'))
+                                        <p class="mt-2 text-sm text-red-600">{{ $errors->first('selectedCompany') }}</p>
+                                    @endif
+                                </div>
+                                @if ($errors->has('selectedCompany'))
+                                    <p class="mt-2 text-sm text-red-600">{{ $errors->first('selectedCompany') }}</p>
+                                @endif
+                            </div>
+
+                            <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
+                                <x-label for="name" class="sm:mt-px sm:pt-2">{{ __('Area') }} </x-label>
                                 <div class="mt-1 sm:mt-0 sm:col-span-2">
                                     <x-input.select :items="$areas" :selected="$selectedItem" wire:model.defer="selectedItem" wire:key="categories-field-{{ $editing->id }}"></x-input.select>
                                     @if ($errors->has('selectedItem'))
@@ -281,6 +294,16 @@
                                 @if ($errors->has('selectedItem'))
                                     <p class="mt-2 text-sm text-red-600">{{ $errors->first('selectedItem') }}</p>
                                 @endif
+                            </div>
+
+                            <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
+                                <x-label for="state" class="sm:mt-px sm:pt-2">{{ __('State') }} </x-label>
+                                <div class="mt-1 sm:mt-0 sm:col-span-2">
+                                    <x-input.dot-select :items="$states" :selected="$selectedState" wire:model.defer="selectedState" wire:key="states-field-{{ $editing->id }}"></x-input.dot-select>
+                                    @if ($errors->has('selectedState'))
+                                        <p class="mt-2 text-sm text-red-600">{{ $errors->first('selectedState') }}</p>
+                                    @endif
+                                </div>
                             </div>
 
                             <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
@@ -315,36 +338,6 @@
                                     </div>
                                 </div>
                             @endif
-
-                            <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
-                                <x-label for="state" class="sm:mt-px sm:pt-2">{{ __('State') }} </x-label>
-                                <div class="mt-1 sm:mt-0 sm:col-span-2">
-                                    <x-input.dot-select :items="$states" :selected="$selectedState" wire:model.defer="selectedState" wire:key="states-field-{{ $editing->id }}"></x-input.dot-select>
-                                    @if ($errors->has('selectedState'))
-                                        <p class="mt-2 text-sm text-red-600">{{ $errors->first('selectedState') }}</p>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
-                                <x-label for="phone" class="sm:mt-px sm:pt-2">{{ __('Phone') }} </x-label>
-                                <div class="mt-1 sm:mt-0 sm:col-span-2">
-                                    <x-input type="text" wire:model.defer="editing.phone" id="phone"  placeholder="Phone" class="max-w-lg w-full"/>
-                                    @if ($errors->has('editing.phone'))
-                                        <p class="mt-2 text-sm text-red-600">{{ $errors->first('editing.phone') }}</p>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
-                                <x-label for="email" class="sm:mt-px sm:pt-2">{{ __('Email') }} </x-label>
-                                <div class="mt-1 sm:mt-0 sm:col-span-2">
-                                    <x-input type="email" wire:model.defer="editing.email" id="email"  placeholder="Email" class="max-w-lg w-full"/>
-                                    @if ($errors->has('editing.email'))
-                                        <p class="mt-2 text-sm text-red-600">{{ $errors->first('editing.email') }}</p>
-                                    @endif
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>

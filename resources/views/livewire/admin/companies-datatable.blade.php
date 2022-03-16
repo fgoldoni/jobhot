@@ -162,7 +162,7 @@
                                                    <span class="truncate text-gray-700">{{ $category->name }}</span>
                                                </p>
                                            @endforeach
-                                           <div class="text-gray-500">{{ $row->phone }}</div>
+                                           <span class="text-sm text-indigo-500 hover:underline cursor-pointer">{{ $row->jobs ? $row->jobs->count() : 0 }}  Job(s)</span>
                                        </x-table.cell>
                                        <x-table.cell>
                                            <div class="relative inline-flex items-center rounded-full border border-gray-300 px-3 py-0.5 m-1 cursor-pointer">

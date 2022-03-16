@@ -31,7 +31,6 @@ trait WithCategories
     private function loadCategories(): Collection|array
     {
         $this->useCachedRows();
-        cache()->flush();
 
         return $this->cache(fn () => Category::query()->where('type', $this->categoryType)->orderBy('position')->get(['id', 'name', 'icon']), 'categories-' . $this->categoryType);
     }
