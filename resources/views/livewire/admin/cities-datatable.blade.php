@@ -94,7 +94,7 @@
                                 <x-table.heading sortable wire:click="sortBy('id')" :direction="$sorts['id'] ?? null">{{ __('table.id') }}</x-table.heading>
                                 <x-table.heading sortable wire:click="sortBy('name')" :direction="$sorts['name'] ?? null">{{ __('table.name') }}</x-table.heading>
                                 <x-table.heading sortable wire:click="sortBy('country_id')" :direction="$sorts['country_id'] ?? null">{{ __('table.country') }}</x-table.heading>
-                                <x-table.heading>{{ __('table.cities') }}</x-table.heading>
+                                <x-table.heading>{{ __('table.division') }}</x-table.heading>
                                 <x-table.heading/>
                             </x-slot>
                             <x-slot name="body">

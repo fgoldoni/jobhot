@@ -44,7 +44,6 @@ class CitiesDatatable extends Component
     {
         return [
             'editing.name' => ['required', 'string', 'max:255'],
-            'editing.online' => 'required',
         ];
     }
 

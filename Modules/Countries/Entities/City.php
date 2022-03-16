@@ -36,6 +36,8 @@ class City extends Model
      */
     protected $appends = ['local_name', 'local_full_name', 'local_alias', 'local_abbr'];
 
+    protected $fillable = ['name'];
+
     /**
      * Searchable rules.
      *

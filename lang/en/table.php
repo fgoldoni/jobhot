@@ -19,5 +19,7 @@ return [
     'online' => 'Online',
     'continent' => 'Continent',
     'continents' => 'Continents',
+    'country' => 'Country',
+    'division' => 'Division',
     'select_continents' => 'Select Continents ...',
 ];

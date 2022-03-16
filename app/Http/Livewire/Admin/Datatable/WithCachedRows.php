@@ -24,8 +24,6 @@ trait WithCachedRows
 
         cache()->put($cacheKey, $result);
 
-        info('no');
-
         return $result;
     }
 
