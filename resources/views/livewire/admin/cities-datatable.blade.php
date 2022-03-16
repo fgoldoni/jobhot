@@ -144,7 +144,7 @@
                                         </x-table.cell>
                                         <x-table.cell>
                                             <span class="inline-flex rounded-full bg-indigo-100 px-2 text-xs font-semibold leading-5 text-indigo-800">
-                                                {{ $row->cities->count() . ' Cities'}}
+                                                {{ $row->division ? $row->division->name : ''}}
                                             </span>
                                         </x-table.cell>
                                         <x-table.cell class="px-6 py-4">

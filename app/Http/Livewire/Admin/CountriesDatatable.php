@@ -125,11 +125,7 @@ class CountriesDatatable extends Component
     {
         $query = Country::query()
             ->with(['continent:id,name', 'locales:id,name,country_id'])
-            ->with('continent')
-            ->when($this->filters['search'], function ($query, $search) {
-                $this->resetPage();
-                return $query->search($search);
-            })
+            ->when($this->filters['search'], fn ($query, $search) => $query->search($search))
             ->when($this->filters['continent_id'], fn ($query, $state) => $query->where('continent_id', $state));
 
         return $this->applySorting($query);

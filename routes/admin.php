@@ -31,4 +31,12 @@ Route::middleware(['auth', 'verified', 'password.confirm', 'role:Administrator|E
     Route::get('/countries', function () {
         return view('admin.countries.index');
     })->name('countries');
+
+    Route::get('/divisions', function () {
+        return view('admin.divisions.index');
+    })->name('divisions');
+
+    Route::get('/cities', function () {
+        return view('admin.cities.index');
+    })->name('cities');
 });

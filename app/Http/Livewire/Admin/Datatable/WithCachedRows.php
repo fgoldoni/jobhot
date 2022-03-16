@@ -15,12 +15,16 @@ trait WithCachedRows
         $cacheKey = $key ?? $this->id;
 
         if ($this->useCache && cache()->has($cacheKey)) {
+            info('yes');
+            info($cacheKey);
             return cache()->get($cacheKey);
         }
 
         $result = $callback();
 
         cache()->put($cacheKey, $result);
+
+        info('no');
 
         return $result;
     }

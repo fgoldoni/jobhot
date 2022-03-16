@@ -4,13 +4,14 @@ namespace Modules\Countries\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Modules\Countries\Traits\WorldTrait;
+use Nicolaslopezj\Searchable\SearchableTrait;
 
 /**
  * Division
  */
 class Division extends Model
 {
-    use WorldTrait;
+    use WorldTrait, SearchableTrait;
 
     /**
      * The database table doesn't use 'created_at' and 'updated_at' so we disable it from Inserts/Updates.
@@ -32,6 +33,29 @@ class Division extends Model
      * @var array
      */
     protected $appends = ['local_name','local_full_name','local_alias', 'local_abbr'];
+
+    /**
+     * Searchable rules.
+     *
+     * @var array
+     */
+    protected $searchable = [
+        /**
+         * Columns and their priority in search results.
+         * Columns with higher values are more important.
+         * Columns with equal values have equal importance.
+         *
+         * @var array
+         */
+        'columns' => [
+            'world_divisions.id' => 10,
+            'world_divisions.name' => 10,
+            'world_countries.name' => 10,
+        ],
+        'joins' => [
+            'world_countries' => ['world_divisions.country_id', 'world_countries.id'],
+        ],
+    ];
 
     public function country()
     {

@@ -9,9 +9,9 @@ use Illuminate\Auth\AuthManager;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Modules\Countries\Entities\Division;
+use Modules\Countries\Entities\City;
 
-class DivisionsDatatable extends Component
+class CitiesDatatable extends Component
 {
     use WithSorting;
     use WithPerPagePagination;
@@ -25,7 +25,7 @@ class DivisionsDatatable extends Component
 
     public bool $showFilters = false;
 
-    public Division $editing;
+    public City $editing;
 
     protected $queryString = ['sorts'];
 
@@ -50,7 +50,7 @@ class DivisionsDatatable extends Component
 
     public function mount(AuthManager $auth)
     {
-        $this->editing = $this->makeBlankDivision();
+        $this->editing = $this->makeBlankCity();
     }
 
     public function toggleShowFilters()
@@ -80,13 +80,13 @@ class DivisionsDatatable extends Component
         $this->resetValidation();
 
         if ($this->editing->getKey()) {
-            $this->editing = $this->makeBlankDivision();
+            $this->editing = $this->makeBlankCity();
         }
 
         $this->showEditModal = true;
     }
 
-    public function edit(Division $country)
+    public function edit(City $country)
     {
         $this->useCachedRows();
 
@@ -123,10 +123,9 @@ class DivisionsDatatable extends Component
 
     public function getRowsQueryProperty()
     {
-        $query = Division::query()
-            ->with(['country:id,name,emoji', 'cities'])
-            ->when($this->filters['search'], fn ($query, $search) => $query->search($search))
-            ->when($this->filters['continent_id'], fn ($query, $state) => $query->where('continent_id', $state));
+        $query = City::query()
+            ->with(['country:id,name,emoji', 'division:id,name'])
+            ->when($this->filters['search'], fn ($query, $search) => $query->search($search));
 
         return $this->applySorting($query);
     }
@@ -136,14 +135,14 @@ class DivisionsDatatable extends Component
         return $this->cache(fn () => $this->applyPagination($this->rowsQuery));
     }
 
-    private function makeBlankDivision(): Model|Division
+    private function makeBlankCity(): Model|City
     {
-        return Division::make();
+        return City::make();
     }
 
     public function render()
     {
-        return view('livewire.admin.divisions-datatable', [
+        return view('livewire.admin.cities-datatable', [
             'rows' => $this->rows
         ]);
     }

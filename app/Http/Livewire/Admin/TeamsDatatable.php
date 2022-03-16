@@ -152,10 +152,7 @@ class TeamsDatatable extends Component
     {
         $query = auth()->user()->teams()
             ->with(['owner:id,name', 'users:id,name', 'invites:id,team_id'])
-            ->when($this->filters['search'], function ($query, $search) {
-                $this->resetPage();
-                return $query->search($search);
-            })
+            ->when($this->filters['search'], fn ($query, $search) => $query->search($search))
             ->when($this->filters['date-min'], fn ($query, $date) => $query->where('created_at', '>=', Carbon::parse($date)))
             ->when($this->filters['date-max'], fn ($query, $date) => $query->where('created_at', '<=', Carbon::parse($date)));
 

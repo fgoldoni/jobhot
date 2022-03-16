@@ -40,6 +40,16 @@
                 {{ __('Countries') }}
             </x-sidebar-link>
 
+            <x-sidebar-link href="{{ route('admin.divisions') }}" :active="request()->routeIs('admin.divisions')">
+                <x-icon.globe :active="request()->routeIs('admin.divisions')"/>
+                {{ __('Divisions') }}
+            </x-sidebar-link>
+
+            <x-sidebar-link href="{{ route('admin.cities') }}" :active="request()->routeIs('admin.cities')">
+                <x-icon.globe :active="request()->routeIs('admin.cities')"/>
+                {{ __('Cities') }}
+            </x-sidebar-link>
+
         </div>
         <div class="space-y-1" x-data="{ open: false }">
             <!-- Current: "bg-gray-100 text-gray-900", Default: "bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
