@@ -50,6 +50,11 @@
                 {{ __('Cities') }}
             </x-sidebar-link>
 
+            <x-sidebar-link href="{{ route('log-viewer::logs.list') }}" :active="request()->routeIs('log-viewer::logs.list')" target="_blank">
+                <x-icon.globe :active="request()->routeIs('log-viewer::logs.list')"/>
+                {{ __('Logs') }}
+            </x-sidebar-link>
+
         </div>
         <div class="space-y-1" x-data="{ open: false }">
             <!-- Current: "bg-gray-100 text-gray-900", Default: "bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->

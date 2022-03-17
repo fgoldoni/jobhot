@@ -59,11 +59,7 @@ class Country extends Model
          * @var array
          */
         'columns' => [
-            'world_countries.id' => 10,
             'world_countries.name' => 10,
-            'world_countries.full_name' => 10,
-            'world_countries.capital' => 10,
-            'world_countries.code' => 10,
         ]
     ];
 

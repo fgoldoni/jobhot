@@ -15,8 +15,6 @@ trait WithCachedRows
         $cacheKey = $key ?? $this->id;
 
         if ($this->useCache && cache()->has($cacheKey)) {
-            info('yes');
-            info($cacheKey);
             return cache()->get($cacheKey);
         }
 
