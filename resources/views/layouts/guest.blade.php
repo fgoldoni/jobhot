@@ -12,7 +12,10 @@
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
 
         <!-- Styles -->
+        @livewireStyles
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
+        <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@1.2.3/dist/trix.css">
 
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
@@ -21,5 +24,13 @@
         <div class="font-sans text-gray-900 antialiased">
             {{ $slot }}
         </div>
+
+        @livewireScripts
+        <script src="https://unpkg.com/moment" ></script>
+        <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js" ></script>
+        <script src="https://unpkg.com/trix@1.2.3/dist/trix.js" ></script>
+        <script src="https://unpkg.com/taggle/src/taggle.js" ></script>
+
+        @stack('scripts')
     </body>
 </html>
