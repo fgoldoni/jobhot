@@ -98,6 +98,9 @@ class Company extends Model
         'columns' => [
             'companies.id' => 10,
             'companies.name' => 10,
+            'companies.email' => 10,
+            'companies.content' => 5,
+            'companies.state' => 5,
         ]
     ];
 

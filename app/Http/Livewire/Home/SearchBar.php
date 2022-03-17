@@ -22,7 +22,7 @@ class SearchBar extends Component
     }
     public function updatedSearch()
     {
-       $this->results =  Country::where('name', 'like', '%'.$this->search.'%')->orderBy('name')->get();
+       $this->results =  Country::search($this->search)->orderBy('name')->get();
        $this->showDropdown = true;
     }
 

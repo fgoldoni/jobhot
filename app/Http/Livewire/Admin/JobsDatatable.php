@@ -166,10 +166,11 @@ class JobsDatatable extends Component
     {
         $query = Job::withoutGlobalScope('team')
             ->with(['user:id,name', 'company:id,name', 'categories:id,name'])
-            ->when($this->filters['search'], fn ($query, $search) => $query->where('team_id', auth()->user()->currentTeam->getKey())->search($search))
+            ->when($this->filters['search'], fn ($query, $search) => $query->search($search))
             ->when($this->filters['state'], fn ($query, $state) => $query->where('state', $state))
             ->when($this->filters['date-min'], fn ($query, $date) => $query->where('created_at', '>=', Carbon::parse($date)))
-            ->when($this->filters['date-max'], fn ($query, $date) => $query->where('created_at', '<=', Carbon::parse($date)));
+            ->when($this->filters['date-max'], fn ($query, $date) => $query->where('created_at', '<=', Carbon::parse($date)))
+            ->where('team_id', auth()->user()->currentTeam->getKey());
 
         return $this->applySorting($query);
     }

@@ -60,6 +60,7 @@ class Country extends Model
          */
         'columns' => [
             'world_countries.name' => 10,
+            'world_countries.full_name' => 10,
         ]
     ];
 
