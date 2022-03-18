@@ -61,8 +61,8 @@
         @keydown.escape="onEscape()"
 
         @keydown.enter.stop.prevent="$dispatch('city-selected', {
-            id: $refs.results.children[highlightedIndex].getAttribute('data-result-id'),
-            name: $refs.results.children[highlightedIndex].getAttribute('data-result-name')
+            id: escape($refs.results.children[highlightedIndex].getAttribute('data-result-id')),
+            name: escape($refs.results.children[highlightedIndex].getAttribute('data-result-name'))
         })"
 
         x-ref="input"
@@ -117,7 +117,7 @@
 
                 @click.stop="$dispatch('city-selected', {
                     id: {{ $item->id }},
-                    name: '{{ $item->name }}'
+                    name: '{{ addslashes($item->name) }}'
                 })"
 
                 class="cursor-default select-none relative py-2 pl-3 pr-9"

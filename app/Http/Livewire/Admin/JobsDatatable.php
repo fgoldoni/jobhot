@@ -178,7 +178,7 @@ class JobsDatatable extends Component
     public function getRowsQueryProperty()
     {
         $query = Job::withoutGlobalScope('team')
-            ->with(['user:id,name', 'company:id,name', 'categories:id,name', 'country'])
+            ->with(['user:id,name', 'company:id,name', 'categories:id,name', 'country:id,name', 'city:id,name'])
             ->when($this->filters['search'], fn ($query, $search) => $query->search($search))
             ->when($this->filters['state'], fn ($query, $state) => $query->where('state', $state))
             ->when($this->filters['date-min'], fn ($query, $date) => $query->where('created_at', '>=', Carbon::parse($date)))
