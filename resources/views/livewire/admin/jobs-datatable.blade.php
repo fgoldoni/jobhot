@@ -152,7 +152,7 @@
                                                     </div>
                                                     <div class="text-gray-500">
                                                         <span class="truncate">
-                                                            {{ $row->country ? $row->country->emoji .' '. $row->country->name : '' }} / {{ $row->city ? $row->city->name : '' }}
+                                                            {{ $row->country ? $row->country->emoji .' '. $row->country->name : '' }}  {{ $row->city ? ' / ' . $row->city->name : '' }}
                                                         </span>
                                                     </div>
                                                 </div>
@@ -161,12 +161,10 @@
                                         <x-table.cell>
                                             @foreach ($row->categories as $category)
                                                 <p class="flex items-center">
-                                                    <x-icon.solid type="{{$category->icon}}" class="mr-1.5 h-5 w-5 text-gray-500"/>
-
-                                                    <span class="truncate text-gray-700">{{ $category->name }}</span>
+                                                    <span class="truncate text-gray-700">{{ $row->company ? $row->company->name : '' }}</span>
                                                 </p>
                                             @endforeach
-                                            <div class="text-gray-500">{{ $row->company ? $row->company->name : '' }}</div>
+                                            <div class="text-gray-500">by:  <x-button.link>{{ $row->user ? $row->user->name : '' }}</x-button.link></div>
                                         </x-table.cell>
                                         <x-table.cell>
                                             <div class="relative inline-flex items-center rounded-full border border-gray-300 px-3 py-0.5 m-1 cursor-pointer">
@@ -339,6 +337,8 @@
                                     @endif
                                 </div>
                             </div>
+
+
                             @if($showEditor)
                                 <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
                                     <x-label for="content" class="sm:mt-px sm:pt-2">{{ __('Content') }} </x-label>
