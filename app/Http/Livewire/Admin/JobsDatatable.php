@@ -5,7 +5,9 @@ use App\Enums\JobState;
 use App\Http\Livewire\Admin\Datatable\WithBulkActions;
 use App\Http\Livewire\Admin\Datatable\WithCachedRows;
 use App\Http\Livewire\Admin\Datatable\WithCategories;
+use App\Http\Livewire\Admin\Datatable\WithCities;
 use App\Http\Livewire\Admin\Datatable\WithCompanies;
+use App\Http\Livewire\Admin\Datatable\WithCountries;
 use App\Http\Livewire\Admin\Datatable\WithPerPagePagination;
 use App\Http\Livewire\Admin\Datatable\WithSorting;
 use App\Models\Job;
@@ -24,7 +26,12 @@ class JobsDatatable extends Component
     use WithCachedRows;
     use WithFileUploads;
     use WithCategories;
+
     use WithCompanies;
+
+    use WithCountries;
+
+    use WithCities;
 
     public bool $showDeleteModal = false;
 
@@ -64,6 +71,8 @@ class JobsDatatable extends Component
             'editing.content' => ['required', 'string', 'min:4'],
             'editing.user_id' => 'required',
             'editing.company_id' => 'required',
+            'editing.country_id' => 'required',
+            'editing.city_id' => 'required',
             'selectedItem' => 'required|integer|exists:categories,id',
             'selectedState' => 'required',
             'avatar' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
@@ -118,9 +127,13 @@ class JobsDatatable extends Component
         $this->resetValidation();
 
         if ($this->editing->isNot($job)) {
-            $this->editing = $job->load('company');
+            $this->editing = $job->load(['company', 'country', 'city']);
 
             $this->avatar = null;
+
+            $this->setDefaultCountry();
+
+            $this->setDefaultCity();
 
             $this->setDefaultCategory();
 
@@ -165,7 +178,7 @@ class JobsDatatable extends Component
     public function getRowsQueryProperty()
     {
         $query = Job::withoutGlobalScope('team')
-            ->with(['user:id,name', 'company:id,name', 'categories:id,name'])
+            ->with(['user:id,name', 'company:id,name', 'categories:id,name', 'country'])
             ->when($this->filters['search'], fn ($query, $search) => $query->search($search))
             ->when($this->filters['state'], fn ($query, $state) => $query->where('state', $state))
             ->when($this->filters['date-min'], fn ($query, $date) => $query->where('created_at', '>=', Carbon::parse($date)))

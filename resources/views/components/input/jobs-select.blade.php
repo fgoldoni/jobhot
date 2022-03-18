@@ -17,16 +17,16 @@
         if (this.highlightedIndex > 0) {
           this.highlightedIndex = this.highlightedIndex - 1;
         } else {
-            let jobs = this.$refs.results.childNodes[3].children.length
-            let companies = this.$refs.results.childNodes[7].children.length
+            let jobs = this.$refs.results.childNodes[3].children.length;
+            let companies = this.$refs.results.childNodes[7] ? this.$refs.results.childNodes[7].children.length : 0;
             this.highlightedIndex = companies + jobs - 1;
         }
         this.scrollIntoView();
       },
 
       highlightNext() {
-        let jobs = this.$refs.results.childNodes[3].children.length
-        let companies = this.$refs.results.childNodes[7].children.length
+        let jobs = this.$refs.results.childNodes[3].children.length;
+        let companies = this.$refs.results.childNodes[7] ? this.$refs.results.childNodes[7].children.length : 0;
 
         if (this.highlightedIndex < (jobs + companies) - 1) {
           this.highlightedIndex = this.highlightedIndex + 1;

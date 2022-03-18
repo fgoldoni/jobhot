@@ -44,14 +44,12 @@ class SearchBar extends Component
        $this->jobs =  Job::withoutGlobalScope('team')
            ->with(['categories'])
            ->search($this->searchJob)
-           ->where('team_id', auth()->user()->currentTeam->getKey())
            ->take(5)
            ->get()->sortBy('name')->toArray();
 
        $companies =  Company::withoutGlobalScope('team')
            ->with(['categories'])
            ->search($this->searchJob)
-           ->where('team_id', auth()->user()->currentTeam->getKey())
            ->take(5)
            ->get()->sortBy('name')->toArray();
 

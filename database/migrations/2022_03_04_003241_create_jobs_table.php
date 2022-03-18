@@ -25,6 +25,9 @@ return new class extends Migration
 
 
             $table->foreignId('user_id')->unsigned()->index()->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('country_id')->nullable()->unsigned()->index()->references('id')->on('world_countries')->cascadeOnDelete();
+            $table->foreignId('division_id')->nullable()->unsigned()->index()->references('id')->on('world_divisions')->cascadeOnDelete();
+            $table->foreignId('city_id')->nullable()->unsigned()->index()->references('id')->on('world_cities')->cascadeOnDelete();
             $table->softDeletes();
             $table->timestamps();
 

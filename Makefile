@@ -53,16 +53,11 @@ migrate: optimize ## migrate
 
 refresh: migrate ## refresh + php artisan module:seed Admin & php artisan module:seed Support
 	## php artisan world:init
-	php artisan module:migrate-refresh Roles
-	php artisan module:migrate-refresh Users
 	## php artisan module:migrate-refresh Categories
-	php artisan module:migrate-refresh Settings
 	## php artisan module:migrate-refresh Companies
 	## php artisan module:migrate-refresh Jobs
-	php artisan module:seed Roles
-	php artisan module:seed Users
+	php artisan module:seed Countries
 	## php artisan module:seed Categories
-	php artisan module:seed Settings
 	## php artisan module:seed Companies
 	## php artisan module:seed Jobs
 	## php artisan module:seed Posts
