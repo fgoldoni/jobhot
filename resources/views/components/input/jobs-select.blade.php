@@ -56,6 +56,14 @@
          this.$refs.input.focus()
       },
 
+      getAttribute(name) {
+           if (this.highlightedIndex < this.$refs.results.childNodes[3].children.length) {
+                return this.$refs.results.childNodes[3].children[this.highlightedIndex].getAttribute(name);
+            } else {
+                return this.$refs.results.childNodes[7].children[this.highlightedIndex - this.$refs.results.childNodes[3].children.length].getAttribute(name);
+           }
+      },
+
       updateSelected(id, name) {
         this.selected = id;
         this.searchJob = name;
@@ -78,8 +86,8 @@
         @keydown.escape="onEscape()"
 
         @keydown.enter.stop.prevent="$dispatch('value-selected', {
-            id: $refs.results.children[highlightedIndex].getAttribute('data-result-id'),
-            name: $refs.results.children[highlightedIndex].getAttribute('data-result-name')
+            id: getAttribute('data-result-id'),
+            name: getAttribute('data-result-name')
         })"
 
         x-ref="input"
@@ -115,14 +123,11 @@
                     $chunks = collect($items)->chunkWhile(function ($value, $key, $chunk) {
                         return array_key_exists('company_id', $value) === array_key_exists('company_id', $chunk->last());
                     });
-
-                    $labels = ['Jobs', 'Companies'];
-
                 @endphp
 
                 @forelse($chunks as $key => $chunk)
 
-                    <h2 class="bg-gray-100 py-4 px-4 text-xs font-semibold text-gray-900">{{ $labels[$key] }}</h2>
+                    <h2 class="bg-gray-100 py-4 px-4 text-xs font-semibold text-gray-900">{{ array_key_exists('company_id', $chunk->first()) ? 'Jobs' : 'Companies' }}</h2>
                     <ul class="mt-2 text-sm text-gray-800">
                         @foreach ($chunk as $index => $item)
                             <li
@@ -157,7 +162,7 @@
                                     <p
                                         :class="{ 'text-gray-900': highlightedIndex === {{ $index }}, 'text-gray-700': !(highlightedIndex === {{ $index }}) }"
                                         class="text-sm font-medium">
-                                        {{ $item['name'] }}-{{ $index }}
+                                        {{ $item['name'] }}
                                     </p>
                                     <!-- Active: "text-gray-700", Not Active: "text-gray-500" -->
                                     <p
@@ -172,14 +177,6 @@
                 @empty
                 @endforelse
 
-        </li>
-        <li>
-            <h2 class="bg-gray-100 py-4 px-4 text-xs font-semibold text-gray-900">Projects</h2>
-            <ul class="mt-2 text-sm text-gray-800">
-                <!-- Active: "bg-indigo-600 text-white" -->
-                <li class="cursor-default select-none px-4 py-2" id="option-3" role="option" tabindex="-1">Workflow Inc. / Website Redesign</li>
-                <li class="cursor-default select-none px-4 py-2" id="option-3" role="option" tabindex="-1">Multinational LLC. / Animation</li>
-            </ul>
         </li>
 
         @unless($items)
