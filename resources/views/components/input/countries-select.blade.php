@@ -5,11 +5,11 @@
 
     x-data="{
 
-      open: @entangle('showDropdown'),
+      open: @entangle('showCountryDropdown'),
 
-      search: @entangle('search'),
+      searchCountry: @entangle('searchCountry'),
 
-      selected: @entangle('selected'),
+      selected: @entangle('selectedCountry'),
 
       highlightedIndex: 0,
 
@@ -39,19 +39,19 @@
          this.$refs.input.focus()
       },
 
-      updateSelected(id, name) {
+      updateSelectedCountry(id, name) {
         this.selected = id;
-        this.search = name;
+        this.searchCountry = name;
         this.open = false;
         this.highlightedIndex = 0;
       },
 
      }"
 
-     @value-selected.window="updateSelected($event.detail.id, $event.detail.name)">
+     @country-selected.window="updateSelectedCountry($event.detail.id, $event.detail.name)">
 
     <input
-        wire:model.debounce.300ms="search"
+        wire:model.debounce.300ms="searchCountry"
 
         @keydown.arrow-down.stop.prevent="highlightNext()"
 
@@ -59,7 +59,7 @@
 
         @keydown.escape="onEscape()"
 
-        @keydown.enter.stop.prevent="$dispatch('value-selected', {
+        @keydown.enter.stop.prevent="$dispatch('country-selected', {
             id: $refs.results.children[highlightedIndex].getAttribute('data-result-id'),
             name: $refs.results.children[highlightedIndex].getAttribute('data-result-name')
         })"
@@ -114,7 +114,7 @@
 
                 data-result-name="{{ $item->name }}"
 
-                @click.stop="$dispatch('value-selected', {
+                @click.stop="$dispatch('country-selected', {
                     id: {{ $item->id }},
                     name: '{{ $item->name }}'
                 })"
