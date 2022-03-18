@@ -16,22 +16,39 @@
       highlightPrevious() {
         if (this.highlightedIndex > 0) {
           this.highlightedIndex = this.highlightedIndex - 1;
-          this.scrollIntoView();
+        } else {
+            let jobs = this.$refs.results.childNodes[3].children.length
+            let companies = this.$refs.results.childNodes[7].children.length
+            this.highlightedIndex = companies + jobs - 1;
         }
+        this.scrollIntoView();
       },
 
       highlightNext() {
-        if (this.highlightedIndex < this.$refs.results.children.length - 1) {
+        let jobs = this.$refs.results.childNodes[3].children.length
+        let companies = this.$refs.results.childNodes[7].children.length
+
+        if (this.highlightedIndex < (jobs + companies) - 1) {
           this.highlightedIndex = this.highlightedIndex + 1;
-          this.scrollIntoView();
+        } else {
+            this.highlightedIndex = 0;
         }
+        this.scrollIntoView();
       },
 
       scrollIntoView() {
-        this.$refs.results.children[this.highlightedIndex].scrollIntoView({
-          block: 'nearest',
-          behavior: 'smooth'
-        });
+        if (this.highlightedIndex < this.$refs.results.childNodes[3].children.length) {
+            this.$refs.results.childNodes[3].children[this.highlightedIndex].scrollIntoView({
+              block: 'nearest',
+              behavior: 'smooth'
+            });
+        } else {
+             this.$refs.results.childNodes[7].children[this.highlightedIndex - this.$refs.results.childNodes[3].children.length].scrollIntoView({
+              block: 'nearest',
+              behavior: 'smooth'
+            });
+        }
+
       },
 
       onEscape() {
@@ -92,22 +109,21 @@
 
         role="listbox">
 
-        <li>
+        <li x-ref="results">
 
                 @php
                     $chunks = collect($items)->chunkWhile(function ($value, $key, $chunk) {
                         return array_key_exists('company_id', $value) === array_key_exists('company_id', $chunk->last());
                     });
 
+                    $labels = ['Jobs', 'Companies'];
+
                 @endphp
+
                 @forelse($chunks as $key => $chunk)
 
-                @php
-                    $chunk = collect($chunk)->sortBy('name');
-                @endphp
-
-                    <h2 class="bg-gray-100 py-4 px-4 text-xs font-semibold text-gray-900">{{ $key }}</h2>
-                    <ul class="mt-2 text-sm text-gray-800" x-ref="results">
+                    <h2 class="bg-gray-100 py-4 px-4 text-xs font-semibold text-gray-900">{{ $labels[$key] }}</h2>
+                    <ul class="mt-2 text-sm text-gray-800">
                         @foreach ($chunk as $index => $item)
                             <li
                                 wire:key="{{ $index }}"
@@ -123,9 +139,9 @@
                                 data-result-name="{{ $item['name'] }}"
 
                                 @click.stop="$dispatch('value-selected', {
-                                id: {{ $item['id'] }},
-                                name: '{{ $item['name'] }}'
-                            })"
+                                    id: {{ $item['id'] }},
+                                    name: '{{ $item['name'] }}'
+                                })"
 
                                 class="group flex cursor-default select-none rounded-xl p-3"
 
