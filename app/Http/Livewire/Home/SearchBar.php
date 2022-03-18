@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Home;
 
+use App\Models\Company;
 use App\Models\Job;
 use Livewire\Component;
 use Modules\Countries\Entities\Country;
@@ -29,7 +30,7 @@ class SearchBar extends Component
     {
         $this->countries = collect();
 
-        $this->jobs = collect();
+        $this->jobs = [];
     }
 
     public function updatedSearchCountry()
@@ -41,12 +42,21 @@ class SearchBar extends Component
     public function updatedSearchJob()
     {
        $this->jobs =  Job::withoutGlobalScope('team')
-           ->with(['company', 'categories'])
+           ->with(['categories'])
            ->search($this->searchJob)
-           ->orderBy('name')
            ->where('team_id', auth()->user()->currentTeam->getKey())
            ->take(5)
-           ->get();
+           ->get()->sortBy('name')->toArray();
+
+       $companies =  Company::withoutGlobalScope('team')
+           ->with(['categories'])
+           ->search($this->searchJob)
+           ->where('team_id', auth()->user()->currentTeam->getKey())
+           ->take(5)
+           ->get()->sortBy('name')->toArray();
+
+        $this->jobs = array_merge($this->jobs, $companies);
+
        $this->showJobDropdown = true;
     }
 

@@ -93,54 +93,69 @@
         role="listbox">
 
         <li>
-            <h2 class="bg-gray-100 py-4 px-4 text-xs font-semibold text-gray-900">Clients</h2>
-            <ul class="mt-2 text-sm text-gray-800" x-ref="results">
-                @forelse($items as $index => $item)
-                    <li
-                        wire:key="{{ $index }}"
 
-                        @mouseenter="highlightedIndex = {{ $index }}"
+                @php
+                    $chunks = collect($items)->chunkWhile(function ($value, $key, $chunk) {
+                        return array_key_exists('company_id', $value) === array_key_exists('company_id', $chunk->last());
+                    });
 
-                        @mouseleave="highlightedIndex = null"
+                @endphp
+                @forelse($chunks as $key => $chunk)
 
-                        :class="{ 'bg-gray-100': highlightedIndex === {{ $index }}, '': !(highlightedIndex === {{ $index }}) }"
+                @php
+                    $chunk = collect($chunk)->sortBy('name');
+                @endphp
 
-                        data-result-id="{{ $item->id }}"
+                    <h2 class="bg-gray-100 py-4 px-4 text-xs font-semibold text-gray-900">{{ $key }}</h2>
+                    <ul class="mt-2 text-sm text-gray-800" x-ref="results">
+                        @foreach ($chunk as $index => $item)
+                            <li
+                                wire:key="{{ $index }}"
 
-                        data-result-name="{{ $item->name }}"
+                                @mouseenter="highlightedIndex = {{ $index }}"
 
-                        @click.stop="$dispatch('value-selected', {
-                            id: {{ $item->id }},
-                            name: '{{ $item->name }}'
-                        })"
+                                @mouseleave="highlightedIndex = null"
 
-                        class="group flex cursor-default select-none rounded-xl p-3"
+                                :class="{ 'bg-gray-100': highlightedIndex === {{ $index }}, '': !(highlightedIndex === {{ $index }}) }"
 
-                        id="option-1"
+                                data-result-id="{{ $item['id'] }}"
 
-                        role="option"
+                                data-result-name="{{ $item['name'] }}"
 
-                        tabindex="-1">
+                                @click.stop="$dispatch('value-selected', {
+                                id: {{ $item['id'] }},
+                                name: '{{ $item['name'] }}'
+                            })"
 
-                        <img class="flex flex-none h-10 w-10 rounded-full" src="{{ $item->avatar_url }}" alt="{{ $item->name }}">
-                        <div class="ml-4 flex-auto">
-                            <!-- Active: "text-gray-900", Not Active: "text-gray-700" -->
-                            <p
-                                :class="{ 'text-gray-900': highlightedIndex === {{ $index }}, 'text-gray-700': !(highlightedIndex === {{ $index }}) }"
-                                class="text-sm font-medium">
-                                {{ $item->name }}
-                            </p>
-                            <!-- Active: "text-gray-700", Not Active: "text-gray-500" -->
-                            <p
-                                :class="{ 'text-gray-700': highlightedIndex === {{ $index }}, 'text-gray-500': !(highlightedIndex === {{ $index }}) }"
-                                class="text-sm">
-                                {{ $item->categories->first() ? $item->categories->first()->name : '' }}
-                            </p>
-                        </div>
-                    </li>
+                                class="group flex cursor-default select-none rounded-xl p-3"
+
+                                id="option-1"
+
+                                role="option"
+
+                                tabindex="-1">
+
+                                <img class="flex flex-none h-10 w-10 rounded-full" src="{{ $item['avatar_url'] }}" alt="{{ $item['name'] }}">
+                                <div class="ml-4 flex-auto">
+                                    <!-- Active: "text-gray-900", Not Active: "text-gray-700" -->
+                                    <p
+                                        :class="{ 'text-gray-900': highlightedIndex === {{ $index }}, 'text-gray-700': !(highlightedIndex === {{ $index }}) }"
+                                        class="text-sm font-medium">
+                                        {{ $item['name'] }}-{{ $index }}
+                                    </p>
+                                    <!-- Active: "text-gray-700", Not Active: "text-gray-500" -->
+                                    <p
+                                        :class="{ 'text-gray-700': highlightedIndex === {{ $index }}, 'text-gray-500': !(highlightedIndex === {{ $index }}) }"
+                                        class="text-sm">
+                                        {{ isset($item['categories'][0]) ? $item['categories'][0]['name'] : '' }}
+                                    </p>
+                                </div>
+                            </li>
+                        @endforeach
+                    </ul>
                 @empty
                 @endforelse
-            </ul>
+
         </li>
         <li>
             <h2 class="bg-gray-100 py-4 px-4 text-xs font-semibold text-gray-900">Projects</h2>
