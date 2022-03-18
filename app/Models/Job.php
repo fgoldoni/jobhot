@@ -151,4 +151,9 @@ class Job extends Model
     {
         return $this->belongsTo(City::class);
     }
+    public function scopePublished($query)
+    {
+        return $query->where('state', JobState::Published);
+    }
+
 }
