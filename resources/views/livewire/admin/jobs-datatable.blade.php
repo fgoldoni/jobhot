@@ -152,7 +152,7 @@
                                                     </div>
                                                     <div class="text-gray-500">
                                                         <span class="truncate">
-                                                            {{ $row->country ? $row->country->emoji .' '. $row->country->name : '' }}  {{ $row->city ? ' / ' . $row->city->name : '' }}
+                                                            {{ $row->country ? $row->country->emoji .' '. $row->country->name : '' }}  {{ $row->city ? ' / ' . $row->city->name : '' }} {{ $row->division ? ' / ' . $row->division->name : '' }}
                                                         </span>
                                                     </div>
                                                 </div>
@@ -294,16 +294,27 @@
                                     @endif
                                 </div>
                             </div>
-
-                            <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
-                                <x-label for="name" class="sm:mt-px sm:pt-2">{{ __('Cities') }} </x-label>
-                                <div class="mt-1 sm:mt-0 sm:col-span-2">
-                                    <x-input.admin-cities-select :items="$cities" wire:model="editing.city_id" wire:key="search-cities"></x-input.admin-cities-select>
-                                    @if ($errors->has('editing.city_id'))
-                                        <p class="mt-2 text-sm text-red-600">{{ $errors->first('editing.city_id') }}</p>
-                                    @endif
+                            @if($showCityField)
+                                <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
+                                    <x-label for="name" class="sm:mt-px sm:pt-2">{{ __('Cities') }} </x-label>
+                                    <div class="mt-1 sm:mt-0 sm:col-span-2">
+                                        <x-input.admin-cities-select :items="$cities" wire:model="editing.city_id" wire:key="search-cities"></x-input.admin-cities-select>
+                                        @if ($errors->has('editing.city_id'))
+                                            <p class="mt-2 text-sm text-red-600">{{ $errors->first('editing.city_id') }}</p>
+                                        @endif
+                                    </div>
                                 </div>
-                            </div>
+                            @else
+                                <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
+                                    <x-label for="name" class="sm:mt-px sm:pt-2">{{ __('Division') }} </x-label>
+                                    <div class="mt-1 sm:mt-0 sm:col-span-2">
+                                        <x-input.admin-divisions-select :items="$divisions" wire:model="editing.division_id" wire:key="search-divisions"></x-input.admin-divisions-select>
+                                        @if ($errors->has('editing.division_id'))
+                                            <p class="mt-2 text-sm text-red-600">{{ $errors->first('editing.division_id') }}</p>
+                                        @endif
+                                    </div>
+                                </div>
+                            @endif
 
                             <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
                                 <x-label for="name" class="sm:mt-px sm:pt-2">{{ __('Area') }} </x-label>

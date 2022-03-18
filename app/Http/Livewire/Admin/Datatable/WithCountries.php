@@ -10,6 +10,8 @@ trait WithCountries
 
     public bool $showCountryDropdown = false;
 
+    public bool $showCityField = true;
+
     public $countries;
 
     public function mountWithCountries()
@@ -27,6 +29,10 @@ trait WithCountries
     public function updated($value)
     {
         if ($value === 'editing.country_id') {
+            if ($this->editing->country_id) {
+                $this->showCityField = !$this->editing->country()->first()->has_division;
+            }
+
             $this->dispatchBrowserEvent('reset-cities');
         }
     }

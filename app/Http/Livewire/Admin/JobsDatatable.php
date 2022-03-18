@@ -8,6 +8,7 @@ use App\Http\Livewire\Admin\Datatable\WithCategories;
 use App\Http\Livewire\Admin\Datatable\WithCities;
 use App\Http\Livewire\Admin\Datatable\WithCompanies;
 use App\Http\Livewire\Admin\Datatable\WithCountries;
+use App\Http\Livewire\Admin\Datatable\WithDivisions;
 use App\Http\Livewire\Admin\Datatable\WithPerPagePagination;
 use App\Http\Livewire\Admin\Datatable\WithSorting;
 use App\Models\Job;
@@ -32,6 +33,8 @@ class JobsDatatable extends Component
     use WithCountries;
 
     use WithCities;
+
+    use WithDivisions;
 
     public bool $showDeleteModal = false;
 
@@ -70,9 +73,10 @@ class JobsDatatable extends Component
             'editing.name' => ['required', 'string', 'max:255'],
             'editing.content' => ['required', 'string', 'min:4'],
             'editing.user_id' => 'required',
-            'editing.company_id' => 'required',
-            'editing.country_id' => 'required',
-            'editing.city_id' => 'required',
+            'editing.company_id' => 'required|integer',
+            'editing.country_id' => 'required|integer',
+            'editing.division_id' => 'nullable|integer',
+            'editing.city_id' => 'nullable|integer',
             'selectedItem' => 'required|integer|exists:categories,id',
             'selectedState' => 'required',
             'avatar' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
@@ -133,7 +137,16 @@ class JobsDatatable extends Component
 
             $this->setDefaultCountry();
 
-            $this->setDefaultCity();
+            if($this->editing->country()->first() && $this->editing->country()->first()->has_division)
+            {
+                $this->setDefaultDivision();
+            } else {
+                $this->setDefaultCity();
+            }
+
+
+
+
 
             $this->setDefaultCategory();
 

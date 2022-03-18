@@ -25,13 +25,17 @@ trait WithCities
 
     public function updatedSearchCity()
     {
-        if (is_null($this->editing->country_id) || strlen($this->searchCity) < 1) {
+        $this->editing->load('country');
+
+
+        if (is_null($this->editing->country_id) || $this->editing->country->has_division || strlen($this->searchCity) < 1) {
             $this->cities = collect();
+
             $this->showCityDropdown = false;
             return;
         }
 
-        $this->cities =  City::search($this->searchCity)->where('country_id', $this->editing->country_id)->orderBy('name')->get();
+        $this->cities =  $this->editing->country->cities()->search($this->searchCity)->orderBy('name')->get();
 
         $this->showCityDropdown = true;
 
@@ -39,6 +43,7 @@ trait WithCities
 
     public function setDefaultCity()
     {
+        $this->showCityField = true;
         $this->searchCity = $this->editing->city ? $this->editing->city->name : '';
     }
 }
