@@ -28,6 +28,11 @@ return new class extends Migration
             $table->foreignId('country_id')->nullable()->unsigned()->index()->references('id')->on('world_countries')->cascadeOnDelete();
             $table->foreignId('division_id')->nullable()->unsigned()->index()->references('id')->on('world_divisions')->cascadeOnDelete();
             $table->foreignId('city_id')->nullable()->unsigned()->index()->references('id')->on('world_cities')->cascadeOnDelete();
+            $table->date('closing_to')->default(now()->addMonth());
+            $table->date('featured_to')->nullable();
+            $table->date('urgent_to')->nullable();
+            $table->date('highlight_to')->nullable();
+
             $table->softDeletes();
             $table->timestamps();
 

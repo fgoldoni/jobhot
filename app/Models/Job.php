@@ -84,7 +84,11 @@ class Job extends Model
     public array $translatable = ['name'];
 
     protected $casts = [
-        'state' => JobState::class
+        'state' => JobState::class,
+        'closing_to' => 'date',
+        'featured_to' => 'date',
+        'urgent_to' => 'date',
+        'highlight_to' => 'date'
     ];
 
     /**

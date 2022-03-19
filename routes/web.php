@@ -28,7 +28,11 @@ Route::get('/home', function () {
 
 Route::get('/jobs', function () {
     return view('jobs');
-});
+})->name('jobs');
+
+Route::get('/jobs/{slug}', function () {
+    return view('jobs.job');
+})->name('jobs.job');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
