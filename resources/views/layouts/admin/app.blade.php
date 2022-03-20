@@ -139,6 +139,7 @@
                         <div>
                             <p class="text-sm font-medium text-gray-700 group-hover:text-gray-900">JobHot by Goldoni</p>
                             <p class="text-xs font-medium text-gray-500 group-hover:text-gray-700">Version: 1.0</p>
+                            <p class="text-xs font-medium text-gray-500 group-hover:text-gray-700">Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})</p>
                         </div>
                     </div>
                 </a>
