@@ -1,94 +1,234 @@
-<div class="">
-    <!-- This example requires Tailwind CSS v2.0+ -->
-    <!-- This example requires Tailwind CSS v2.0+ -->
-    <div class="bg-white shadow overflow-hidden sm:rounded-md">
-        <ul role="list" class="divide-y space-y-5 p-4 divide-gray-200">
-            @forelse($rows as $row)
-                <li class="relative">
-                    <a href="{{ route('jobs.job', ['slug' => $row->slug]) }}" class="{{ $row->highlight ? 'bg-yellow-50 hover:border-yellow-400' : 'bg-white hover:bg-gray-50 hover:border-indigo-400'}} block shadow-lg hover:shadow-2xl hover:border-l-4 hover:-translate-y-2 hover:scale-y-105 ease-in-out delay-150 duration-300">
-                        <div class="px-4 py-4 sm:px-6 space-y-5">
-                            <div class="flex items-center justify-between">
-                                <div class="text-sm font-medium truncate">
-                                    <div class="flex items-center">
-                                        <div class="h-10 w-10 flex-shrink-0">
-                                            <img class="h-10 w-10 rounded-full" src="{{ $row->avatar_url }}" alt="{{ $row->name }}">
+<section>
+    <div>
+        <div x-data="{ open: false }" @keydown.window.escape="open = false">
+            <!--
+              Mobile filter dialog
+
+              Off-canvas filters for mobile, show/hide based on off-canvas filters state.
+            -->
+            <x-jobs.filter-mobile-section></x-jobs.filter-mobile-section>
+
+
+            <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <x-jobs.jobs-top-bar></x-jobs.jobs-top-bar>
+
+                <section aria-labelledby="products-heading" class="pt-6 pb-24">
+                    <h2 id="products-heading" class="sr-only">Products</h2>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-4 gap-x-8 gap-y-10">
+                        <!-- Filters -->
+                        <form class="hidden bg-white p-5 lg:block">
+                            <h3 class="sr-only">Categories</h3>
+                            <ul role="list" class="text-sm font-medium text-gray-900 space-y-4 pb-6 border-b border-gray-200">
+                                <li>
+                                    <a href="#"> Totes </a>
+                                </li>
+
+                                <li>
+                                    <a href="#"> Backpacks </a>
+                                </li>
+
+                                <li>
+                                    <a href="#"> Travel Bags </a>
+                                </li>
+
+                                <li>
+                                    <a href="#"> Hip Bags </a>
+                                </li>
+
+                                <li>
+                                    <a href="#"> Laptop Sleeves </a>
+                                </li>
+                            </ul>
+
+                            <div class="border-b border-gray-200 py-6">
+                                <h3 class="-my-3 flow-root">
+                                    <!-- Expand/collapse section button -->
+                                    <button type="button" class="py-3 bg-white w-full flex items-center justify-between text-sm text-gray-400 hover:text-gray-500" aria-controls="filter-section-0" aria-expanded="false">
+                                        <span class="font-medium text-gray-900"> Color </span>
+                                        <span class="ml-6 flex items-center">
+                    <!--
+                      Expand icon, show/hide based on section open state.
+
+                      Heroicon name: solid/plus-sm
+                    -->
+                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                      <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
+                    </svg>
+                                            <!--
+                                              Collapse icon, show/hide based on section open state.
+
+                                              Heroicon name: solid/minus-sm
+                                            -->
+                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                      <path fill-rule="evenodd" d="M5 10a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1z" clip-rule="evenodd" />
+                    </svg>
+                  </span>
+                                    </button>
+                                </h3>
+                                <!-- Filter section, show/hide based on section state. -->
+                                <div class="pt-6" id="filter-section-0">
+                                    <div class="space-y-4">
+                                        <div class="flex items-center">
+                                            <input id="filter-color-0" name="color[]" value="white" type="checkbox" class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
+                                            <label for="filter-color-0" class="ml-3 text-sm text-gray-600"> White </label>
                                         </div>
-                                        <div class="ml-4 space-y-1">
-                                            <div class="font-medium text-indigo-600">{{ $row->name }}</div>
-                                            <div class="flex items-center">
-                                                <span class="font-medium text-gray-900">{{ $row->company->name }}</span>
-                                                <span class="{{ $row->company ? 'ml-1' : ''}} flex items-center">
-                                                     <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 transition mr-1.5 h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                                        <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                                                    </svg>
-                                                     <span class="text-gray-500">
-                                                        {{ $row->created_at->diffForHumans() }}
-                                                    </span>
-                                                </span>
-                                            </div>
+
+                                        <div class="flex items-center">
+                                            <input id="filter-color-1" name="color[]" value="beige" type="checkbox" class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
+                                            <label for="filter-color-1" class="ml-3 text-sm text-gray-600"> Beige </label>
+                                        </div>
+
+                                        <div class="flex items-center">
+                                            <input id="filter-color-2" name="color[]" value="blue" type="checkbox" checked class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
+                                            <label for="filter-color-2" class="ml-3 text-sm text-gray-600"> Blue </label>
+                                        </div>
+
+                                        <div class="flex items-center">
+                                            <input id="filter-color-3" name="color[]" value="brown" type="checkbox" class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
+                                            <label for="filter-color-3" class="ml-3 text-sm text-gray-600"> Brown </label>
+                                        </div>
+
+                                        <div class="flex items-center">
+                                            <input id="filter-color-4" name="color[]" value="green" type="checkbox" class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
+                                            <label for="filter-color-4" class="ml-3 text-sm text-gray-600"> Green </label>
+                                        </div>
+
+                                        <div class="flex items-center">
+                                            <input id="filter-color-5" name="color[]" value="purple" type="checkbox" class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
+                                            <label for="filter-color-5" class="ml-3 text-sm text-gray-600"> Purple </label>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="ml-2 flex-shrink-0 flex self-stretch">
-                                    <p>
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Full-time</span>
-                                    </p>
+                            </div>
 
-                                </div>
-                            </div>
-                            <div class="mt-2 sm:flex text-justify text-gray-500">
-                                {{  Str::limit($row->content, 400, ' ...') }}
-                            </div>
-                            <div class="mt-2 sm:flex sm:justify-between">
-                                <div class="sm:flex">
-                                    @if($row->categories->first())
-                                        <p class="flex items-center text-sm text-gray-500">
-                                            <!-- Heroicon name: solid/users -->
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                                <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" />
-                                            </svg>
-                                            {{ $row->categories->first()->name }}
-                                        </p>
-                                    @endif
+                            <div class="border-b border-gray-200 py-6">
+                                <h3 class="-my-3 flow-root">
+                                    <!-- Expand/collapse section button -->
+                                    <button type="button" class="py-3 bg-white w-full flex items-center justify-between text-sm text-gray-400 hover:text-gray-500" aria-controls="filter-section-1" aria-expanded="false">
+                                        <span class="font-medium text-gray-900"> Category </span>
+                                        <span class="ml-6 flex items-center">
+                    <!--
+                      Expand icon, show/hide based on section open state.
 
-                                    @if($row->country_id)
-                                        <p class="mt-2 flex items-center text-sm text-gray-500 sm:mt-0 sm:ml-6">
-                                            <!-- Heroicon name: solid/location-marker -->
-                                            <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
-                                            </svg>
-                                            {{ $row->country->name }}{{ $row->city_id || $row->division_id ? ', ' : '' }}
-                                            {{ $row->city->name }}
-                                            {{ $row->division->name }}
-                                        </p>
-                                    @endif
-                                </div>
-                                <div class="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
-                                    <!-- Heroicon name: solid/calendar -->
-                                    <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                        <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
-                                    </svg>
-                                    <p>
-                                        Closing on
-                                        <time datetime="2020-01-14">{{ $row->closing_to_formatted }}</time>
-                                    </p>
+                      Heroicon name: solid/plus-sm
+                    -->
+                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                      <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
+                    </svg>
+                                            <!--
+                                              Collapse icon, show/hide based on section open state.
+
+                                              Heroicon name: solid/minus-sm
+                                            -->
+                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                      <path fill-rule="evenodd" d="M5 10a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1z" clip-rule="evenodd" />
+                    </svg>
+                  </span>
+                                    </button>
+                                </h3>
+                                <!-- Filter section, show/hide based on section state. -->
+                                <div class="pt-6" id="filter-section-1">
+                                    <div class="space-y-4">
+                                        <div class="flex items-center">
+                                            <input id="filter-category-0" name="category[]" value="new-arrivals" type="checkbox" class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
+                                            <label for="filter-category-0" class="ml-3 text-sm text-gray-600"> New Arrivals </label>
+                                        </div>
+
+                                        <div class="flex items-center">
+                                            <input id="filter-category-1" name="category[]" value="sale" type="checkbox" class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
+                                            <label for="filter-category-1" class="ml-3 text-sm text-gray-600"> Sale </label>
+                                        </div>
+
+                                        <div class="flex items-center">
+                                            <input id="filter-category-2" name="category[]" value="travel" type="checkbox" checked class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
+                                            <label for="filter-category-2" class="ml-3 text-sm text-gray-600"> Travel </label>
+                                        </div>
+
+                                        <div class="flex items-center">
+                                            <input id="filter-category-3" name="category[]" value="organization" type="checkbox" class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
+                                            <label for="filter-category-3" class="ml-3 text-sm text-gray-600"> Organization </label>
+                                        </div>
+
+                                        <div class="flex items-center">
+                                            <input id="filter-category-4" name="category[]" value="accessories" type="checkbox" class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
+                                            <label for="filter-category-4" class="ml-3 text-sm text-gray-600"> Accessories </label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+
+                            <div class="border-b border-gray-200 py-6">
+                                <h3 class="-my-3 flow-root">
+                                    <!-- Expand/collapse section button -->
+                                    <button type="button" class="py-3 bg-white w-full flex items-center justify-between text-sm text-gray-400 hover:text-gray-500" aria-controls="filter-section-2" aria-expanded="false">
+                                        <span class="font-medium text-gray-900"> Size </span>
+                                        <span class="ml-6 flex items-center">
+                    <!--
+                      Expand icon, show/hide based on section open state.
+
+                      Heroicon name: solid/plus-sm
+                    -->
+                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                      <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
+                    </svg>
+                                            <!--
+                                              Collapse icon, show/hide based on section open state.
+
+                                              Heroicon name: solid/minus-sm
+                                            -->
+                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                      <path fill-rule="evenodd" d="M5 10a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1z" clip-rule="evenodd" />
+                    </svg>
+                  </span>
+                                    </button>
+                                </h3>
+                                <!-- Filter section, show/hide based on section state. -->
+                                <div class="pt-6" id="filter-section-2">
+                                    <div class="space-y-4">
+                                        <div class="flex items-center">
+                                            <input id="filter-size-0" name="size[]" value="2l" type="checkbox" class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
+                                            <label for="filter-size-0" class="ml-3 text-sm text-gray-600"> 2L </label>
+                                        </div>
+
+                                        <div class="flex items-center">
+                                            <input id="filter-size-1" name="size[]" value="6l" type="checkbox" class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
+                                            <label for="filter-size-1" class="ml-3 text-sm text-gray-600"> 6L </label>
+                                        </div>
+
+                                        <div class="flex items-center">
+                                            <input id="filter-size-2" name="size[]" value="12l" type="checkbox" class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
+                                            <label for="filter-size-2" class="ml-3 text-sm text-gray-600"> 12L </label>
+                                        </div>
+
+                                        <div class="flex items-center">
+                                            <input id="filter-size-3" name="size[]" value="18l" type="checkbox" class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
+                                            <label for="filter-size-3" class="ml-3 text-sm text-gray-600"> 18L </label>
+                                        </div>
+
+                                        <div class="flex items-center">
+                                            <input id="filter-size-4" name="size[]" value="20l" type="checkbox" class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
+                                            <label for="filter-size-4" class="ml-3 text-sm text-gray-600"> 20L </label>
+                                        </div>
+
+                                        <div class="flex items-center">
+                                            <input id="filter-size-5" name="size[]" value="40l" type="checkbox" checked class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
+                                            <label for="filter-size-5" class="ml-3 text-sm text-gray-600"> 40L </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <!-- Product grid -->
+                        <div class="lg:col-span-3">
+                            <!-- Replace with your content -->
+                                <x-jobs-list :rows="$rows"></x-jobs-list>
+                            <!-- /End replace -->
                         </div>
-                    </a>
-                    @if($row->urgent_to)
-                        <span class="flex absolute h-4 w-4 top-0 right-0 -mt-1 -mr-1">
-                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
-                            <span class="relative inline-flex rounded-full h-4 w-4 bg-sky-500"></span>
-                        </span>
-                    @endif
-                </li>
-            @empty
-            @endforelse
-        </ul>
-
-        <div>
-            {{ $rows->links('livewire::pagination-links') }}
+                    </div>
+                </section>
+            </main>
         </div>
     </div>
-</div>
+</section>
