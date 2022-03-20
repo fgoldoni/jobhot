@@ -22,6 +22,11 @@
     </head>
     <body>
         <div class="font-sans bg-gray-100 text-gray-900 antialiased">
+            <section>
+                <!-- This example requires Tailwind CSS v2.0+ -->
+                <x-navigation-menu></x-navigation-menu>
+            </section>
+
             {{ $slot }}
         </div>
 

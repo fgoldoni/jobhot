@@ -30,6 +30,10 @@ Route::get('/jobs', function () {
     return view('jobs');
 })->name('jobs');
 
+Route::get('/companies', function () {
+    return view('companies');
+})->name('companies');
+
 Route::get('/jobs/{slug}', function () {
     return view('jobs.job');
 })->name('jobs.job');
