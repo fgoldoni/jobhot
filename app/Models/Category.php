@@ -110,4 +110,13 @@ class Category extends Model
     {
         return $query->where('type', CategoryType::Industry);
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        Category::creating(function ($model) {
+            $model->position = Category::max('position') + 1;
+        });
+    }
 }

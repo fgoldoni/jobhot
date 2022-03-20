@@ -152,7 +152,7 @@
                                                     </div>
                                                     <div class="text-gray-500">
                                                         <span class="truncate">
-                                                            {{ $row->country ? $row->country->emoji .' '. $row->country->name : '' }}  {{ $row->city ? ' / ' . $row->city->name : '' }} {{ $row->division ? ' / ' . $row->division->name : '' }}
+                                                            {{ $row->country->name  }}  {{ ($row->city_id || $row->division_id) ? '/' : '' }} {{ $row->city->name }} {{ $row->division->name }}
                                                         </span>
                                                     </div>
                                                 </div>
@@ -161,10 +161,10 @@
                                         <x-table.cell>
                                             @foreach ($row->categories as $category)
                                                 <p class="flex items-center">
-                                                    <span class="truncate text-gray-700">{{ $row->company ? $row->company->name : '' }}</span>
+                                                    <span class="truncate text-gray-700">{{ $row->company->name }}</span>
                                                 </p>
                                             @endforeach
-                                            <div class="text-gray-500">by:  <x-button.link>{{ $row->user ? $row->user->name : '' }}</x-button.link></div>
+                                            <div class="text-gray-500">by:  <x-button.link>{{ $row->user->name }}</x-button.link></div>
                                         </x-table.cell>
                                         <x-table.cell>
                                             <div class="relative inline-flex items-center rounded-full border border-gray-300 px-3 py-0.5 m-1 cursor-pointer">

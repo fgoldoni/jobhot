@@ -49,7 +49,7 @@
      }"
 
      @city-selected.window="updateSelectedCity($event.detail.id, $event.detail.name)"
-     @reset-cities.window="selected = null; searchCity = ''; open = false; ">
+     @reset-country.window="selected = null; searchCity = ''; open = false; ">
 
     <input
         wire:model.debounce.500ms="searchCity"

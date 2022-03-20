@@ -49,7 +49,7 @@
      }"
 
      @city-selected.window="updateSelectedDivision($event.detail.id, $event.detail.name)"
-     @reset-divisions.window="selected = null; searchDivision = ''; open = false; ">
+     @reset-country.window="selected = null; searchDivision = ''; open = false; ">
 
     <input
         wire:model.debounce.500ms="searchDivision"

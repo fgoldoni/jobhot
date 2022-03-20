@@ -105,5 +105,9 @@ docker:  ## docker-compose up -d nginx mysql phpmyadmin laravel-horizon redis ph
 	cd laradock
 	docker-compose up -d nginx mysql phpmyadmin laravel-horizon redis php-worker  workspace
 
+ide-helper:  ## docker-compose up -d nginx mysql phpmyadmin laravel-horizon redis php-worker  workspace
+	php artisan ide-helper:generate
+	php artisan ide-helper:models
+
 
 

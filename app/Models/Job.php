@@ -5,6 +5,7 @@ use App\Enums\JobState;
 use App\Traits\BelongsToUser;
 use App\Traits\Categorizable;
 use App\Traits\HasAvatar;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -74,6 +75,26 @@ use Spatie\Translatable\HasTranslations;
  * @property-read \App\Models\Team|null $team
  * @method static \Illuminate\Database\Eloquent\Builder|Job allTeams()
  * @method static \Illuminate\Database\Eloquent\Builder|Job whereTeamId($value)
+ * @property int|null $country_id
+ * @property int|null $division_id
+ * @property int|null $city_id
+ * @property \Illuminate\Support\Carbon $closing_to
+ * @property \Illuminate\Support\Carbon|null $featured_to
+ * @property \Illuminate\Support\Carbon|null $urgent_to
+ * @property \Illuminate\Support\Carbon|null $highlight_to
+ * @property-read City|null $city
+ * @property-read Country|null $country
+ * @property-read Division|null $division
+ * @property-read mixed $closing_to_formatted
+ * @property-read bool $highlight
+ * @method static \Illuminate\Database\Eloquent\Builder|Job published()
+ * @method static \Illuminate\Database\Eloquent\Builder|Job whereCityId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Job whereClosingTo($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Job whereCountryId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Job whereDivisionId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Job whereFeaturedTo($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Job whereHighlightTo($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Job whereUrgentTo($value)
  */
 class Job extends Model
 {
@@ -116,8 +137,15 @@ class Job extends Model
         'columns' => [
             'jobs.id' => 10,
             'jobs.name' => 10,
-            'jobs.content' => 10,
-        ]
+            'world_countries.name' => 2,
+            'world_cities.name' => 2,
+            'world_divisions.name' => 2,
+        ],
+        'joins' => [
+            'world_countries' => ['jobs.country_id', 'world_countries.id'],
+            'world_divisions' => ['jobs.division_id', 'world_divisions.id'],
+            'world_cities' => ['jobs.city_id', 'world_cities.id'],
+        ],
     ];
 
     public function getSlugOptions(): SlugOptions
@@ -138,26 +166,43 @@ class Job extends Model
 
     public function company(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Company::class);
+        return $this->belongsTo(Company::class)->withDefault();
     }
 
     public function country(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Country::class);
+        return $this->belongsTo(Country::class)->withDefault();
     }
 
     public function division(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Division::class);
+        return $this->belongsTo(Division::class)->withDefault();
     }
 
     public function city(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(City::class);
+        return $this->belongsTo(City::class)->withDefault();
     }
+
     public function scopePublished($query)
     {
         return $query->where('state', JobState::Published);
     }
 
+    public function getClosingToFormattedAttribute()
+    {
+        return $this->closing_to->format('d, M Y');
+    }
+
+    public function getHighlightAttribute(): bool
+    {
+        return $this->highlight_to ? $this->highlight_to->gt(now()) : false;
+    }
+
+    protected function firstName(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => ucfirst($value),
+        );
+    }
 }

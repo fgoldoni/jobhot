@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Livewire\Admin\Datatable;
 
 use Modules\Countries\Entities\Country;
@@ -21,7 +20,7 @@ trait WithCountries
 
     public function updatedSearchCountry()
     {
-        $this->countries =  Country::search($this->searchCountry)->orderBy('name')->get();
+        $this->countries = Country::search($this->searchCountry)->orderBy('name')->get();
         $this->editing->city_id = null;
         $this->showCountryDropdown = true;
     }
@@ -30,10 +29,10 @@ trait WithCountries
     {
         if ($value === 'editing.country_id') {
             if ($this->editing->country_id) {
-                $this->showCityField = !$this->editing->country()->first()->has_division;
+                $this->showCityField = !$this->editing->country()->value('has_division');
             }
 
-            $this->dispatchBrowserEvent('reset-cities');
+            $this->dispatchBrowserEvent('reset-country');
         }
     }
 

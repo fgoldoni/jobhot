@@ -61,6 +61,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Team[] $teams
  * @property-read int|null $teams_count
  * @method static \Illuminate\Database\Eloquent\Builder|User whereCurrentTeamId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User registeredWithinDays($days)
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -133,5 +134,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function personalTeam(): Team
     {
         return $this->ownedTeams()->where('personal_team', true)->first();
+    }
+
+    public function scopeRegisteredWithinDays($query, $days)
+    {
+        return $query->where('created_at', '>=', now()->subDays($days));
     }
 }

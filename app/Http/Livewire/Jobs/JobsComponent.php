@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Livewire\Jobs;
 
 use App\Http\Livewire\Admin\Datatable\WithCachedRows;
@@ -28,19 +27,17 @@ class JobsComponent extends Component
 
     public function getRowsQueryProperty()
     {
-
         $query = Job::withoutGlobalScope('team')
             ->published()
-            ->with(['company' => fn($query) => $query->withoutGlobalScope('team'), 'country:id,name', 'city:id,name', 'division:id,name', 'categories'])
+            ->orderBy('id')
+            ->with(['company' => fn ($query) => $query->withoutGlobalScope('team'), 'country:id,name', 'city:id,name', 'division:id,name', 'categories'])
             ->when($this->filters['search'], fn ($query, $search) => $query->search($search));
-
 
         return $this->applySorting($query);
     }
 
     public function getRowsProperty()
     {
-
         return $this->cache(fn () => $this->applyPagination($this->rowsQuery));
     }
 

@@ -1,9 +1,5 @@
 <?php
-
-
 namespace App\Http\Livewire\Admin\Datatable;
-
-use Modules\Countries\Entities\Division;
 
 /**
  * Class WithCities
@@ -18,7 +14,7 @@ trait WithDivisions
 
     public $divisions;
 
-    public function  mountWithDivisions()
+    public function mountWithDivisions()
     {
         $this->divisions = collect();
     }
@@ -26,7 +22,6 @@ trait WithDivisions
     public function updatedSearchDivision()
     {
         $this->editing->load('country');
-
 
         if (is_null($this->editing->country_id) || !($this->editing->country->has_division) || (strlen($this->searchDivision) < 1)) {
             $this->divisions = collect();
@@ -37,13 +32,12 @@ trait WithDivisions
 
         $this->showDivisionDropdown = true;
 
-        $this->divisions =  $this->editing->country->divisions()->search($this->searchDivision)->orderBy('name')->get();
-
+        $this->divisions = $this->editing->country->divisions()->search($this->searchDivision)->orderBy('name')->get();
     }
 
     public function setDefaultDivision()
     {
         $this->showCityField = false;
-        $this->searchDivision = $this->editing->division ? $this->editing->division->name : '';
+        $this->searchDivision = $this->editing->division->name;
     }
 }

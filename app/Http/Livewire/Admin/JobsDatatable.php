@@ -137,16 +137,11 @@ class JobsDatatable extends Component
 
             $this->setDefaultCountry();
 
-            if($this->editing->country()->first() && $this->editing->country()->first()->has_division)
-            {
+            if ($this->editing->country()->value('has_division')) {
                 $this->setDefaultDivision();
             } else {
                 $this->setDefaultCity();
             }
-
-
-
-
 
             $this->setDefaultCategory();
 

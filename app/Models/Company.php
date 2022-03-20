@@ -62,6 +62,8 @@ use Nicolaslopezj\Searchable\SearchableTrait;
  * @property-read \App\Models\Team|null $team
  * @method static \Illuminate\Database\Eloquent\Builder|Company allTeams()
  * @method static \Illuminate\Database\Eloquent\Builder|Company whereTeamId($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Job[] $jobs
+ * @property-read int|null $jobs_count
  */
 class Company extends Model
 {
