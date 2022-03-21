@@ -1,15 +1,7 @@
-@props(['heightMin' => '24', 'heightMax' => '32'])
-
-@php
-    $heightMin = 'py-' . $heightMin;
-    $heightMax = 'lg:py-' . $heightMax;
-@endphp
-
-
 <section class="relative" style="background-image: url('https://cdn.devdojo.com/images/february2021/directory-bg.jpg')">
     <div class="absolute inset-0 bg-gradient-to-b from-black to-transparent opacity-30"></div>
 
-    <div class="relative z-20 px-4 {{ $heightMin }} mx-auto text-center text-white max-w-7xl {{ $heightMax }}">
+    <div class="relative z-20 px-4 py-12 mx-auto text-center text-white max-w-7xl lg:py-32">
         <div class="flex flex-wrap text-white">
             <div class="relative w-full px-4 mx-auto text-center xl:flex-grow-0 xl:flex-shrink-0">
 

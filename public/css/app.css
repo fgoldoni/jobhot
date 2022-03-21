@@ -3922,6 +3922,11 @@ select {
     padding-bottom: 0.5rem;
   }
 
+  .lg\:py-32 {
+    padding-top: 8rem;
+    padding-bottom: 8rem;
+  }
+
   .lg\:pl-8 {
     padding-left: 2rem;
   }
