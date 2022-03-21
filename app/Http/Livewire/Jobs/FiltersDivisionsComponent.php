@@ -20,7 +20,7 @@ class FiltersDivisionsComponent extends Component
     public function getRowsQueryProperty()
     {
         return Division::query()
-                ->whereHas('jobs', fn (Builder $query) => $query->published())
+                ->whereHas('jobs', fn (Builder $query) => $query->published()->withoutGlobalScope('team'))
                 ->withCount(['jobs' => fn($query) => $query->published()->withoutGlobalScope('team')])
                 ->orderBy('jobs_count', 'desc');
     }

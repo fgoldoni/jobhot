@@ -1,6 +1,5 @@
 <x-guest-layout>
 
-    <!-- Section 1 -->
     <x-hero></x-hero>
 
     <!-- Section 2 -->

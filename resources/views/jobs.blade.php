@@ -1,6 +1,5 @@
 <x-guest-layout>
     <!-- Section 1 -->
-    <x-hero heightMin="4" heightMax="12"></x-hero>
 
     <!-- Section 2 -->
     @livewire('jobs.jobs-component')

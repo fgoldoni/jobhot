@@ -20,7 +20,7 @@ class FiltersCountriesComponent extends Component
         return Job::published()
             ->withoutGlobalScope('team')
             ->select('country_id', DB::raw('COUNT(country_id) as count'))
-            ->with('country:id,name')
+            ->with('country:id,name,emoji')
             ->groupBy('country_id')
             ->orderBy('count', 'desc');
     }
