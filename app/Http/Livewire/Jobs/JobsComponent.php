@@ -20,7 +20,7 @@ class JobsComponent extends Component
 
     public array $filters = [
         'search' => '',
-        'category' => 1,
+        'category' => null,
         'days' => null,
         'latest' => null,
         'oldest' => null,
@@ -28,6 +28,12 @@ class JobsComponent extends Component
 
     public function mount()
     {
+    }
+
+    public function resetFilters()
+    {
+        $this->reset('filters');
+        $this->resetPage();
     }
 
     public function getRowsQueryProperty()
