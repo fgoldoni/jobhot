@@ -84,6 +84,14 @@ class Category extends Model
     {
         return $this->morphedByMany($class, 'categorizable', 'categorizables', 'category_id', 'categorizable_id', 'id', 'id');
     }
+    /**
+     * Get all of the posts that are assigned this tag.
+     */
+    public function jobs()
+    {
+        return $this->morphedByMany(Job::class, 'categorizable', 'categorizables', 'category_id', 'categorizable_id', 'id', 'id');
+    }
+
 
     public function getSlugOptions() : SlugOptions
     {

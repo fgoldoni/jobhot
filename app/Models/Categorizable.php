@@ -26,4 +26,12 @@ use Illuminate\Database\Eloquent\Model;
 class Categorizable extends Model
 {
     use HasFactory;
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     */
+    public function categorizable()
+    {
+        return $this->morphTo();
+    }
 }

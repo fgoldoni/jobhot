@@ -172,17 +172,17 @@ class Job extends Model
 
     public function country(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Country::class)->withDefault();
+        return $this->belongsTo(Country::class)->withDefault(['name' => '']);
     }
 
     public function division(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Division::class)->withDefault();
+        return $this->belongsTo(Division::class)->withDefault(['name' => '']);
     }
 
     public function city(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(City::class)->withDefault();
+        return $this->belongsTo(City::class)->withDefault(['name' => '']);
     }
 
     public function scopePublished($query)

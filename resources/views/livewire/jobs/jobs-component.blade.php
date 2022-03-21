@@ -10,7 +10,7 @@
 
 
             <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <x-jobs.jobs-top-bar :rows="$rows" :areas="$areas"></x-jobs.jobs-top-bar>
+                <x-jobs.jobs-top-bar :rows="$rows" :areas="$areas" :industries="$industries" :filters="$filters" wire:model="filters.category"></x-jobs.jobs-top-bar>
 
                 <section aria-labelledby="products-heading" class="pt-6 pb-24">
                     <h2 id="products-heading" class="sr-only">Products</h2>

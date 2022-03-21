@@ -1,9 +1,15 @@
-@props(['rows', 'areas'])
+@props(['rows', 'areas', 'industries', 'filters'])
 
 <section aria-labelledby="filter-heading">
     <h2 id="filter-heading" class="sr-only">Filters</h2>
 
-    <div x-data="{ openFilters: false }" aria-labelledby="filter-heading" class="relative z-10 border-t border-b border-gray-200 grid items-center">
+    <div
+        x-data="{ openFilters: true }"
+
+        aria-labelledby="filter-heading"
+
+        class="relative z-10 border-t border-b border-gray-200 grid items-center">
+
         <h2 id="filter-heading" class="sr-only">Filters</h2>
         <div class="relative col-start-1 row-start-1 py-4">
             <div class="max-w-7xl mx-auto flex space-x-6 divide-x divide-gray-200 text-sm">
@@ -25,9 +31,39 @@
             </div>
         </div>
         <div
+
             x-show="openFilters"
+
+            x-transition:enter="transition-opacity ease-linear duration-300"
+
+            x-transition:enter-start="opacity-0"
+
+            x-transition:enter-end="opacity-100"
+
+            x-transition:leave="transition-opacity ease-linear duration-300"
+
+            x-transition:leave-start="opacity-100"
+
+            x-transition:leave-end="opacity-0"
+
             x-cloak
-            class="border-t border-gray-200 bg-gray-200" id="disclosure-1">
+
+            x-data="{
+                tab: 'tab1',
+                selected:  @entangle($attributes->wire('model')),
+                toggleTab (tab) {
+                    this.tab = tab;
+                },
+                isActive (tab) {
+                    return this.tab === tab;
+                },
+                choice (id) {
+                    this.selected = id;
+                }
+            }"
+
+            class="border-t border-gray-200 bg-gray-200"
+            id="disclosure-1">
 
             <div class="px-4 py-4 sm:px-6 lg:px-8">
                 <div class="sm:hidden">
@@ -45,72 +81,142 @@
                 </div>
                 <div class="hidden sm:block">
                     <div class="border-b border-gray-200">
-                        <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+                        <nav
+                            class="-mb-px flex space-x-8" aria-label="Tabs">
                             <!-- Current: "border-indigo-500 text-indigo-600", Default: "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" -->
-                            <a href="#" class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 group inline-flex items-center py-4 px-1 border-b-2 font-medium text-sm">
-                                <!--
-                                  Heroicon name: solid/user
+                            <a
+                                @click="toggleTab('tab1')"
 
-                                  Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
-                                -->
-                                <svg class="text-gray-400 group-hover:text-gray-500 -ml-0.5 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
-                                </svg>
-                                <span>My Account</span>
-                            </a>
+                                href="#tab1"
 
-                            <a href="#" class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 group inline-flex items-center py-4 px-1 border-b-2 font-medium text-sm">
-                                <!-- Heroicon name: solid/office-building -->
-                                <svg class="text-gray-400 group-hover:text-gray-500 -ml-0.5 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                :class="{'border-indigo-500 text-indigo-600' : isActive ('tab1'), 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' : !(isActive ('tab1'))}"
+
+                                class="group inline-flex items-center py-4 px-1 border-b-2 font-medium text-sm">
+
+                                <svg
+                                    :class="{'text-indigo-500' : isActive ('tab1'), 'text-gray-400 group-hover:text-gray-500 ' : !(isActive ('tab1'))}"
+                                    class="-ml-0.5 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                     <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clip-rule="evenodd" />
                                 </svg>
-                                <span>Company</span>
+
+                                <span>Areas</span>
+
+                                <!-- Current: "bg-indigo-100 text-indigo-600", Default: "bg-gray-100 text-gray-900" -->
+                                <span
+                                    :class="{'bg-indigo-100 text-indigo-600' : isActive ('tab1'), 'bg-gray-100 text-gray-900' : !(isActive ('tab1'))}"
+                                    class="hidden ml-3 py-0.5 px-2.5 rounded-full text-xs font-medium md:inline-block">{{ $areas->count() }}
+                                </span>
                             </a>
 
-                            <a href="#" class="border-indigo-500 text-indigo-600 group inline-flex items-center py-4 px-1 border-b-2 font-medium text-sm" aria-current="page">
-                                <!-- Heroicon name: solid/users -->
-                                <svg class="text-indigo-500 -ml-0.5 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                    <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
-                                </svg>
-                                <span>Team Members</span>
-                            </a>
+                            <a
+                                @click="toggleTab('tab2')"
 
-                            <a href="#" class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 group inline-flex items-center py-4 px-1 border-b-2 font-medium text-sm">
-                                <!-- Heroicon name: solid/credit-card -->
-                                <svg class="text-gray-400 group-hover:text-gray-500 -ml-0.5 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                    <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z" />
-                                    <path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd" />
+                                href="#tab2"
+
+                                :class="{'border-indigo-500 text-indigo-600' : isActive ('tab2'), 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' : !(isActive ('tab2'))}"
+
+                                class="group inline-flex items-center py-4 px-1 border-b-2 font-medium text-sm">
+
+                                <!-- Heroicon name: solid/office-building -->
+                                <svg
+                                    :class="{'text-indigo-500' : isActive ('tab2'), 'text-gray-400 group-hover:text-gray-500' : !(isActive ('tab2'))}"
+                                    class="-ml-0.5 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clip-rule="evenodd" />
                                 </svg>
-                                <span>Billing</span>
+
+                                <span>Industries</span>
+
+                                <span
+                                    :class="{'bg-indigo-100 text-indigo-600' : isActive ('tab2'), 'bg-gray-100 text-gray-900' : !(isActive ('tab2'))}"
+                                    class="hidden ml-3 py-0.5 px-2.5 rounded-full text-xs font-medium md:inline-block">{{ $industries->count() }}
+                                </span>
                             </a>
                         </nav>
                     </div>
                 </div>
             </div>
 
+            <template
+                x-if="isActive('tab1')"
+                x-cloak
+                x-transition:enter="transition ease-in-out duration-300 transform"
+                x-transition:enter-start="translate-x-full"
+                x-transition:enter-end="translate-x-0"
+                x-transition:leave="transition ease-in-out duration-300 transform"
+                x-transition:enter="transition ease-in-out duration-300 transform"
+                x-transition:leave-start="translate-x-0"
+                x-transition:leave-end="translate-x-full">
+                <div class="max-w-7xl mx-auto grid grid-cols-2 gap-x-4 px-4 py-4 text-sm sm:px-6 md:gap-x-6 lg:px-8">
+                    @foreach($areas->chunk(8) as $chunks)
+                        <div class="grid grid-cols-1 gap-y-10 auto-rows-min md:grid-cols-2 md:gap-x-6" wire:key="chunks-{{ $loop->index }}">
+                            @foreach($chunks->chunk(4) as $chunk)
+                                <fieldset wire:key="chunk-{{ $loop->index }}">
+                                    <div class="space-y-6 sm:space-y-4">
+                                        @foreach($chunk as $area)
+                                            <div wire:key="area-{{ $loop->index }}" x-on:click="choice({{ $area->id }})">
+                                                <a href="javascript:;" class="flex items-center text-sm hover:underline">
+                                                    @if($filters['category'] === $area->id)
+                                                        <svg class="mr-2 h-5 w-5 text-green-400" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                        </svg>
+                                                    @else
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 transition mr-1.5 h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                                                        </svg>
+                                                    @endif
+                                                    <span class="text-gray-500">
+                                                    {{ Str::limit($area->name, 25, ' ...') }}
+                                                        @if($area->jobs_count)
+                                                            <span class="bg-indigo-100 text-indigo-600 ml-1 py-0.5 px-2.5 rounded-full text-xs font-medium inline-block">
+                                                          {{ $area->jobs_count }}
+                                                        </span>
+                                                        @endif
+                                                </span>
+                                                </a>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </fieldset>
+                            @endforeach
+                        </div>
+                    @endforeach
+                </div>
+            </template>
 
-            <div class="max-w-7xl mx-auto grid grid-cols-2 gap-x-4 px-4 py-4 text-sm sm:px-6 md:gap-x-6 lg:px-8">
-                @foreach($areas->chunk(8) as $chunks)
-                    <div class="grid grid-cols-1 gap-y-10 auto-rows-min md:grid-cols-2 md:gap-x-6">
-                        @foreach($chunks->chunk(4) as $chunk)
-                            <fieldset>
-                                <div class="space-y-6 sm:space-y-4">
-                                    @foreach($chunk as $area)
-                                        <a href="javascript:;" class="flex items-center text-sm hover:underline">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 transition mr-1.5 h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                              <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" />
-                                            </svg>
-                                             <span class="text-gray-500">
-                                                {{ $area->name }}
+            <template
+                x-if="isActive('tab2')"
+                x-cloak
+                x-transition:enter="transition ease-in-out duration-300 transform"
+                x-transition:enter-start="translate-x-full"
+                x-transition:enter-end="translate-x-0"
+                x-transition:leave="transition ease-in-out duration-300 transform"
+                x-transition:enter="transition ease-in-out duration-300 transform"
+                x-transition:leave-start="translate-x-0"
+                x-transition:leave-end="translate-x-full">
+                <div class="max-w-7xl mx-auto grid grid-cols-2 gap-x-4 px-4 py-4 text-sm sm:px-6 md:gap-x-6 lg:px-8">
+                    @foreach($industries->chunk(8) as $chunks)
+                        <div class="grid grid-cols-1 gap-y-10 auto-rows-min md:grid-cols-2 md:gap-x-6">
+                            @foreach($chunks->chunk(4) as $chunk)
+                                <fieldset>
+                                    <div class="space-y-6 sm:space-y-4">
+                                        @foreach($chunk as $industry)
+                                            <a href="javascript:;" class="flex items-center text-sm hover:underline">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 transition mr-1.5 h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                                    <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" />
+                                                </svg>
+                                                <span class="text-gray-500">
+                                                {{ $industry->name }}
                                             </span>
-                                        </a>
-                                    @endforeach
-                                </div>
-                            </fieldset>
-                        @endforeach
-                    </div>
-                @endforeach
-            </div>
+                                            </a>
+                                        @endforeach
+                                    </div>
+                                </fieldset>
+                            @endforeach
+                        </div>
+                    @endforeach
+                </div>
+            </template>
+
         </div>
         <div class="col-start-1 row-start-1 py-4">
             <div class="flex items-center justify-end max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

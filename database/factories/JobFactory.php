@@ -29,4 +29,14 @@ class JobFactory extends Factory
             'highlight_to' => $this->faker->randomElement([$this->faker->dateTimeInInterval('now', '+30 days'), null, null, null, null]),
         ];
     }
+
+    public function configure()
+    {
+        return $this->afterMaking(function (Job $job) {
+            //
+        })->afterCreating(function (Job $job) {
+            $job->syncCategories([$this->faker->numberBetween(1, 16)]);
+        });
+    }
+
 }
