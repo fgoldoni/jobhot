@@ -1,6 +1,6 @@
 <section>
     <div>
-        <div x-data="{ open: false }" @keydown.window.escape="open = false">
+        <div x-data="{ open: false, openFilters: false }" @keydown.window.escape="open = false">
             <!--
               Mobile filter dialog
 
@@ -10,7 +10,7 @@
 
 
             <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <x-jobs.jobs-top-bar></x-jobs.jobs-top-bar>
+                <x-jobs.jobs-top-bar :rows="$rows"></x-jobs.jobs-top-bar>
 
                 <section aria-labelledby="products-heading" class="pt-6 pb-24">
                     <h2 id="products-heading" class="sr-only">Products</h2>
@@ -223,7 +223,7 @@
                         <!-- Product grid -->
                         <div class="lg:col-span-3">
                             <!-- Replace with your content -->
-                                <x-jobs-list :rows="$rows"></x-jobs-list>
+                                <x-jobs-list :rows="$rows" wire:loading.remove></x-jobs-list>
                             <!-- /End replace -->
                         </div>
                     </div>

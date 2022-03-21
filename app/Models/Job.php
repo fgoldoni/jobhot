@@ -5,6 +5,7 @@ use App\Enums\JobState;
 use App\Traits\BelongsToUser;
 use App\Traits\Categorizable;
 use App\Traits\HasAvatar;
+use App\Traits\WithinDays;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -98,7 +99,7 @@ use Spatie\Translatable\HasTranslations;
  */
 class Job extends Model
 {
-    use HasFactory, HasSlug, HasTranslations, Categorizable, HasAvatar, BelongsToUser, SearchableTrait, SoftDeletes, UsedByTeams;
+    use HasFactory, HasSlug, HasTranslations, Categorizable, HasAvatar, BelongsToUser, SearchableTrait, SoftDeletes, UsedByTeams, WithinDays;
 
     protected $guarded = [];
 
@@ -196,7 +197,7 @@ class Job extends Model
 
     public function getHighlightAttribute(): bool
     {
-        return $this->highlight_to ? $this->highlight_to->gt(now()) : false;
+        return $this->highlight_to && $this->highlight_to->gt(now());
     }
 
     protected function firstName(): Attribute

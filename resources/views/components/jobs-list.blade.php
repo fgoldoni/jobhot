@@ -4,7 +4,7 @@
     <ul role="list" class="divide-y space-y-5 p-4 divide-gray-200">
         @forelse($rows as $row)
         <li class="relative">
-            <a href="{{ route('jobs.job', ['slug' => $row->slug]) }}" class="{{ $row->highlight ? 'bg-yellow-50 hover:border-yellow-400' : 'bg-white hover:bg-gray-50 hover:border-indigo-400'}} block shadow-lg hover:shadow-2xl hover:border-l-4 hover:-translate-y-2 hover:scale-y-105 ease-in-out delay-150 duration-300">
+            <a href="{{ route('jobs.job', ['slug' => $row->slug]) }}" class="{{ $row->highlight ? 'bg-yellow-50 hover:border-yellow-400' : 'bg-white hover:bg-gray-50 hover:border-indigo-400'}} block shadow-lg hover:shadow-2xl hover:border-l-4 hover:-translate-y-2 hover:scale-y-105 ease-in-out delay-150 duration-300" wire:loading.class="opacity-25 cursor-not-allowed">
                 <div class="px-4 py-4 sm:px-6 space-y-5">
                     <div class="flex items-center justify-between">
                         <div class="text-sm font-medium truncate">

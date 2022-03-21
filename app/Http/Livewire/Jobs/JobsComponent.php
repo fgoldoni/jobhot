@@ -19,6 +19,9 @@ class JobsComponent extends Component
 
     public array $filters = [
         'search' => '',
+        'days' => null,
+        'latest' => null,
+        'oldest' => null,
     ];
 
     public function mount()
@@ -27,10 +30,12 @@ class JobsComponent extends Component
 
     public function getRowsQueryProperty()
     {
-        $query = Job::withoutGlobalScope('team')
+        sleep(2);
+        $query = Job::query()
+            ->withoutGlobalScope('team')
             ->published()
-            ->orderBy('id')
             ->with(['company' => fn ($query) => $query->withoutGlobalScope('team'), 'country:id,name', 'city:id,name', 'division:id,name', 'categories'])
+            ->when($this->filters['days'], fn ($query, $days) => $query->registeredWithinDays($days))
             ->when($this->filters['search'], fn ($query, $search) => $query->search($search));
 
         return $this->applySorting($query);
