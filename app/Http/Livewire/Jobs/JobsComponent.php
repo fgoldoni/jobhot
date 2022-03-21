@@ -19,24 +19,39 @@ class JobsComponent extends Component
 
     private ?Job $job = null;
 
+    protected $listeners = ['refreshCities', 'refreshCountries', 'refreshDivisions'];
+
     public array $filters = [
         'search' => '',
         'category' => null,
         'countries' => [],
+        'divisions' => [],
         'cities' => [],
         'days' => null,
         'latest' => null,
         'oldest' => null,
     ];
 
-    public function mount()
+    public function refreshCities(array $selected)
     {
+        $this->filters['cities'] = $selected;
+    }
+
+    public function refreshCountries(array $selected)
+    {
+        $this->filters['countries'] = $selected;
+    }
+
+    public function refreshDivisions(array $selected)
+    {
+        $this->filters['divisions'] = $selected;
     }
 
     public function resetFilters()
     {
         $this->reset('filters');
         $this->resetPage();
+        $this->emit('refreshFiltersSelected');
     }
 
     public function getRowsQueryProperty()
@@ -46,6 +61,7 @@ class JobsComponent extends Component
             ->published()
             ->with(['company' => fn ($query) => $query->withoutGlobalScope('team'), 'country:id,name', 'city:id,name', 'division:id,name', 'categories'])
             ->when($this->filters['countries'], fn ($query, $countries) => $query->whereIn('country_id', $countries))
+            ->when($this->filters['divisions'], fn ($query, $divisions) => $query->whereIn('division_id', $divisions))
             ->when($this->filters['cities'], fn ($query, $cities) => $query->whereIn('city_id', $cities))
             ->when($this->filters['days'], fn ($query, $days) => $query->registeredWithinDays($days))
             ->when($this->filters['category'], fn ($query, $category) => $query->whereHas('categories', fn (Builder $query) =>   $query->where('categories.id', $category)))

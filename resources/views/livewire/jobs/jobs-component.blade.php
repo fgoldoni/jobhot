@@ -17,7 +17,7 @@
 
                     <div class="grid grid-cols-1 lg:grid-cols-4 gap-x-8 gap-y-10">
                         <!-- Filters -->
-                        <x-jobs.filter-section :countries="$countries" :cities="$cities"></x-jobs.filter-section>
+                        <x-jobs.filter-section></x-jobs.filter-section>
 
 
                         <!-- Product grid -->

@@ -62,13 +62,7 @@
              x-transition:leave-end="opacity-0"
              class="pt-6" id="filter-section-0">
             <div class="space-y-4">
-                @foreach($countries as $country)
-                    <div class="hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 cursor-pointer">
-                        <input id="filter-countries-{{ $country->id }}" wire:model="filters.countries" value="{{ $country->id }}" type="checkbox" class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                        <label for="filter-countries-{{ $country->id }}" class="flex-1 ml-3 text-sm text-gray-600"> {{ $country->name }}  </label>
-                        <span class="bg-gray-100 group-hover:bg-gray-200 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> {{ $country->jobs_count }} </span>
-                    </div>
-                @endforeach
+                @livewire('jobs.filters-countries-component', key('filters-countries-component'))
             </div>
         </div>
     </div>
@@ -111,13 +105,7 @@
              x-transition:leave-end="opacity-0"
              class="pt-6" id="filter-section-0">
             <div class="space-y-4">
-                @foreach($cities as $row)
-                    <div class="hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 cursor-pointer">
-                        <input id="filter-cities-{{ $row->city_id }}" wire:model="filters.cities" value="{{ $row->city_id }}" type="checkbox" class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                        <label for="filter-cities-{{ $row->city_id }}" class="flex-1 ml-3 text-sm text-gray-600"> {{ $row->city->name }}  </label>
-                        <span class="bg-gray-100 group-hover:bg-gray-200 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> {{ $row->count }} </span>
-                    </div>
-                @endforeach
+                @livewire('jobs.filters-cities-component', key('filters-cities-component'))
             </div>
         </div>
     </div>
@@ -129,7 +117,7 @@
             <button
                 @click="open = !open"
                 type="button" class="py-3 bg-white w-full flex items-center justify-between text-sm text-gray-400 hover:text-gray-500" aria-controls="filter-section-0" aria-expanded="false">
-                <span class="font-medium text-gray-900"> Jobs By Country </span>
+                <span class="font-medium text-gray-900"> Jobs By Divisions </span>
                 <span class="ml-6 flex items-center">
                     <!--
                       Expand icon, show/hide based on section open state.
@@ -161,13 +149,7 @@
              x-transition:leave-end="opacity-0"
              class="pt-6" id="filter-section-0">
             <div class="space-y-4">
-                @foreach($countries as $country)
-                    <div class="hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 cursor-pointer">
-                        <input id="filter-color-{{ $country->id }}" name="color[]" value="white" type="checkbox" class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                        <label for="filter-color-{{ $country->id }}" class="flex-1 ml-3 text-sm text-gray-600"> {{ $country->name }}  </label>
-                        <span class="bg-gray-100 group-hover:bg-gray-200 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> {{ $country->jobs_count }} </span>
-                    </div>
-                @endforeach
+                @livewire('jobs.filters-divisions-component', key('filters-divisions-component'))
             </div>
         </div>
     </div>
