@@ -148,9 +148,9 @@
                 x-transition:leave-end="translate-x-full">
                 <div class="max-w-7xl mx-auto grid grid-cols-2 gap-x-4 px-4 py-4 text-sm sm:px-6 md:gap-x-6 lg:px-8">
                     @foreach($areas->chunk(8) as $chunks)
-                        <div class="grid grid-cols-1 gap-y-10 auto-rows-min md:grid-cols-2 md:gap-x-6" wire:key="chunks-{{ $loop->index }}">
-                            @foreach($chunks->chunk(4) as $chunk)
-                                <fieldset wire:key="chunk-{{ $loop->index }}">
+                        @foreach($chunks->chunk(4) as $chunk)
+                            <div class="grid grid-cols-1 gap-y-10 py-4 auto-rows-min md:gap-x-6" wire:key="chunk-{{ $loop->index }}">
+                                <fieldset>
                                     <div class="space-y-6 sm:space-y-4">
                                         @foreach($chunk as $area)
                                             <div wire:key="area-{{ $loop->index }}" x-on:click="choice({{ $area->id }})">
@@ -165,20 +165,20 @@
                                                         </svg>
                                                     @endif
                                                     <span class="text-gray-500">
-                                                    {{ Str::limit($area->name, 25, ' ...') }}
+                                                        {{ $area->name }}
                                                         @if($area->jobs_count)
                                                             <span class="bg-indigo-100 text-indigo-600 ml-1 py-0.5 px-2.5 rounded-full text-xs font-medium inline-block">
-                                                          {{ $area->jobs_count }}
-                                                        </span>
+                                                              {{ $area->jobs_count }}
+                                                            </span>
                                                         @endif
-                                                </span>
+                                                    </span>
                                                 </a>
                                             </div>
                                         @endforeach
                                     </div>
                                 </fieldset>
-                            @endforeach
-                        </div>
+                            </div>
+                        @endforeach
                     @endforeach
                 </div>
             </template>
