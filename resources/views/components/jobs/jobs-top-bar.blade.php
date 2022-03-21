@@ -1,4 +1,4 @@
-@props(['rows'])
+@props(['rows', 'areas'])
 
 <section aria-labelledby="filter-heading">
     <h2 id="filter-heading" class="sr-only">Filters</h2>
@@ -15,7 +15,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" class="flex-none w-5 h-5 mr-2 text-gray-400 group-hover:text-gray-500" viewBox="0 0 20 20" fill="currentColor">
                             <path d="M5 4a1 1 0 00-2 0v7.268a2 2 0 000 3.464V16a1 1 0 102 0v-1.268a2 2 0 000-3.464V4zM11 4a1 1 0 10-2 0v1.268a2 2 0 000 3.464V16a1 1 0 102 0V8.732a2 2 0 000-3.464V4zM16 3a1 1 0 011 1v7.268a2 2 0 010 3.464V16a1 1 0 11-2 0v-1.268a2 2 0 010-3.464V4a1 1 0 011-1z" />
                         </svg>
-                        2 Filters
+                        Browse Jobs
                     </button>
                 </div>
                 <div class="pl-6">
@@ -27,133 +27,89 @@
         <div
             x-show="openFilters"
             x-cloak
-            class="border-t border-gray-200 py-10" id="disclosure-1">
-            <div class="max-w-7xl mx-auto grid grid-cols-2 gap-x-4 px-4 text-sm sm:px-6 md:gap-x-6 lg:px-8">
-                <div class="grid grid-cols-1 gap-y-10 auto-rows-min md:grid-cols-2 md:gap-x-6">
-                    <fieldset>
-                        <legend class="block font-medium">Price</legend>
-                        <div class="pt-6 space-y-6 sm:pt-4 sm:space-y-4">
-                            <div class="flex items-center text-base sm:text-sm">
-                                <input id="price-0" name="price[]" value="0" type="checkbox" class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                <label for="price-0" class="ml-3 min-w-0 flex-1 text-gray-600"> $0 - $25 </label>
-                            </div>
+            class="border-t border-gray-200 bg-gray-200" id="disclosure-1">
 
-                            <div class="flex items-center text-base sm:text-sm">
-                                <input id="price-1" name="price[]" value="25" type="checkbox" class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                <label for="price-1" class="ml-3 min-w-0 flex-1 text-gray-600"> $25 - $50 </label>
-                            </div>
+            <div class="px-4 py-4 sm:px-6 lg:px-8">
+                <div class="sm:hidden">
+                    <label for="tabs" class="sr-only">Select a tab</label>
+                    <!-- Use an "onChange" listener to redirect the user to the selected tab URL. -->
+                    <select id="tabs" name="tabs" class="block w-full focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md">
+                        <option>My Account</option>
 
-                            <div class="flex items-center text-base sm:text-sm">
-                                <input id="price-2" name="price[]" value="50" type="checkbox" class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                <label for="price-2" class="ml-3 min-w-0 flex-1 text-gray-600"> $50 - $75 </label>
-                            </div>
+                        <option>Company</option>
 
-                            <div class="flex items-center text-base sm:text-sm">
-                                <input id="price-3" name="price[]" value="75" type="checkbox" class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                <label for="price-3" class="ml-3 min-w-0 flex-1 text-gray-600"> $75+ </label>
-                            </div>
-                        </div>
-                    </fieldset>
-                    <fieldset>
-                        <legend class="block font-medium">Color</legend>
-                        <div class="pt-6 space-y-6 sm:pt-4 sm:space-y-4">
-                            <div class="flex items-center text-base sm:text-sm">
-                                <input id="color-0" name="color[]" value="white" type="checkbox" class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                <label for="color-0" class="ml-3 min-w-0 flex-1 text-gray-600"> White </label>
-                            </div>
+                        <option selected>Team Members</option>
 
-                            <div class="flex items-center text-base sm:text-sm">
-                                <input id="color-1" name="color[]" value="beige" type="checkbox" class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                <label for="color-1" class="ml-3 min-w-0 flex-1 text-gray-600"> Beige </label>
-                            </div>
-
-                            <div class="flex items-center text-base sm:text-sm">
-                                <input id="color-2" name="color[]" value="blue" type="checkbox" class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500" checked>
-                                <label for="color-2" class="ml-3 min-w-0 flex-1 text-gray-600"> Blue </label>
-                            </div>
-
-                            <div class="flex items-center text-base sm:text-sm">
-                                <input id="color-3" name="color[]" value="brown" type="checkbox" class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                <label for="color-3" class="ml-3 min-w-0 flex-1 text-gray-600"> Brown </label>
-                            </div>
-
-                            <div class="flex items-center text-base sm:text-sm">
-                                <input id="color-4" name="color[]" value="green" type="checkbox" class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                <label for="color-4" class="ml-3 min-w-0 flex-1 text-gray-600"> Green </label>
-                            </div>
-
-                            <div class="flex items-center text-base sm:text-sm">
-                                <input id="color-5" name="color[]" value="purple" type="checkbox" class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                <label for="color-5" class="ml-3 min-w-0 flex-1 text-gray-600"> Purple </label>
-                            </div>
-                        </div>
-                    </fieldset>
+                        <option>Billing</option>
+                    </select>
                 </div>
-                <div class="grid grid-cols-1 gap-y-10 auto-rows-min md:grid-cols-2 md:gap-x-6">
-                    <fieldset>
-                        <legend class="block font-medium">Size</legend>
-                        <div class="pt-6 space-y-6 sm:pt-4 sm:space-y-4">
-                            <div class="flex items-center text-base sm:text-sm">
-                                <input id="size-0" name="size[]" value="xs" type="checkbox" class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                <label for="size-0" class="ml-3 min-w-0 flex-1 text-gray-600"> XS </label>
-                            </div>
+                <div class="hidden sm:block">
+                    <div class="border-b border-gray-200">
+                        <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+                            <!-- Current: "border-indigo-500 text-indigo-600", Default: "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" -->
+                            <a href="#" class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 group inline-flex items-center py-4 px-1 border-b-2 font-medium text-sm">
+                                <!--
+                                  Heroicon name: solid/user
 
-                            <div class="flex items-center text-base sm:text-sm">
-                                <input id="size-1" name="size[]" value="s" type="checkbox" class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500" checked>
-                                <label for="size-1" class="ml-3 min-w-0 flex-1 text-gray-600"> S </label>
-                            </div>
+                                  Current: "text-indigo-500", Default: "text-gray-400 group-hover:text-gray-500"
+                                -->
+                                <svg class="text-gray-400 group-hover:text-gray-500 -ml-0.5 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                                </svg>
+                                <span>My Account</span>
+                            </a>
 
-                            <div class="flex items-center text-base sm:text-sm">
-                                <input id="size-2" name="size[]" value="m" type="checkbox" class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                <label for="size-2" class="ml-3 min-w-0 flex-1 text-gray-600"> M </label>
-                            </div>
+                            <a href="#" class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 group inline-flex items-center py-4 px-1 border-b-2 font-medium text-sm">
+                                <!-- Heroicon name: solid/office-building -->
+                                <svg class="text-gray-400 group-hover:text-gray-500 -ml-0.5 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clip-rule="evenodd" />
+                                </svg>
+                                <span>Company</span>
+                            </a>
 
-                            <div class="flex items-center text-base sm:text-sm">
-                                <input id="size-3" name="size[]" value="l" type="checkbox" class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                <label for="size-3" class="ml-3 min-w-0 flex-1 text-gray-600"> L </label>
-                            </div>
+                            <a href="#" class="border-indigo-500 text-indigo-600 group inline-flex items-center py-4 px-1 border-b-2 font-medium text-sm" aria-current="page">
+                                <!-- Heroicon name: solid/users -->
+                                <svg class="text-indigo-500 -ml-0.5 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
+                                </svg>
+                                <span>Team Members</span>
+                            </a>
 
-                            <div class="flex items-center text-base sm:text-sm">
-                                <input id="size-4" name="size[]" value="xl" type="checkbox" class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                <label for="size-4" class="ml-3 min-w-0 flex-1 text-gray-600"> XL </label>
-                            </div>
-
-                            <div class="flex items-center text-base sm:text-sm">
-                                <input id="size-5" name="size[]" value="2xl" type="checkbox" class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                <label for="size-5" class="ml-3 min-w-0 flex-1 text-gray-600"> 2XL </label>
-                            </div>
-                        </div>
-                    </fieldset>
-                    <fieldset>
-                        <legend class="block font-medium">Category</legend>
-                        <div class="pt-6 space-y-6 sm:pt-4 sm:space-y-4">
-                            <div class="flex items-center text-base sm:text-sm">
-                                <input id="category-0" name="category[]" value="all-new-arrivals" type="checkbox" class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                <label for="category-0" class="ml-3 min-w-0 flex-1 text-gray-600"> All New Arrivals </label>
-                            </div>
-
-                            <div class="flex items-center text-base sm:text-sm">
-                                <input id="category-1" name="category[]" value="tees" type="checkbox" class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                <label for="category-1" class="ml-3 min-w-0 flex-1 text-gray-600"> Tees </label>
-                            </div>
-
-                            <div class="flex items-center text-base sm:text-sm">
-                                <input id="category-2" name="category[]" value="objects" type="checkbox" class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                <label for="category-2" class="ml-3 min-w-0 flex-1 text-gray-600"> Objects </label>
-                            </div>
-
-                            <div class="flex items-center text-base sm:text-sm">
-                                <input id="category-3" name="category[]" value="sweatshirts" type="checkbox" class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                <label for="category-3" class="ml-3 min-w-0 flex-1 text-gray-600"> Sweatshirts </label>
-                            </div>
-
-                            <div class="flex items-center text-base sm:text-sm">
-                                <input id="category-4" name="category[]" value="pants-and-shorts" type="checkbox" class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                <label for="category-4" class="ml-3 min-w-0 flex-1 text-gray-600"> Pants &amp; Shorts </label>
-                            </div>
-                        </div>
-                    </fieldset>
+                            <a href="#" class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 group inline-flex items-center py-4 px-1 border-b-2 font-medium text-sm">
+                                <!-- Heroicon name: solid/credit-card -->
+                                <svg class="text-gray-400 group-hover:text-gray-500 -ml-0.5 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z" />
+                                    <path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd" />
+                                </svg>
+                                <span>Billing</span>
+                            </a>
+                        </nav>
+                    </div>
                 </div>
+            </div>
+
+
+            <div class="max-w-7xl mx-auto grid grid-cols-2 gap-x-4 px-4 py-4 text-sm sm:px-6 md:gap-x-6 lg:px-8">
+                @foreach($areas->chunk(8) as $chunks)
+                    <div class="grid grid-cols-1 gap-y-10 auto-rows-min md:grid-cols-2 md:gap-x-6">
+                        @foreach($chunks->chunk(4) as $chunk)
+                            <fieldset>
+                                <div class="space-y-6 sm:space-y-4">
+                                    @foreach($chunk as $area)
+                                        <a href="javascript:;" class="flex items-center text-sm hover:underline">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 transition mr-1.5 h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                              <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" />
+                                            </svg>
+                                             <span class="text-gray-500">
+                                                {{ $area->name }}
+                                            </span>
+                                        </a>
+                                    @endforeach
+                                </div>
+                            </fieldset>
+                        @endforeach
+                    </div>
+                @endforeach
             </div>
         </div>
         <div class="col-start-1 row-start-1 py-4">

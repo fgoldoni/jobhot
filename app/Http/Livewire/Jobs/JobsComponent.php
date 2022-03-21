@@ -30,7 +30,6 @@ class JobsComponent extends Component
 
     public function getRowsQueryProperty()
     {
-        sleep(2);
         $query = Job::query()
             ->withoutGlobalScope('team')
             ->published()
