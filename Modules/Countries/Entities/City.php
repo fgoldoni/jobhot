@@ -2,6 +2,7 @@
 
 namespace Modules\Countries\Entities;
 
+use App\Models\Job;
 use Illuminate\Database\Eloquent\Model;
 use DateTime;
 use DateTimeZone;
@@ -82,6 +83,11 @@ class City extends Model
             return $this->country;
         }
         return $this->division;
+    }
+
+    public function jobs()
+    {
+        return $this->hasMany(Job::class);
     }
 
     public function locales()

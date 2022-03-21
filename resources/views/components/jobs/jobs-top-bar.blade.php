@@ -4,7 +4,7 @@
     <h2 id="filter-heading" class="sr-only">Filters</h2>
 
     <div
-        x-data="{ openFilters: true }"
+        x-data="{ openFilters: false }"
 
         aria-labelledby="filter-heading"
 

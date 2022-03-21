@@ -1,6 +1,7 @@
 <?php
 namespace Modules\Countries\Entities;
 
+use App\Models\Job;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Countries\Traits\WorldTrait;
 use Nicolaslopezj\Searchable\SearchableTrait;
@@ -72,6 +73,11 @@ class Country extends Model
     public function cities()
     {
         return $this->hasMany(City::class);
+    }
+
+    public function jobs()
+    {
+        return $this->hasMany(Job::class);
     }
 
     /**

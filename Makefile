@@ -49,7 +49,7 @@ optimize: install ## optimize
 		$(PHP) artisan cache:clear & $(PHP) artisan config:clear & $(PHP) artisan route:clear & $(PHP) artisan view:clear
 
 migrate: optimize ## migrate
-	$(PHP) artisan migrate:refresh --seed
+	$(PHP) artisan migrate:refresh
 
 refresh: migrate ## refresh + php artisan module:seed Admin & php artisan module:seed Support
 	## php artisan world:init
@@ -57,6 +57,7 @@ refresh: migrate ## refresh + php artisan module:seed Admin & php artisan module
 	## php artisan module:migrate-refresh Companies
 	## php artisan module:migrate-refresh Jobs
 	php artisan module:seed Countries
+	php artisan db:seed
 	## php artisan module:seed Categories
 	## php artisan module:seed Companies
 	## php artisan module:seed Jobs
