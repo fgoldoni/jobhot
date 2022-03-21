@@ -219,7 +219,7 @@
 
         </div>
         <div class="col-start-1 row-start-1 py-4">
-            <div class="flex items-center justify-end max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-end max-w-7xl mx-auto">
                 <div class="relative inline-block text-left">
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
