@@ -1,4 +1,4 @@
-<x-guest-layout>
+<x-jobs-layout>
     <!-- Section 1 -->
 
     <!-- Section 2 -->
@@ -200,4 +200,4 @@
     </section>
 
 
-</x-guest-layout>
+</x-jobs-layout>
