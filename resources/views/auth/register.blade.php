@@ -37,14 +37,8 @@
                         </p>
                     @endif
 
-                    <input id="password" type="password" class="px-3 w-full py-2 bg-gray-200 border border-gray-200 rounded focus:border-gray-400 focus:outline-none focus:bg-white mb-4 {{ $errors->has('password') ? ' border-red-500' : '' }}" name="password" required autocomplete="new-password" placeholder="Password">
-                    @if ($errors->has('password'))
-                        <p class="text-red-500 text-xs italic mt-4">
-                            {{ $errors->first('password') }}
-                        </p>
-                    @endif
+                    @livewire('register-passwords')
 
-                    <input id="password-confirm" type="password" class="px-3 w-full py-2 bg-gray-200 border border-gray-200 rounded focus:border-gray-400 focus:outline-none focus:bg-white mb-4" name="password_confirmation" required autocomplete="new-password" placeholder="Confirm Password">
 
                     <div class="flex flex-wrap items-center">
                         <div class="w-full sm:flex-1">
