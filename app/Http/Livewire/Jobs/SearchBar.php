@@ -26,7 +26,7 @@ class SearchBar extends Component
             ->with(['categories:id,name'])
             ->search($this->searchJob)
             ->take(5)
-            ->get(['id', 'name', 'avatar_path', 'live_at'])->sortBy('name')->toArray();
+            ->get(['id', 'name', 'avatar_path', 'company_id', 'live_at'])->sortBy('name')->toArray();
 
         $companies = Company::query()
             ->with(['categories:id,name'])
