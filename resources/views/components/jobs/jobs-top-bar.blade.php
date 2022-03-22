@@ -42,8 +42,6 @@
 
                 <div class="pl-6">
 
-                    <span class="text-gray-400 text-xs">About {{ $rows->total() }} results ... </span>
-
                     <x-button.link wire:click="resetFilters">Clear all</x-button.link>
 
                 </div>
