@@ -258,7 +258,7 @@
                 </div>
                 <div class="relative inline-block text-left mt-3">
                     <button
-                        @click="open = true"
+                        @click="openSidebar = true"
                         type="button" class="p-2 -m-2 ml-4 sm:ml-6 text-gray-400 hover:text-gray-500 lg:hidden">
                         <span class="sr-only">Filters</span>
                         <!-- Heroicon name: solid/filter -->
