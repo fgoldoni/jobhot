@@ -154,24 +154,27 @@
                                     <div class="space-y-6 sm:space-y-4">
                                         @foreach($chunk as $area)
                                             <div wire:key="area-{{ $loop->index }}" x-on:click="choice({{ $area->id }})">
-                                                <a href="javascript:;" class="flex items-center text-sm hover:underline">
-                                                    @if($filters['category'] === $area->id)
-                                                        <svg class="mr-2 h-5 w-5 text-green-400" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                                        </svg>
-                                                    @else
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 transition mr-1.5 h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-                                                        </svg>
-                                                    @endif
-                                                    <span class="text-gray-500">
+                                                <!-- Current: "bg-gray-100 text-gray-900", Default: "text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+                                                <a href="javascript:;" class="{{ $filters['category'] === $area->id ? 'bg-gray-100 text-gray-900 ' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 '}} group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                                                    <!-- Heroicon name: outline/users -->
+                                                    <x-icon.solid type="{{ $area->icon }}" class="text-gray-400 group-hover:text-gray-500 mr-3 flex-shrink-0 h-6 w-6" x-ignore/>
+                                                    <span class="flex flex-1 inline-block">
                                                         {{ $area->name }}
-                                                        @if($area->jobs_count)
-                                                            <span class="bg-indigo-100 text-indigo-600 ml-1 py-0.5 px-2.5 rounded-full text-xs font-medium inline-block">
-                                                              {{ $area->jobs_count }}
-                                                            </span>
+                                                        @if($filters['category'] === $area->id)
+                                                            <svg class="ml-2 h-5 w-5 text-green-400" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                            </svg>
                                                         @endif
                                                     </span>
+
+                                                    @if($area->jobs_count)
+                                                        <!-- Current: "bg-white", Default: "bg-gray-100 group-hover:bg-gray-200" -->
+                                                        <span class="{{ $filters['category'] === $area->id ? 'bg-white ' : 'bg-gray-100 group-hover:bg-gray-200 '}} ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full">
+                                                            {{ $area->jobs_count }}
+                                                        </span>
+                                                    @endif
+
+
                                                 </a>
                                             </div>
                                         @endforeach
