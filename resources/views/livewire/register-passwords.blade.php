@@ -29,7 +29,7 @@
         @endif
 
         <div class="flex items-center place-content-end  mb-4">
-            <x-secondary-button wire:click="generatePassword" type="button" class="w-full sm:w-auto px-6 py-3">Generate</x-secondary-button>
+            <button wire:click="generatePassword" class="btn-secondary py-2 px-3">Generate</button>
         </div>
 
         <span class="text-sm">
