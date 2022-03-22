@@ -222,7 +222,7 @@ class Job extends Model
 
     public function getIsNewAttribute(): ?bool
     {
-        return $this->live_at?->isToday();
+        return $this->live_at?->gt(now()->subDays()->startOfDay());
     }
 
     public function getLiveAtFormattedAttribute()

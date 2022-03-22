@@ -20,7 +20,7 @@ class JobSeeder extends Seeder
     {
         Job::factory(100)->state(function (array $attributes) {
             return ['city_id' =>  City::where('country_id', $attributes['country_id'])->inRandomOrder()->first()->id];
-        })->create(['state' => JobState::Published,'live_at' => $faker->dateTimeInInterval('now', '-1 days')]);
+        })->create(['live_at' => $faker->dateTimeInInterval('now', '-1 days')]);
 
 
         Job::factory(100)->state(function (array $attributes) {
