@@ -4,23 +4,21 @@
     <h3 class="sr-only">Categories</h3>
     <ul role="list" class="text-sm font-medium text-gray-900 space-y-4 pb-6 border-b border-gray-200">
         <li>
-            <a href="#" class="btn w-full inline-flex items-center px-6 py-3 text-base font-medium ">
-                <!-- Heroicon name: solid/mail -->
+            <x-outline-button>
                 <svg xmlns="http://www.w3.org/2000/svg" class="-ml-1 mr-3 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
                 Upload Your Resume
-            </a>
+            </x-outline-button>
         </li>
 
         <li>
-            <a href="#" class="btn-secondary w-full inline-flex items-center px-6 py-3 text-base font-medium ">
-                <!-- Heroicon name: solid/mail -->
+            <x-secondary-button class="w-full inline-flex items-center px-6 py-3">
                 <svg xmlns="http://www.w3.org/2000/svg" class="-ml-1 mr-3 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                 </svg>
                 Save Job Alert
-            </a>
+            </x-secondary-button>
         </li>
     </ul>
 
