@@ -38,9 +38,10 @@ Route::get('/companies/{slug}', function () {
     return view('jobs.job');
 })->name('companies.company');
 
-Route::get('/jobs/{slug}', function () {
-    return view('jobs.job');
-})->name('jobs.job');
+
+Route::controller(\App\Http\Controllers\JobController::class)->group(function () {
+    Route::get('/jobs/{slug}', 'show')->name('jobs.job');
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
