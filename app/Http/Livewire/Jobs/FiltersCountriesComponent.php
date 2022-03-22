@@ -10,24 +10,11 @@ class FiltersCountriesComponent extends Component
 {
     public int $amount = 5;
 
+    public int $type = 0;
+
     public array $selected = [];
 
     protected $listeners = ['refreshFiltersSelected'];
-
-    public function getRowsQueryProperty()
-    {
-        return Job::published()
-            ->withoutGlobalScope('team')
-            ->select('country_id', DB::raw('COUNT(country_id) as count'))
-            ->with('country:id,name,emoji')
-            ->groupBy('country_id')
-            ->orderBy('count', 'desc');
-    }
-
-    public function getRowsProperty()
-    {
-        return Cache::remember('filters-cities-page-' . $this->amount, 60 * 60, fn () => $this->rowsQuery->take($this->amount)->get());
-    }
 
     public function updatedSelected()
     {
@@ -42,6 +29,21 @@ class FiltersCountriesComponent extends Component
     public function load()
     {
         $this->amount += 5;
+    }
+
+    public function getRowsQueryProperty()
+    {
+        return Job::published()
+            ->withoutGlobalScope('team')
+            ->select('country_id', DB::raw('COUNT(country_id) as count'))
+            ->with('country:id,name,emoji')
+            ->groupBy('country_id')
+            ->orderBy('count', 'desc');
+    }
+
+    public function getRowsProperty()
+    {
+        return Cache::remember('filters-countries-page-' . $this->amount, 60 * 60, fn () => $this->rowsQuery->take($this->amount)->get());
     }
 
     public function render()

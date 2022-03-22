@@ -25,7 +25,7 @@
 <div class="font-sans bg-gray-100 text-gray-900 antialiased">
     <section>
         <!-- This example requires Tailwind CSS v2.0+ -->
-        <x-jobs-navigation-menu></x-jobs-navigation-menu>
+        <x-jobs.jobs-navigation-menu></x-jobs.jobs-navigation-menu>
     </section>
 
     {{ $slot }}

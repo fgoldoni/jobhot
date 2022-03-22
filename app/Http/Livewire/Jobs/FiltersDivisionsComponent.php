@@ -10,22 +10,11 @@ class FiltersDivisionsComponent extends Component
 {
     public int $amount = 5;
 
+    public int $type = 0;
+
     public array $selected = [];
 
     protected $listeners = ['refreshFiltersSelected'];
-
-    public function getRowsQueryProperty()
-    {
-        return Division::query()
-                ->whereHas('jobs', fn (Builder $query) => $query->published()->withoutGlobalScope('team'))
-                ->withCount(['jobs' => fn ($query) => $query->published()->withoutGlobalScope('team')])
-                ->orderBy('jobs_count', 'desc');
-    }
-
-    public function getRowsProperty()
-    {
-        return Cache::remember('filters-cities-page-' . $this->amount, 60 * 60, fn () => $this->rowsQuery->take($this->amount)->get());
-    }
 
     public function updatedSelected()
     {
@@ -40,6 +29,19 @@ class FiltersDivisionsComponent extends Component
     public function load()
     {
         $this->amount += 5;
+    }
+
+    public function getRowsQueryProperty()
+    {
+        return Division::query()
+            ->whereHas('jobs', fn (Builder $query) => $query->published()->withoutGlobalScope('team'))
+            ->withCount(['jobs' => fn ($query) => $query->published()->withoutGlobalScope('team')])
+            ->orderBy('jobs_count', 'desc');
+    }
+
+    public function getRowsProperty()
+    {
+        return Cache::remember('filters-divisions-page-' . $this->amount, 60 * 60, fn () => $this->rowsQuery->take($this->amount)->get());
     }
 
     public function render()

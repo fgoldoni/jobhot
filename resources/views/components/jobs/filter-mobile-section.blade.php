@@ -145,7 +145,7 @@
 
                     <div class="space-y-4">
 
-                        @livewire('jobs.filters-countries-component', key('filters-mobile-countries-component'))
+                        @livewire('jobs.filters-countries-component', ['type'=> 1], key('filters-mobile-countries-component'))
 
                     </div>
 
@@ -201,7 +201,7 @@
                      class="pt-6" id="filter-section-0">
 
                     <div class="space-y-4">
-                        @livewire('jobs.filters-divisions-component', key('filters-mobile-divisions-component'))
+                        @livewire('jobs.filters-divisions-component', ['type'=> 1], key('filters-mobile-divisions-component'))
                     </div>
 
                 </div>
@@ -259,7 +259,7 @@
                      class="pt-6" id="filter-section-0">
 
                     <div class="space-y-4">
-                        @livewire('jobs.filters-cities-component', key('filters-mobile-cities-component'))
+                        @livewire('jobs.filters-cities-component', ['type'=> 1], key('filters-mobile-cities-component'))
                     </div>
 
                 </div>

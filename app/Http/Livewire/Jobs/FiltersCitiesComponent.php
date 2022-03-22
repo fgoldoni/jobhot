@@ -13,6 +13,8 @@ class FiltersCitiesComponent extends Component
 
     public int $amount = 5;
 
+    public int $type = 0;
+
     public array $selected = [];
 
     protected $listeners = ['refreshFiltersSelected'];

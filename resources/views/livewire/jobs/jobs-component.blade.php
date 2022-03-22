@@ -18,7 +18,7 @@
                         <x-jobs.filter-section class="hidden bg-white p-5 lg:block"></x-jobs.filter-section>
 
                         <div class="lg:col-span-3">
-                            <x-jobs-list :rows="$rows"></x-jobs-list>
+                            <x-jobs.jobs-list :rows="$rows"></x-jobs.jobs-list>
                         </div>
 
                     </div>
