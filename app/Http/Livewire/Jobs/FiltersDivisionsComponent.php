@@ -1,12 +1,9 @@
 <?php
-
 namespace App\Http\Livewire\Jobs;
 
-use App\Models\Job;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
-use Modules\Countries\Entities\Country;
 use Modules\Countries\Entities\Division;
 
 class FiltersDivisionsComponent extends Component
@@ -21,13 +18,13 @@ class FiltersDivisionsComponent extends Component
     {
         return Division::query()
                 ->whereHas('jobs', fn (Builder $query) => $query->published()->withoutGlobalScope('team'))
-                ->withCount(['jobs' => fn($query) => $query->published()->withoutGlobalScope('team')])
+                ->withCount(['jobs' => fn ($query) => $query->published()->withoutGlobalScope('team')])
                 ->orderBy('jobs_count', 'desc');
     }
 
     public function getRowsProperty()
     {
-        return $this->rowsQuery->take($this->amount)->get();
+        return Cache::remember('filters-cities-page-' . $this->amount, 60 * 60, fn () => $this->rowsQuery->take($this->amount)->get());
     }
 
     public function updatedSelected()

@@ -6,7 +6,6 @@ use App\Http\Livewire\Admin\Datatable\WithPerPagePagination;
 use App\Http\Livewire\Admin\Datatable\WithSorting;
 use App\Models\Job;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Collection;
 use Livewire\Component;
 
 class JobsComponent extends Component
@@ -65,7 +64,7 @@ class JobsComponent extends Component
             ->when($this->filters['divisions'], fn ($query, $divisions) => $query->whereIn('division_id', $divisions))
             ->when($this->filters['cities'], fn ($query, $cities) => $query->whereIn('city_id', $cities))
             ->when($this->filters['days'], fn ($query, $days) => $query->registeredWithinDays($days))
-            ->when($this->filters['categories'], fn ($query, $categories) => $query->whereHas('categories', fn (Builder $query) =>   $query->whereIn('categories.id', $categories)))
+            ->when($this->filters['categories'], fn ($query, $categories) => $query->whereHas('categories', fn (Builder $query) => $query->whereIn('categories.id', $categories)))
             ->when($this->filters['search'], fn ($query, $search) => $query->search($search));
 
         return $this->applySorting($query);

@@ -29,6 +29,8 @@
     </section>
 
     {{ $slot }}
+
+    @livewire('footer')
 </div>
 
 @livewireScripts

@@ -1,12 +1,9 @@
 <?php
-
 namespace App\Http\Livewire\Jobs;
 
-use App\Http\Livewire\Admin\Datatable\WithCachedRows;
-use App\Http\Livewire\Admin\Datatable\WithPerPagePagination;
 use App\Http\Livewire\Admin\Datatable\WithSorting;
 use App\Models\Job;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -32,7 +29,7 @@ class FiltersCitiesComponent extends Component
 
     public function getRowsProperty()
     {
-        return $this->rowsQuery->take($this->amount)->get();
+        return Cache::remember('filters-cities-page-' . $this->amount, 60 * 60, fn () => $this->rowsQuery->take($this->amount)->get());
     }
 
     public function updatedSelected()

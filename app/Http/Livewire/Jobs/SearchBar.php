@@ -4,11 +4,9 @@ namespace App\Http\Livewire\Jobs;
 use App\Models\Company;
 use App\Models\Job;
 use Livewire\Component;
-use Modules\Countries\Entities\Country;
 
 class SearchBar extends Component
 {
-
     public string $searchJob = '';
 
     public int|null $selectedJob = null;
@@ -50,7 +48,6 @@ class SearchBar extends Component
                 return redirect()->route('companies.company', ['slug' => $model->slug]);
             }
         }
-
     }
 
     public function render()

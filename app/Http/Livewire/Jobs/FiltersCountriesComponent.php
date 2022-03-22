@@ -1,11 +1,10 @@
 <?php
-
 namespace App\Http\Livewire\Jobs;
 
 use App\Models\Job;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
-use Modules\Countries\Entities\Country;
 
 class FiltersCountriesComponent extends Component
 {
@@ -27,7 +26,7 @@ class FiltersCountriesComponent extends Component
 
     public function getRowsProperty()
     {
-        return $this->rowsQuery->take($this->amount)->get();
+        return Cache::remember('filters-cities-page-' . $this->amount, 60 * 60, fn () => $this->rowsQuery->take($this->amount)->get());
     }
 
     public function updatedSelected()
