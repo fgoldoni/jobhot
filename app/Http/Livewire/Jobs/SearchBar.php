@@ -41,6 +41,18 @@ class SearchBar extends Component
         $this->showJobDropdown = true;
     }
 
+    public function updatedSelectedJob()
+    {
+        if ($model = Job::withoutGlobalScope('team')->search($this->searchJob)->find($this->selectedJob)) {
+            return redirect()->route('jobs.job', ['slug' => $model->slug]);
+        } else {
+            if ($model = Company::withoutGlobalScope('team')->search($this->searchJob)->find($this->selectedJob)) {
+                return redirect()->route('companies.company', ['slug' => $model->slug]);
+            }
+        }
+
+    }
+
     public function render()
     {
         return view('livewire.jobs.search-bar');

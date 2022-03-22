@@ -34,6 +34,10 @@ Route::get('/companies', function () {
     return view('companies');
 })->name('companies');
 
+Route::get('/companies/{slug}', function () {
+    return view('jobs.job');
+})->name('companies.company');
+
 Route::get('/jobs/{slug}', function () {
     return view('jobs.job');
 })->name('jobs.job');

@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Mpociot\Teamwork\Traits\UsedByTeams;
 use Nicolaslopezj\Searchable\SearchableTrait;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 /**
  * App\Models\Company
@@ -67,7 +69,7 @@ use Nicolaslopezj\Searchable\SearchableTrait;
  */
 class Company extends Model
 {
-    use HasFactory, Categorizable, HasAvatar, BelongsToUser, SearchableTrait, SoftDeletes, UsedByTeams;
+    use HasFactory, HasSlug, Categorizable, HasAvatar, BelongsToUser, SearchableTrait, SoftDeletes, UsedByTeams;
 
     protected $guarded = [];
 
@@ -109,5 +111,12 @@ class Company extends Model
     public function jobs(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Job::class);
+    }
+
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug');
     }
 }
