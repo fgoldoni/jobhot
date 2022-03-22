@@ -5,6 +5,7 @@ use App\Enums\CompanyState;
 use App\Traits\BelongsToUser;
 use App\Traits\Categorizable;
 use App\Traits\HasAvatar;
+use App\Traits\HasTeams;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -66,15 +67,22 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Company whereTeamId($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Job[] $jobs
  * @property-read int|null $jobs_count
+ * @property string $slug
+ * @property-read mixed $created_at_formatted
+ * @method static \Illuminate\Database\Eloquent\Builder|Company whereSlug($value)
  */
 class Company extends Model
 {
-    use HasFactory, HasSlug, Categorizable, HasAvatar, BelongsToUser, SearchableTrait, SoftDeletes, UsedByTeams;
+    use HasFactory, HasSlug, Categorizable, HasAvatar, BelongsToUser, SearchableTrait, SoftDeletes, HasTeams;
 
     protected $guarded = [];
 
     protected $casts = [
         'state' => CompanyState::class
+    ];
+
+    protected $dates = [
+        'live_at'
     ];
 
     /**
@@ -84,6 +92,8 @@ class Company extends Model
      */
     protected $appends = [
         'avatar_url',
+        'created_at_formatted',
+        'is_new',
     ];
 
     /**
@@ -119,4 +129,15 @@ class Company extends Model
             ->generateSlugsFrom('name')
             ->saveSlugsTo('slug');
     }
+
+    public function getCreatedAtFormattedAttribute()
+    {
+        return $this->created_at?->diffForHumans();
+    }
+
+    public function getIsNewAttribute(): ?bool
+    {
+        return $this->live_at?->isToday();
+    }
+
 }

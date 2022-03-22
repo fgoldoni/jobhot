@@ -45,6 +45,8 @@ use Spatie\Translatable\HasTranslations;
  * @method static Builder|Category whereType($value)
  * @method static Builder|Category whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Job[] $jobs
+ * @property-read int|null $jobs_count
  */
 class Category extends Model
 {

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('email')->unique()->nullable();
             $table->string('phone')->nullable();
             $table->string('state')->default('draft');
+            $table->datetime('live_at')->nullable();
 
             $table->string('avatar_path', 2048)->nullable();
 

@@ -39,13 +39,13 @@ class SearchBar extends Component
 
     public function updatedSearchJob()
     {
-        $this->jobs = Job::withoutGlobalScope('team')
+        $this->jobs = Job::query()
            ->with(['categories'])
            ->search($this->searchJob)
            ->take(5)
            ->get()->sortBy('name')->toArray();
 
-        $companies = Company::withoutGlobalScope('team')
+        $companies = Company::query()
            ->with(['categories'])
            ->search($this->searchJob)
            ->take(5)

@@ -169,9 +169,16 @@
                             <div class="ml-4 flex-auto">
                                 <!-- Active: "text-gray-900", Not Active: "text-gray-700" -->
                                 <p
-                                    :class="{ 'text-gray-900': highlightedIndex === {{ $index }}, 'text-gray-700': !(highlightedIndex === {{ $index }}) }"
+                                    :class="{ 'text-indigo-900': highlightedIndex === {{ $index }}, 'text-indigo-700': !(highlightedIndex === {{ $index }}) }"
                                     class="text-sm font-medium">
                                     {{ $item['name'] }}
+
+                                    @if($item['is_new'])
+                                        <span class="bg-teal-200 text-teal-800 text-xs px-2 inline-block rounded-full  uppercase font-semibold tracking-wide">
+                                            New
+                                        </span>
+                                    @endif
+
                                 </p>
                                 <!-- Active: "text-gray-700", Not Active: "text-gray-500" -->
                                 <p
@@ -180,6 +187,9 @@
                                     {{ isset($item['categories'][0]) ? $item['categories'][0]['name'] : '' }}
                                 </p>
                             </div>
+                            <span class="ml-3 flex-none text-xs font-semibold text-gray-400">
+                                {{ $item['created_at_formatted'] }}
+                            </span>
                         </li>
                     @endforeach
                 </ul>

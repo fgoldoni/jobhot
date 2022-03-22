@@ -57,13 +57,12 @@ class JobsComponent extends Component
     public function getRowsQueryProperty()
     {
         $query = Job::query()
-            ->withoutGlobalScope('team')
             ->published()
-            ->with(['company' => fn ($query) => $query->withoutGlobalScope('team'), 'country:id,name', 'city:id,name', 'division:id,name', 'categories'])
+            ->with(['company', 'country:id,name', 'city:id,name', 'division:id,name', 'categories'])
             ->when($this->filters['countries'], fn ($query, $countries) => $query->whereIn('country_id', $countries))
             ->when($this->filters['divisions'], fn ($query, $divisions) => $query->whereIn('division_id', $divisions))
             ->when($this->filters['cities'], fn ($query, $cities) => $query->whereIn('city_id', $cities))
-            ->when($this->filters['days'], fn ($query, $days) => $query->registeredWithinDays($days))
+            ->when($this->filters['days'], fn ($query, $days) => $query->liveWithinDays($days))
             ->when($this->filters['categories'], fn ($query, $categories) => $query->whereHas('categories', fn (Builder $query) => $query->whereIn('categories.id', $categories)))
             ->when($this->filters['search'], fn ($query, $search) => $query->search($search));
 

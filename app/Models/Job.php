@@ -5,6 +5,7 @@ use App\Enums\JobState;
 use App\Traits\BelongsToUser;
 use App\Traits\Categorizable;
 use App\Traits\HasAvatar;
+use App\Traits\HasTeams;
 use App\Traits\WithinDays;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -96,10 +97,17 @@ use Spatie\Translatable\HasTranslations;
  * @method static \Illuminate\Database\Eloquent\Builder|Job whereFeaturedTo($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Job whereHighlightTo($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Job whereUrgentTo($value)
+ * @property \Illuminate\Support\Carbon|null $live_at
+ * @property-read mixed $created_at_formatted
+ * @property-read mixed $live_at_formatted
+ * @property-read bool $new
+ * @method static \Illuminate\Database\Eloquent\Builder|Job liveWithinDays($days)
+ * @method static \Illuminate\Database\Eloquent\Builder|Job registeredWithinDays($days)
+ * @method static \Illuminate\Database\Eloquent\Builder|Job whereLiveAt($value)
  */
 class Job extends Model
 {
-    use HasFactory, HasSlug, HasTranslations, Categorizable, HasAvatar, BelongsToUser, SearchableTrait, SoftDeletes, UsedByTeams, WithinDays;
+    use HasFactory, HasSlug, HasTranslations, Categorizable, HasAvatar, BelongsToUser, SearchableTrait, SoftDeletes, HasTeams, WithinDays;
 
     protected $guarded = [];
 
@@ -110,7 +118,11 @@ class Job extends Model
         'closing_to' => 'date',
         'featured_to' => 'date',
         'urgent_to' => 'date',
-        'highlight_to' => 'date'
+        'highlight_to' => 'date',
+    ];
+
+    protected $dates = [
+        'live_at'
     ];
 
     /**
@@ -120,6 +132,9 @@ class Job extends Model
      */
     protected $appends = [
         'avatar_url',
+        'created_at_formatted',
+        'live_at_formatted',
+        'is_new',
     ];
 
     /**
@@ -200,10 +215,18 @@ class Job extends Model
         return $this->highlight_to && $this->highlight_to->gt(now());
     }
 
-    protected function firstName(): Attribute
+    public function getCreatedAtFormattedAttribute()
     {
-        return Attribute::make(
-            get: fn ($value) => ucfirst($value),
-        );
+        return $this->created_at?->diffForHumans();
+    }
+
+    public function getIsNewAttribute(): ?bool
+    {
+        return $this->live_at?->isToday();
+    }
+
+    public function getLiveAtFormattedAttribute()
+    {
+        return $this->live_at?->diffForHumans();
     }
 }

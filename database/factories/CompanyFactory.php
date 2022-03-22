@@ -23,6 +23,7 @@ class CompanyFactory extends Factory
             'phone' => $this->faker->phoneNumber,
             'user_id' => $this->faker->numberBetween(1, 10),
             'team_id' => $this->faker->numberBetween(1, 5),
+            'live_at' => $this->faker->randomElement([$this->faker->dateTimeInInterval('-5 days', 'now'), null]),
         ];
     }
 }

@@ -21,8 +21,8 @@ class FiltersCitiesComponent extends Component
 
     public function getRowsQueryProperty()
     {
-        return Job::published()
-            ->withoutGlobalScope('team')
+        return Job::query()
+            ->published()
             ->select('city_id', DB::raw('COUNT(city_id) as count'))
             ->with('city:id,name')
             ->groupBy('city_id')

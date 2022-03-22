@@ -33,8 +33,8 @@ class FiltersCountriesComponent extends Component
 
     public function getRowsQueryProperty()
     {
-        return Job::published()
-            ->withoutGlobalScope('team')
+        return Job::query()
+            ->published()
             ->select('country_id', DB::raw('COUNT(country_id) as count'))
             ->with('country:id,name,emoji')
             ->groupBy('country_id')

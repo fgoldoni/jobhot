@@ -185,7 +185,7 @@ class JobsDatatable extends Component
 
     public function getRowsQueryProperty()
     {
-        $query = Job::withoutGlobalScope('team')
+        $query = Job::query()
             ->with(['user:id,name', 'company:id,name', 'categories:id,name,icon', 'country:id,name', 'city:id,name', 'division:id,name'])
             ->when($this->filters['search'], fn ($query, $search) => $query->search($search))
             ->when($this->filters['state'], fn ($query, $state) => $query->where('state', $state))

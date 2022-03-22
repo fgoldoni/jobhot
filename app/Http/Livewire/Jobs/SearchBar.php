@@ -22,17 +22,17 @@ class SearchBar extends Component
 
     public function updatedSearchJob()
     {
-        $this->jobs = Job::withoutGlobalScope('team')
-            ->with(['categories'])
+        $this->jobs = Job::query()
+            ->with(['categories:id,name'])
             ->search($this->searchJob)
             ->take(5)
-            ->get()->sortBy('name')->toArray();
+            ->get(['id', 'name', 'avatar_path', 'live_at'])->sortBy('name')->toArray();
 
-        $companies = Company::withoutGlobalScope('team')
-            ->with(['categories'])
+        $companies = Company::query()
+            ->with(['categories:id,name'])
             ->search($this->searchJob)
             ->take(5)
-            ->get()->sortBy('name')->toArray();
+            ->get(['id', 'name', 'avatar_path', 'live_at'])->sortBy('name')->toArray();
 
         $this->jobs = array_merge($this->jobs, $companies);
 
@@ -41,10 +41,10 @@ class SearchBar extends Component
 
     public function updatedSelectedJob()
     {
-        if ($model = Job::withoutGlobalScope('team')->search($this->searchJob)->find($this->selectedJob)) {
+        if ($model = Job::search($this->searchJob)->find($this->selectedJob)) {
             return redirect()->route('jobs.job', ['slug' => $model->slug]);
         } else {
-            if ($model = Company::withoutGlobalScope('team')->search($this->searchJob)->find($this->selectedJob)) {
+            if ($model = Company::search($this->searchJob)->find($this->selectedJob)) {
                 return redirect()->route('companies.company', ['slug' => $model->slug]);
             }
         }

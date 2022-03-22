@@ -32,6 +32,7 @@ return new class extends Migration
             $table->date('featured_to')->nullable();
             $table->date('urgent_to')->nullable();
             $table->date('highlight_to')->nullable();
+            $table->datetime('live_at')->nullable();
 
             $table->softDeletes();
             $table->timestamps();

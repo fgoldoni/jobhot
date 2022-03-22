@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|categorizable whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|categorizable whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read Model|\Eloquent $categorizable
  */
 class Categorizable extends Model
 {

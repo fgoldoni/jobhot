@@ -63,6 +63,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read int|null $teams_count
  * @method static \Illuminate\Database\Eloquent\Builder|User whereCurrentTeamId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User registeredWithinDays($days)
+ * @method static \Illuminate\Database\Eloquent\Builder|User liveWithinDays($days)
  */
 class User extends Authenticatable implements MustVerifyEmail
 {

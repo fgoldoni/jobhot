@@ -28,6 +28,7 @@ class JobFactory extends Factory
             'closing_to' => $this->faker->dateTimeInInterval('now', '+30 days'),
             'urgent_to' => $this->faker->randomElement([$this->faker->dateTimeInInterval('now', '+30 days'), null, null, null, null]),
             'highlight_to' => $this->faker->randomElement([$this->faker->dateTimeInInterval('now', '+30 days'), null, null, null, null]),
+            'live_at' => $this->faker->randomElement([$this->faker->dateTimeInInterval('-5 days', 'now'), null]),
         ];
     }
 
