@@ -1,6 +1,7 @@
 @props(['rows', 'areas', 'industries', 'filters'])
 
 <section aria-labelledby="filter-heading">
+
     <h2 id="filter-heading" class="sr-only">Filters</h2>
 
     <div
@@ -11,9 +12,11 @@
         class="relative z-10 border-t border-b border-gray-200 grid items-center">
 
         <h2 id="filter-heading" class="sr-only">Filters</h2>
+
         <div class="relative col-start-1 row-start-1 py-4">
             <div class="max-w-7xl mx-auto flex space-x-6 divide-x divide-gray-200 text-sm">
                 <div>
+
                     <button
                         @click="openFilters = !openFilters"
                         type="button" class="group text-gray-700 font-medium flex items-center" aria-controls="disclosure-1" aria-expanded="false">
@@ -23,6 +26,7 @@
                         </svg>
                         Browse Jobs
                     </button>
+
                 </div>
                 <div class="pl-6">
                     <span class="text-gray-400 text-xs">About {{ $rows->total() }} results ... </span>
@@ -80,7 +84,7 @@
                     </select>
                 </div>
                 <div class="hidden sm:block">
-                    <div class="border-b border-gray-200">
+                    <div class="border-b border-gray-100">
                         <nav
                             class="-mb-px flex space-x-8" aria-label="Tabs">
                             <!-- Current: "border-indigo-500 text-indigo-600", Default: "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" -->
@@ -100,12 +104,6 @@
                                 </svg>
 
                                 <span>Areas</span>
-
-                                <!-- Current: "bg-indigo-100 text-indigo-600", Default: "bg-gray-100 text-gray-900" -->
-                                <span
-                                    :class="{'bg-indigo-100 text-indigo-600' : isActive ('tab1'), 'bg-gray-100 text-gray-900' : !(isActive ('tab1'))}"
-                                    class="hidden ml-3 py-0.5 px-2.5 rounded-full text-xs font-medium md:inline-block">{{ $areas->count() }}
-                                </span>
                             </a>
 
                             <a
@@ -125,11 +123,6 @@
                                 </svg>
 
                                 <span>Industries</span>
-
-                                <span
-                                    :class="{'bg-indigo-100 text-indigo-600' : isActive ('tab2'), 'bg-gray-100 text-gray-900' : !(isActive ('tab2'))}"
-                                    class="hidden ml-3 py-0.5 px-2.5 rounded-full text-xs font-medium md:inline-block">{{ $industries->count() }}
-                                </span>
                             </a>
                         </nav>
                     </div>
@@ -153,14 +146,18 @@
                                 <fieldset>
                                     <div class="space-y-6 sm:space-y-4">
                                         @foreach($chunk as $area)
-                                            <div wire:key="area-{{ $loop->index }}" x-on:click="choice({{ $area->id }})">
+                                            @php
+                                                $isSelected = in_array($area->id, $filters['categories']);
+                                            @endphp
+                                            <input x-model="selected" id="area-{{ $area->id }}" value="{{ $area->id }}" type="checkbox" class="hidden">
+                                            <label  for="area-{{ $area->id }}">
                                                 <!-- Current: "bg-gray-100 text-gray-900", Default: "text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
-                                                <a href="javascript:;" class="{{ $filters['category'] === $area->id ? 'bg-gray-100 text-gray-900 ' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 '}} group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                                                <div class="{{ $isSelected ? 'bg-gray-100 text-gray-900 ' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 '}} group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                                                     <!-- Heroicon name: outline/users -->
                                                     <x-icon.solid type="{{ $area->icon }}" class="text-gray-400 group-hover:text-gray-500 mr-3 flex-shrink-0 h-6 w-6" x-ignore/>
                                                     <span class="flex flex-1 inline-block">
                                                         {{ $area->name }}
-                                                        @if($filters['category'] === $area->id)
+                                                        @if($isSelected)
                                                             <svg class="ml-2 h-5 w-5 text-green-400" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24">
                                                                 <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                                             </svg>
@@ -169,14 +166,12 @@
 
                                                     @if($area->jobs_count)
                                                         <!-- Current: "bg-white", Default: "bg-gray-100 group-hover:bg-gray-200" -->
-                                                        <span class="{{ $filters['category'] === $area->id ? 'bg-white ' : 'bg-gray-100 group-hover:bg-gray-200 '}} ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full">
+                                                        <span class="{{ $isSelected ? 'bg-white ' : 'bg-gray-100 group-hover:bg-gray-200 '}} ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full">
                                                             {{ $area->jobs_count }}
                                                         </span>
                                                     @endif
-
-
-                                                </a>
-                                            </div>
+                                                </div>
+                                            </label>
                                         @endforeach
                                     </div>
                                 </fieldset>

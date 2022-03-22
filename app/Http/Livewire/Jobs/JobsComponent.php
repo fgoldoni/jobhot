@@ -24,6 +24,7 @@ class JobsComponent extends Component
     public array $filters = [
         'search' => '',
         'category' => null,
+        'categories' => [],
         'countries' => [],
         'divisions' => [],
         'cities' => [],
@@ -64,7 +65,7 @@ class JobsComponent extends Component
             ->when($this->filters['divisions'], fn ($query, $divisions) => $query->whereIn('division_id', $divisions))
             ->when($this->filters['cities'], fn ($query, $cities) => $query->whereIn('city_id', $cities))
             ->when($this->filters['days'], fn ($query, $days) => $query->registeredWithinDays($days))
-            ->when($this->filters['category'], fn ($query, $category) => $query->whereHas('categories', fn (Builder $query) =>   $query->where('categories.id', $category)))
+            ->when($this->filters['categories'], fn ($query, $categories) => $query->whereHas('categories', fn (Builder $query) =>   $query->whereIn('categories.id', $categories)))
             ->when($this->filters['search'], fn ($query, $search) => $query->search($search));
 
         return $this->applySorting($query);
