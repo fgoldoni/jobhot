@@ -23,7 +23,7 @@
 
 
                     <!-- Password -->
-                    <input id="password" type="password" class="px-3 w-full py-2 bg-gray-200 border border-gray-200 rounded focus:border-gray-400 focus:outline-none focus:bg-white mb-4 {{ $errors->has('password') ? ' border-red' : '' }}" name="password" required autocomplete="current-password" placeholder="Password">
+                    <input id="password" type="password" value="00000000" class="px-3 w-full py-2 bg-gray-200 border border-gray-200 rounded focus:border-gray-400 focus:outline-none focus:bg-white mb-4 {{ $errors->has('password') ? ' border-red' : '' }}" name="password" required autocomplete="current-password" placeholder="Password">
                     @if ($errors->has('password'))
                         <p class="text-red-500 text-xs italic mt-4">
                             {{ $errors->first('password') }}
