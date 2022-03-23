@@ -357,7 +357,7 @@
                                 {{ __('Last 7 Days') }}
                             </x-dropdown-link>
 
-                            <x-dropdown-link href="javascript:;" wire:click="$set('filters.days', 3)">
+                            <x-dropdown-link href="javascript:;" wire:click="$set('filters.days', 30)">
                                 {{ __('Last 30 Days') }}
                             </x-dropdown-link>
 
@@ -397,12 +397,10 @@
 
         <div class="max-w-7xl mx-auto py-3 px-4 sm:flex sm:items-center sm:px-6 lg:px-8">
 
-            <h3 class="text-xs font-semibold uppercase tracking-wide text-gray-500">
-
+            <h3 class="relative inline-block text-xs font-semibold uppercase tracking-wide text-gray-500">
                 Filters
-
                 <span class="sr-only">, active</span>
-
+                <span class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">1</span>
             </h3>
 
             <div aria-hidden="true" class="hidden w-px h-5 bg-gray-300 sm:block sm:ml-4"></div>
@@ -410,6 +408,8 @@
             <div class="mt-2 sm:mt-0 sm:ml-4">
 
                 <div class="-m-1 flex flex-wrap items-center">
+
+                    <x-jobs.filters.days :filters="$filters"></x-jobs.filters.days>
 
                     <span class="m-1 inline-flex rounded-full border border-gray-200 items-center py-1.5 pl-3 pr-2 text-sm font-medium bg-gray-100 text-gray-900">
 
