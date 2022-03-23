@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\JobState;
+use App\Models\Company;
 use App\Models\Job;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -38,6 +39,8 @@ class JobFactory extends Factory
             //
         })->afterCreating(function (Job $job) {
             $job->syncCategories([$this->faker->numberBetween(1, 16)]);
+            $job->company_id = Company::where('team_id', $job->team_id)->inRandomOrder()->first()->id;
+            $job->save();
         });
     }
 
