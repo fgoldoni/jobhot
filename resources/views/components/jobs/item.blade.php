@@ -30,7 +30,9 @@
                     @endif
                 </div>
                 <div class="flex-shrink-0 self-center">
-                    <a href="{{ route('jobs.job', ['slug' => $row->slug]) }}" class="hover:underline">Details</a>
+                    <a href="{{ route('jobs.job', ['slug' => $row->slug]) }}" class="text-xs text-indigo-500 hover:text-indigo-900 font-bold underline">
+                        Details <span aria-hidden="true">&rarr;</span>
+                    </a>
                 </div>
             </div>
             <ul role="list" class="mt-2 leading-8">
