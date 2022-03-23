@@ -1,4 +1,15 @@
-@props(['rows', 'areas', 'industries', 'filters'])
+@props(['rows', 'areas', 'industries', 'filters', 'countries'])
+
+@php
+
+    $filtersCount =0;
+
+    foreach ($filters as $filter)
+    {
+        $filtersCount += empty($filter) ? 0 : (is_array($filter) ? count($filter) : 1);
+    }
+
+@endphp
 
 <section aria-labelledby="filter-heading">
 
@@ -400,7 +411,12 @@
             <h3 class="relative inline-block text-xs font-semibold uppercase tracking-wide text-gray-500">
                 Filters
                 <span class="sr-only">, active</span>
-                <span class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">1</span>
+
+                @if($filtersCount)
+                    <span class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">
+                        {{ $filtersCount }}
+                    </span>
+                @endif
             </h3>
 
             <div aria-hidden="true" class="hidden w-px h-5 bg-gray-300 sm:block sm:ml-4"></div>
@@ -411,18 +427,9 @@
 
                     <x-jobs.filters.days :filters="$filters"></x-jobs.filters.days>
 
-                    <span class="m-1 inline-flex rounded-full border border-gray-200 items-center py-1.5 pl-3 pr-2 text-sm font-medium bg-gray-100 text-gray-900">
-
-                        <span>Objects</span>
-
-                        <button type="button" class="flex-shrink-0 ml-1 h-4 w-4 p-1 rounded-full inline-flex text-gray-400 hover:bg-gray-200 hover:text-gray-500">
-                            <span class="sr-only">Remove filter for Objects</span>
-                            <svg class="h-2 w-2" stroke="currentColor" fill="none" viewBox="0 0 8 8">
-                              <path stroke-linecap="round" stroke-width="1.5" d="M1 1l6 6m0-6L1 7" />
-                            </svg>
-                        </button>
-
-                    </span>
+                    @foreach ($filters['countries'] as $country)
+                        <x-jobs.filters.countries :filters="$filters" :country="$country"></x-jobs.filters.countries>
+                    @endforeach
 
                 </div>
 
