@@ -350,7 +350,7 @@
                             </x-dropdown-link>
 
                             <x-dropdown-link href="javascript:;" wire:click="$set('filters.days', 2)">
-                                {{ __('Yesterday') }}
+                                {{ __('Last 2 Days') }}
                             </x-dropdown-link>
 
                             <x-dropdown-link href="javascript:;" wire:click="$set('filters.days', 7)">
