@@ -24,7 +24,7 @@ class JobFactory extends Factory
             'content' => $this->faker->sentence(100),
             'user_id' => $this->faker->numberBetween(1, 10),
             'team_id' => $this->faker->numberBetween(1, 5),
-            'country_id' => $this->faker->numberBetween(1, 50),
+            'country_id' => $this->faker->numberBetween(1, 200),
             'state' => $this->faker->randomElement([JobState::Draft, JobState::Published, JobState::Archived, JobState::Hold]),
             'closing_to' => $this->faker->dateTimeInInterval('now', '+30 days'),
             'urgent_to' => $this->faker->randomElement([$this->faker->dateTimeInInterval('now', '+30 days'), null, null, null, null]),

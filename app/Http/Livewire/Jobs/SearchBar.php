@@ -23,18 +23,10 @@ class SearchBar extends Component
     public function updatedSearchJob()
     {
         $this->jobs = Job::query()
-            ->with(['categories:id,name'])
+            ->with(['categories:id,name', 'country:id,name,emoji', 'city:id,name', 'division:id,name'])
             ->search($this->searchJob)
-            ->take(5)
-            ->get(['id', 'name', 'avatar_path', 'company_id', 'live_at'])->sortBy('name')->toArray();
-
-        $companies = Company::query()
-            ->with(['categories:id,name'])
-            ->search($this->searchJob)
-            ->take(5)
-            ->get(['id', 'name', 'avatar_path', 'live_at'])->sortBy('name')->toArray();
-
-        $this->jobs = array_merge($this->jobs, $companies);
+            ->take(10)
+            ->get(['id', 'name', 'avatar_path', 'company_id', 'live_at', 'country_id', 'city_id', 'division_id'])->sortBy('name');
 
         $this->showJobDropdown = true;
     }
