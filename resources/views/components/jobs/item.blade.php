@@ -52,7 +52,7 @@
 
                 </div>
 
-                <div class="flex-shrink-0 self-center">
+                <div class="flex-shrink-0 justify-self-stretch">
 
                     <a href="{{ route('jobs.job', ['slug' => $row->slug]) }}" class="text-xs text-indigo-500 hover:text-indigo-900 font-bold underline">
 

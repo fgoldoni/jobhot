@@ -1954,6 +1954,9 @@ select {
 .self-center {
   align-self: center;
 }
+.justify-self-stretch {
+  justify-self: stretch;
+}
 .overflow-auto {
   overflow: auto;
 }
