@@ -134,6 +134,7 @@ class Job extends Model
         'avatar_url',
         'created_at_formatted',
         'live_at_formatted',
+        'urgent',
         'is_new',
     ];
 
@@ -210,9 +211,14 @@ class Job extends Model
         return $this->closing_to->format('d, M Y');
     }
 
-    public function getHighlightAttribute(): bool
+    public function getHighlightAttribute(): ?bool
     {
-        return $this->highlight_to && $this->highlight_to->gt(now());
+        return $this->highlight_to?->gt(now());
+    }
+
+    public function getUrgentAttribute(): ?bool
+    {
+        return $this->urgent_to?->gt(now());
     }
 
     public function getCreatedAtFormattedAttribute()
