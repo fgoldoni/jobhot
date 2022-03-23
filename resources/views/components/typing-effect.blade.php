@@ -1,7 +1,7 @@
 <span
         x-data="{
                     text: '',
-                    textArray :  ['Jobs', 'Employment', 'Career Opportunities'],
+                    textArray :  ['Jobs', 'Employment', 'Career Opportunities', 'Fit'],
                     textIndex: 0,
                     charIndex: 0,
                     pauseEnd: 1000,
@@ -44,6 +44,6 @@
                  }
              })()">
 
-    <span class="text-blue-600" x-text="text"></span>
+    <span class="text-indigo-600 font-semibold" x-text="text"></span>
 
 </span>

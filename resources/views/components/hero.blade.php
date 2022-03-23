@@ -5,9 +5,9 @@
         <div class="flex flex-wrap text-white">
             <div class="relative w-full px-4 mx-auto text-center xl:flex-grow-0 xl:flex-shrink-0">
 
-                <h1 class="mt-0 mb-2 text-4xl font-bold text-white sm:text-5xl lg:text-7xl">Search Directory</h1>
-                <p class="mt-0 mb-4 text-base text-white sm:text-lg lg:text-xl">
-                    Find the best places to eat, drink, and shop nearest to you.
+                <h1 class="mt-0 mb-2 text-4xl font-bold text-white sm:text-5xl lg:text-7xl uppercase">Job Board</h1>
+                <p class="mt-0 mb-4 text-base text-white sm:text-lg lg:text-xl font-medium">
+                    Find the right <x-typing-effect></x-typing-effect>.
                 </p>
 
             </div>
