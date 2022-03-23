@@ -55,7 +55,7 @@
             </a>
 
         </div>
-        <div class="mt-2 text-sm text-gray-700 space-y-4">
+        <div class="mt-2 text-sm text-gray-700 space-y-4 text-justify">
             <p>{{  strip_tags(Str::limit($row->content, 100, ' ...')) }}</p>
         </div>
         <div class="mt-6 flex justify-between space-x-8">
