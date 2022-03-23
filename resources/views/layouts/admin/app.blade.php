@@ -95,7 +95,7 @@
 
             <div class="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
                 <div class="flex-shrink-0 flex items-center px-4">
-                    <a href="{{ url('/home') }}">
+                    <a href="{{ url('/') }}">
                         <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-800-text.svg" alt="Workflow">
                     </a>
                 </div>
@@ -126,7 +126,7 @@
         <div class="flex-1 flex flex-col min-h-0 border-r border-gray-200 bg-white">
             <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
                 <div class="flex items-center flex-shrink-0 px-4">
-                    <a href="{{ url('/home') }}">
+                    <a href="{{ url('/') }}">
                         <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-800-text.svg" alt="Workflow">
                     </a>
                 </div>
