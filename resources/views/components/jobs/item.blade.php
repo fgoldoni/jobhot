@@ -1,6 +1,6 @@
 @props(['row'])
 
-<li class="{{ $row->highlight ? 'bg-yellow-50 ' : 'bg-white '}} px-4 py-6 sm:p-6 shadow hover:shadow-xl hover:-translate-y-1 ease-in-out delay-150 duration-300">
+<li class="{{ $row->highlight ? 'bg-yellow-50 ' : 'bg-white '}} relative px-4 py-6 sm:p-6 shadow hover:shadow-xl hover:-translate-y-1 ease-in-out delay-150 duration-300">
     <article aria-labelledby="question-title-81614">
         <div>
             <div class="flex space-x-3">
@@ -19,19 +19,18 @@
                             <time datetime="2020-12-09T11:43:00">{{ $row->live_at_formatted }}</time>
                         </a>
                     </p>
-                </div>
-                <div class="flex-shrink-0 self-center flex">
                     @if($row->urgent)
-                        <a href="{{ route('jobs.job', ['slug' => $row->slug]) }}" class="cursor-pointer">
-                             <span class="animate-pulse inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-rose-100 text-rose-800">
-                              <svg class="-ml-0.5 mr-1.5 h-2 w-2 text-rose-400" fill="currentColor" viewBox="0 0 8 8">
+                        <span class="animate-pulse absolute -top-3 z-20 right-3 ml-4 font-medium inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-rose-100 text-rose-800">
+                                <svg class="h-2 w-2 mr-1.5 text-rose-400" fill="currentColor" viewBox="0 0 8 8">
                                 <circle cx="4" cy="4" r="3" />
                               </svg>
-                              Urgent
-                            </span>
-                        </a>
+                            </svg>
+                            Urgent
+                        </span>
                     @endif
-
+                </div>
+                <div class="flex-shrink-0 self-center">
+                    <a href="{{ route('jobs.job', ['slug' => $row->slug]) }}" class="hover:underline">Details</a>
                 </div>
             </div>
             <ul role="list" class="mt-2 leading-8">

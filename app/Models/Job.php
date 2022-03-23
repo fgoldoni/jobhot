@@ -135,6 +135,7 @@ class Job extends Model
         'created_at_formatted',
         'live_at_formatted',
         'urgent',
+        'highlight',
         'is_new',
     ];
 
