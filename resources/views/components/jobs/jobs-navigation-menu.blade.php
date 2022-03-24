@@ -4,7 +4,7 @@
             <!-- Logo section -->
             <div class="flex items-center px-2 lg:px-0 xl:w-64">
                 <div class="flex-shrink-0">
-                    <a href="{{ url('/home') }}">
+                    <a href="{{ url('/') }}">
                         <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=600" alt="Workflow">
                     </a>
                 </div>
