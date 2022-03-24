@@ -38,7 +38,7 @@
 
                     @if($row->urgent)
 
-                        <span class="hidden md:inline-flex animate-pulse absolute -top-3 z-20 right-3 ml-4 font-medium  items-center px-3 py-0.5 rounded-full text-sm font-medium bg-rose-100 text-rose-800">
+                        <span class="inline-flex animate-pulse absolute -top-3 z-20 right-3 ml-4 font-medium  items-center px-3 py-0.5 rounded-full text-sm font-medium bg-rose-100 text-rose-800">
 
                             <svg class="h-2 w-2 mr-1.5 text-rose-400" fill="currentColor" viewBox="0 0 8 8">
                                 <circle cx="4" cy="4" r="3" />
@@ -66,25 +66,6 @@
 
             <ul role="list" class="mt-2 leading-8">
 
-                @if($row->urgent)
-
-                    <li class="inline md:hidden">
-
-                        <a href="#" class="relative inline-flex items-center rounded-full border bg-rose-100 text-rose-800 px-3 py-0.5">
-
-                            <div class="absolute flex-shrink-0 flex items-center justify-center">
-
-                                <span class="h-1.5 w-1.5 rounded-full bg-rose-500" aria-hidden="true"></span>
-
-                            </div>
-
-                            <div class="ml-3.5 text-sm font-medium text-rose-900">Urgent</div>
-
-                        </a>
-
-                    </li>
-
-                @endif
                 <li class="inline">
 
                     <a href="#" class="relative inline-flex items-center rounded-full border border-gray-300 px-3 py-0.5">
