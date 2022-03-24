@@ -1,19 +1,11 @@
 @props(['filters', 'country'])
 
 @php
-    if (session()->has('displayCountries')) {
+    $c = \Modules\Countries\Entities\Country::find($country);
 
-        $c = session()->get('displayCountries')->filter(function ($item, $key) use( $country ) {
-            return $item->country_id === (int) $country;
-        })->first()->country;
-
-    } else {
-        $c = \Modules\Countries\Entities\Country::find($country);
-    }
-
-    $filters['countries'] = array_filter($filters['countries'], static function ($element) use ($country) {
-        return $element != $country;
-    });
+     $filters['countries'] = array_filter($filters['countries'], static function ($element) use ($country) {
+         return $element != $country;
+     });
 @endphp
 
 <span class="m-1 inline-flex rounded-full border border-gray-200 items-center py-1.5 pl-3 pr-2 text-sm font-medium bg-gray-100 text-gray-900">

@@ -53,10 +53,6 @@ class FiltersCountriesComponent extends Component
 
     public function render()
     {
-        $displayCountries = $this->rows;
-
-        session()->put('displayCountries', $displayCountries);
-
-        return view('livewire.jobs.filters-countries-component', ['rows' => [$displayCountries]]);
+        return view('livewire.jobs.filters-countries-component', ['rows' => [$this->rows]]);
     }
 }
