@@ -14,7 +14,7 @@ class FiltersCountriesComponent extends Component
 
     public array $selected = [];
 
-    protected $listeners = ['refreshFiltersSelected'];
+    protected $listeners = ['refreshFiltersSelected', 'refreshFiltersCountries'];
 
     public function updatedSelected()
     {
@@ -24,6 +24,11 @@ class FiltersCountriesComponent extends Component
     public function refreshFiltersSelected()
     {
         $this->reset('selected');
+    }
+
+    public function refreshFiltersCountries(array $countries)
+    {
+        $this->selected = $countries;
     }
 
     public function load()
@@ -48,6 +53,10 @@ class FiltersCountriesComponent extends Component
 
     public function render()
     {
-        return view('livewire.jobs.filters-countries-component', ['rows' => [$this->rows]]);
+        $displayCountries = $this->rows;
+
+        session()->put('displayCountries', $displayCountries);
+
+        return view('livewire.jobs.filters-countries-component', ['rows' => [$displayCountries]]);
     }
 }

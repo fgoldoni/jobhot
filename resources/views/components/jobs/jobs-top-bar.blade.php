@@ -428,7 +428,9 @@
                     <x-jobs.filters.days :filters="$filters"></x-jobs.filters.days>
 
                     @foreach ($filters['countries'] as $country)
+
                         <x-jobs.filters.countries :filters="$filters" :country="$country"></x-jobs.filters.countries>
+
                     @endforeach
 
                 </div>

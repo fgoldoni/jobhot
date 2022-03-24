@@ -54,6 +54,12 @@ class JobsComponent extends Component
         $this->emit('refreshFiltersSelected');
     }
 
+    public function filtersChangeCountries(array $countries)
+    {
+        $this->filters['countries'] = $countries;
+        $this->emit('refreshFiltersCountries', $countries);
+    }
+
     public function getRowsQueryProperty()
     {
         $query = Job::query()

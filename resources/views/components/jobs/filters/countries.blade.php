@@ -1,7 +1,15 @@
 @props(['filters', 'country'])
 
 @php
-    $c = \Modules\Countries\Entities\Country::find($country);
+    if (session()->has('displayCountries')) {
+
+        $c = session()->get('displayCountries')->filter(function ($item, $key) use( $country ) {
+            return $item->country_id === (int) $country;
+        })->first()->country;
+
+    } else {
+        $c = \Modules\Countries\Entities\Country::find($country);
+    }
 
     $filters['countries'] = array_filter($filters['countries'], static function ($element) use ($country) {
         return $element != $country;
@@ -12,7 +20,7 @@
 
         <span>{{ $c->name }}</span>
 
-        <button type="button" class="flex-shrink-0 ml-1 h-4 w-4 p-1 rounded-full inline-flex text-gray-400 hover:bg-gray-200 hover:text-gray-500" wire:click="$set('filters.days', null)">
+        <button type="button" class="flex-shrink-0 ml-1 h-4 w-4 p-1 rounded-full inline-flex text-gray-400 hover:bg-gray-200 hover:text-gray-500" wire:click="filtersChangeCountries({{ json_encode($filters['countries']) }})">
             <span class="sr-only">Remove filter for Objects</span>
             <svg class="h-2 w-2" stroke="currentColor" fill="none" viewBox="0 0 8 8">
               <path stroke-linecap="round" stroke-width="1.5" d="M1 1l6 6m0-6L1 7" />
