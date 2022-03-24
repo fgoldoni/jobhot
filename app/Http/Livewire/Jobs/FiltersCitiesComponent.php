@@ -17,7 +17,7 @@ class FiltersCitiesComponent extends Component
 
     public array $selected = [];
 
-    protected $listeners = ['refreshFiltersSelected'];
+    protected $listeners = ['refreshFiltersSelected', 'filtersChangeCities'];
 
     public function getRowsQueryProperty()
     {
@@ -42,6 +42,11 @@ class FiltersCitiesComponent extends Component
     public function refreshFiltersSelected()
     {
         $this->reset('selected');
+    }
+
+    public function filtersChangeCities(array $cities)
+    {
+        $this->selected = $cities;
     }
 
     public function load()

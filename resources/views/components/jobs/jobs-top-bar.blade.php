@@ -428,8 +428,19 @@
                     <x-jobs.filters.days :filters="$filters"></x-jobs.filters.days>
 
                     @foreach ($filters['countries'] as $country)
-
                         <x-jobs.filters.countries :filters="$filters" :country="$country"></x-jobs.filters.countries>
+
+                    @endforeach
+
+                    @foreach ($filters['cities'] as $city)
+
+                        <x-jobs.filters.cities :filters="$filters" :city="$city"></x-jobs.filters.cities>
+
+                    @endforeach
+
+                    @foreach ($filters['divisions'] as $division)
+
+                        <x-jobs.filters.divisions :filters="$filters" :division="$division"></x-jobs.filters.divisions>
 
                     @endforeach
 

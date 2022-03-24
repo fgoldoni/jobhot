@@ -60,6 +60,18 @@ class JobsComponent extends Component
         $this->emit('refreshFiltersCountries', $countries);
     }
 
+    public function filtersChangeCities(array $cities)
+    {
+        $this->filters['cities'] = $cities;
+        $this->emit('refreshFiltersCities', $cities);
+    }
+
+    public function filtersChangeDivisions(array $divisions)
+    {
+        $this->filters['divisions'] = $divisions;
+        $this->emit('refreshFiltersDivisions', $divisions);
+    }
+
     public function getRowsQueryProperty()
     {
         $query = Job::query()

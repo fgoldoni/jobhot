@@ -14,7 +14,7 @@ class FiltersDivisionsComponent extends Component
 
     public array $selected = [];
 
-    protected $listeners = ['refreshFiltersSelected'];
+    protected $listeners = ['refreshFiltersSelected', 'filtersChangeDivisions'];
 
     public function updatedSelected()
     {
@@ -24,6 +24,11 @@ class FiltersDivisionsComponent extends Component
     public function refreshFiltersSelected()
     {
         $this->reset('selected');
+    }
+
+    public function filtersChangeDivisions(array $divisions)
+    {
+        $this->selected = $divisions;
     }
 
     public function load()
