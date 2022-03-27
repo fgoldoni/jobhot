@@ -8,46 +8,26 @@ use Illuminate\Http\Request;
 
 class JobController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         return view('admin.jobs.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Job  $job
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(Job $job)
     {
-        //
+        return view('admin.jobs.show');
     }
 
     /**
@@ -58,7 +38,7 @@ class JobController extends Controller
      */
     public function edit(Job $job)
     {
-        //
+        return view('admin.jobs.edit', compact(['job']));
     }
 
     /**
