@@ -15,13 +15,13 @@
             {{ __('Users') }}
         </x-sidebar-link>
 
-        <x-sidebar-link href="{{ route('admin.companies') }}" :active="request()->routeIs('admin.companies')">
-            <x-icon.cube :active="request()->routeIs('admin.companies')"/>
+        <x-sidebar-link href="{{ route('admin.companies.index') }}" :active="request()->routeIs('admin.companies.index')">
+            <x-icon.cube :active="request()->routeIs('admin.companies.index')"/>
             {{ __('Companies') }}
         </x-sidebar-link>
 
-        <x-sidebar-link href="{{ route('admin.jobs') }}" :active="request()->routeIs('admin.jobs')">
-            <x-icon.academic :active="request()->routeIs('admin.jobs')"/>
+        <x-sidebar-link href="{{ route('admin.jobs.index') }}" :active="request()->routeIs('admin.jobs.index')">
+            <x-icon.academic :active="request()->routeIs('admin.jobs.index')"/>
             {{ __('Jobs') }}
         </x-sidebar-link>
 

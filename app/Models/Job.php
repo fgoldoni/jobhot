@@ -173,6 +173,15 @@ class Job extends Model
             ->saveSlugsTo('slug');
     }
 
+    public function getRouteKey()
+    {
+        return $this->slug;
+    }
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
     public function toArray(): array
     {
         $attributes = parent::toArray();
