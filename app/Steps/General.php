@@ -33,12 +33,12 @@ class General extends Step
      */
     public function save($state)
     {
-        $user = $this->model;
+        $job = $this->model;
 
-        $user->name     = $state['name'];
-        $user->content    = $state['content'];
+        $job->name     = $state['name'];
+        $job->content    = $state['content'];
 
-        $user->save();
+        $job->save();
     }
 
     /*
@@ -48,8 +48,8 @@ class General extends Step
     {
         return [
             [
-                'state.name'     => ['required', Rule::unique('users', 'name')->ignoreModel($this->model)],
-                'state.content'    => ['required', Rule::unique('users', 'content')->ignoreModel($this->model)],
+                'state.name'     => ['required', Rule::unique('jobs', 'name')->ignoreModel($this->model)],
+                'state.content'    => ['required', Rule::unique('jobs', 'content')->ignoreModel($this->model)],
             ],
             [
                 'state.name'     => __('Name'),

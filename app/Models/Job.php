@@ -136,7 +136,7 @@ class Job extends Model
         'live_at_formatted',
         'urgent',
         'highlight',
-        'is_new',
+        'closing_to_for_editing',
     ];
 
     /**
@@ -244,5 +244,15 @@ class Job extends Model
     public function getLiveAtFormattedAttribute()
     {
         return $this->live_at?->diffForHumans();
+    }
+
+    public function getClosingToForEditingAttribute()
+    {
+        return $this->date?->format('m/d/Y');
+    }
+
+    public function setClosingToForEditingAttribute($value)
+    {
+        $this->date = Carbon::parse($value);
     }
 }

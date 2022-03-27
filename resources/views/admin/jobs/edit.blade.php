@@ -4,5 +4,4 @@
     </x-slot>
 
     <!-- Replace with your content -->
-    <livewire:admin.jobs.job-wizard job-id="{{ $job->slug }}"/>
 </x-admin-layout>
