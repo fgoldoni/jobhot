@@ -21,7 +21,11 @@ class ImpersonationController extends Controller
     {
         $originalId = $this->auth->user()->id;
 
-        $this->auth->loginUsingId($userId);
+        $this->auth->logout();
+
+        session()->flush();
+
+        $this->auth->loginUsingId($userId, true);
 
         session()->put($this->getSessionKey(), $originalId);
 

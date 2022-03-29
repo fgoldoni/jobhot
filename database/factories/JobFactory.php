@@ -30,6 +30,9 @@ class JobFactory extends Factory
             'urgent_to' => $this->faker->randomElement([$this->faker->dateTimeInInterval('now', '+30 days'), null, null, null, null]),
             'highlight_to' => $this->faker->randomElement([$this->faker->dateTimeInInterval('now', '+30 days'), null, null, null, null]),
             'live_at' => $this->faker->randomElement([$this->faker->dateTimeInInterval('-5 days', 'now'), null]),
+            'experience' => $this->faker->numberBetween(1,5),
+            'salary_min' => $this->faker->numberBetween(38000, 55000),
+            'salary_max' => $this->faker->numberBetween(55000, 200000),
         ];
     }
 

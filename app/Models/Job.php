@@ -2,15 +2,19 @@
 namespace App\Models;
 
 use App\Enums\JobState;
+use App\Enums\SalaryType;
 use App\Traits\BelongsToUser;
 use App\Traits\Categorizable;
 use App\Traits\HasAvatar;
 use App\Traits\HasTeams;
+use App\Traits\JobAttribute;
 use App\Traits\WithinDays;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 use Modules\Countries\Entities\City;
 use Modules\Countries\Entities\Country;
 use Modules\Countries\Entities\Division;
@@ -107,7 +111,7 @@ use Spatie\Translatable\HasTranslations;
  */
 class Job extends Model
 {
-    use HasFactory, HasSlug, HasTranslations, Categorizable, HasAvatar, BelongsToUser, SearchableTrait, SoftDeletes, HasTeams, WithinDays;
+    use HasFactory, HasSlug, HasTranslations, Categorizable, HasAvatar, BelongsToUser, SearchableTrait, SoftDeletes, HasTeams, WithinDays, JobAttribute;
 
     protected $guarded = [];
 
@@ -115,6 +119,7 @@ class Job extends Model
 
     protected $casts = [
         'state' => JobState::class,
+        'salary_type' => SalaryType::class,
         'closing_to' => 'date',
         'featured_to' => 'date',
         'urgent_to' => 'date',
@@ -191,22 +196,22 @@ class Job extends Model
         return $attributes;
     }
 
-    public function company(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class)->withDefault();
     }
 
-    public function country(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function country(): BelongsTo
     {
         return $this->belongsTo(Country::class)->withDefault(['name' => '']);
     }
 
-    public function division(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function division(): BelongsTo
     {
         return $this->belongsTo(Division::class)->withDefault(['name' => '']);
     }
 
-    public function city(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function city(): BelongsTo
     {
         return $this->belongsTo(City::class)->withDefault(['name' => '']);
     }
@@ -214,45 +219,5 @@ class Job extends Model
     public function scopePublished($query)
     {
         return $query->where('state', JobState::Published);
-    }
-
-    public function getClosingToFormattedAttribute()
-    {
-        return $this->closing_to->format('d, M Y');
-    }
-
-    public function getHighlightAttribute(): ?bool
-    {
-        return $this->highlight_to?->gt(now());
-    }
-
-    public function getUrgentAttribute(): ?bool
-    {
-        return $this->urgent_to?->gt(now());
-    }
-
-    public function getCreatedAtFormattedAttribute()
-    {
-        return $this->created_at?->diffForHumans();
-    }
-
-    public function getIsNewAttribute(): ?bool
-    {
-        return $this->live_at?->gt(now()->subDays()->startOfDay());
-    }
-
-    public function getLiveAtFormattedAttribute()
-    {
-        return $this->live_at?->diffForHumans();
-    }
-
-    public function getClosingToForEditingAttribute()
-    {
-        return $this->date?->format('m/d/Y');
-    }
-
-    public function setClosingToForEditingAttribute($value)
-    {
-        $this->date = Carbon::parse($value);
     }
 }

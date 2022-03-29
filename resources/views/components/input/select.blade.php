@@ -7,7 +7,6 @@
         selectedIndex: @entangle($attributes->wire('model')),
         activeIndex: {{ $selected }},
         name: '',
-        icon: 'unuin',
         items: {{ collect($items) }},
         optionCount: {{ collect($items)->count() }},
         onButtonClick()
@@ -44,8 +43,9 @@
            this.open = !1
        },
        setValue() {
-            this.name = this.items.find(item => item.id === this.selectedIndex).name
-            this.icon = this.items.find(item => item.id === this.selectedIndex).icon
+            if (this.items && this.selectedIndex) {
+                this.name = this.items ? this.items.find(item => item.id === this.selectedIndex).name : ''
+            }
         },
        }"
         x-init="setValue(); $watch('selectedIndex', () => setValue())">

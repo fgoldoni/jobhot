@@ -140,4 +140,10 @@ class Company extends Model
         return $this->live_at?->isToday();
     }
 
+    public function scopeTeamByUser($query)
+    {
+        static::teamGuard();
+        $query->where($query->getQuery()->from.'.team_id', auth()->user()->currentTeam->getKey());
+    }
+
 }

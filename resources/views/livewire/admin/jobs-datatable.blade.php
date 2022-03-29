@@ -284,11 +284,8 @@
                                 <x-label for="name" class="sm:mt-px sm:pt-2">{{ __('Company') }} </x-label>
                                 <div class="mt-1 sm:mt-0 sm:col-span-2">
                                     <x-input.company-select :items="$companies" :selected="$editing->company_id" wire:model.defer="editing.company_id" wire:key="companies-field-{{ $editing->id }}"></x-input.company-select>
-                                    @if ($errors->has('selectedCompany'))
-                                        <p class="mt-2 text-sm text-red-600">{{ $errors->first('selectedCompany') }}</p>
-                                    @endif
                                 </div>
-                                @if ($errors->has('selectedCompany'))
+                                @if ($errors->has('editing.company_id'))
                                     <p class="mt-2 text-sm text-red-600">{{ $errors->first('selectedCompany') }}</p>
                                 @endif
                             </div>

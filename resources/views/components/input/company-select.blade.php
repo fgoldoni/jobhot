@@ -44,8 +44,10 @@
            this.open = !1
        },
        setValue() {
-            this.name = this.items.find(item => item.id === this.selectedIndex).name
-            this.avatar_url = this.items.find(item => item.id === this.selectedIndex).avatar_url
+           if (this.items && this.selectedIndex) {
+                this.name = this.items ? this.items.find(item => item.id === this.selectedIndex).name : '';
+                this.avatar_url = this.items ? this.items.find(item => item.id === this.selectedIndex).avatar_url : '';
+           }
         },
        }"
          x-init="setValue(); $watch('selectedIndex', () => setValue())">

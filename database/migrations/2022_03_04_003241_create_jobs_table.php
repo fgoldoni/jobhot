@@ -19,6 +19,11 @@ return new class extends Migration
             $table->json('name');
             $table->string('slug');
             $table->longText('content')->nullable();
+            $table->smallInteger('experience')->unsigned()->nullable();
+            $table->integer('salary_min')->unsigned()->nullable();
+            $table->integer('salary_max')->unsigned()->nullable();
+            $table->string('salary_type')->default((\App\Enums\SalaryType::Year)->value);
+            $table->boolean('negotiable')->default(true);
             $table->string('state')->default((\App\Enums\JobState::Draft)->value);
 
             $table->string('avatar_path', 2048)->nullable();
@@ -28,7 +33,7 @@ return new class extends Migration
             $table->foreignId('country_id')->nullable()->unsigned()->index()->references('id')->on('world_countries')->cascadeOnDelete();
             $table->foreignId('division_id')->nullable()->unsigned()->index()->references('id')->on('world_divisions')->cascadeOnDelete();
             $table->foreignId('city_id')->nullable()->unsigned()->index()->references('id')->on('world_cities')->cascadeOnDelete();
-            $table->date('closing_to')->default(now()->addMonth());
+            $table->date('closing_to')->nullable();
             $table->date('featured_to')->nullable();
             $table->date('urgent_to')->nullable();
             $table->date('highlight_to')->nullable();

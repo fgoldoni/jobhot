@@ -4,4 +4,5 @@
     </x-slot>
 
     <!-- Replace with your content -->
+    @livewire('admin.jobs.job-form', ['editing' => $job])
 </x-admin-layout>
