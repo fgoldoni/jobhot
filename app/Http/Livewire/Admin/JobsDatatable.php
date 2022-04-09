@@ -42,7 +42,7 @@ class JobsDatatable extends Component
 
     public bool $showFilters = false;
 
-    public bool $showEditor = false;
+    public bool $showEditor = true;
 
     public int $selectedState = 1;
 

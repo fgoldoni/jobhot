@@ -26,7 +26,7 @@ class SearchBar extends Component
             ->with(['categories:id,name', 'country:id,name,emoji', 'city:id,name', 'division:id,name'])
             ->search($this->searchJob)
             ->take(10)
-            ->get(['id', 'name', 'avatar_path', 'company_id', 'live_at', 'country_id', 'city_id', 'division_id'])->sortBy('name');
+            ->get()->sortBy('name');
 
         $this->showJobDropdown = true;
     }

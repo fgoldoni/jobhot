@@ -111,7 +111,7 @@ use Spatie\Translatable\HasTranslations;
  */
 class Job extends Model
 {
-    use HasFactory, HasSlug, HasTranslations, Categorizable, HasAvatar, BelongsToUser, SearchableTrait, SoftDeletes, HasTeams, WithinDays, JobAttribute;
+    use HasFactory, HasSlug, HasTranslations, Categorizable, HasAvatar, BelongsToUser, SearchableTrait, SoftDeletes, WithinDays, JobAttribute;
 
     protected $guarded = [];
 

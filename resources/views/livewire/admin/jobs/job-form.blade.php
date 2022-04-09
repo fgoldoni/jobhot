@@ -15,7 +15,7 @@
     <x-slot name="form" class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
 
         <div class="col-span-6">
-            <h3 class="text-lg leading-6 font-medium text-gray-900">{{ $companies->count() }}</h3>
+            <h3 class="text-lg leading-6 font-medium text-gray-900">{{ __('Job Content') }}</h3>
             <p class="mt-1 text-sm text-gray-500">Use a permanent address where you can receive mail.</p>
         </div>
 
@@ -140,14 +140,83 @@
 
 
         <div class="col-span-6 sm:col-span-3">
-            <x-label for="name"> {{__('Countries')}} </x-label>
+            <x-label for="countries"> {{__('Countries')}} </x-label>
             <x-input.admin-countries-select :items="$countries" wire:model="editing.country_id" wire:key="search-countries"></x-input.admin-countries-select>
+            @if ($errors->has('editing.country_id'))
+                <p class="mt-2 text-sm text-red-600">{{ $errors->first('editing.country_id') }}</p>
+            @endif
+        </div>
+
+        @if($showCityField)
+            <div class="col-span-6 sm:col-span-3">
+                <x-label for="cities"> {{__('Cities')}} </x-label>
+                <x-input.admin-cities-select :items="$cities" wire:model="editing.city_id" wire:key="search-cities"></x-input.admin-cities-select>
+                @if ($errors->has('editing.city_id'))
+                    <p class="mt-2 text-sm text-red-600">{{ $errors->first('editing.city_id') }}</p>
+                @endif
+            </div>
+        @else
+            <div class="col-span-6 sm:col-span-3">
+                <x-label for="divisions"> {{__('Division')}} </x-label>
+                <x-input.admin-divisions-select :items="$divisions" wire:model="editing.division_id" wire:key="search-divisions"></x-input.admin-divisions-select>
+                @if ($errors->has('editing.division_id'))
+                    <p class="mt-2 text-sm text-red-600">{{ $errors->first('editing.division_id') }}</p>
+                @endif
+            </div>
+        @endif
+
+        <div class="col-span-6">
+
+            <x-label for="iframe"> {{__('iFrame')}} </x-label>
+
+            <x-input.textarea id="iframe" wire:model.defer="editing.iframe" rows="3"></x-input.textarea>
+
+            <x-input-error for="editing.iframe" class="mt-2" />
+
+        </div>
+
+
+        <div class="col-span-6 sm:col-span-3">
+
+            <x-label for="selectedItem"> {{__('Functional Area')}} </x-label>
+
+            <x-input.select :items="$areas" :selected="$selectedItem" wire:model.defer="selectedItem" wire:key="categories-field-{{ $editing->id }}"></x-input.select>
+
+            <x-input-error for="selectedItem" class="mt-2" />
+
         </div>
 
         <div class="col-span-6 sm:col-span-3">
-            <x-label for="name"> {{__('Countries')}} </x-label>
-            <x-input.admin-countries-select :items="$countries" wire:model="editing.country_id" wire:key="search-countries"></x-input.admin-countries-select>
+
+            <x-label for="selectedItem"> {{__('Job Type')}} </x-label>
+
+            <x-input.select :items="$areas" :selected="$selectedItem" wire:model.defer="selectedItem" wire:key="categories-field-{{ $editing->id }}"></x-input.select>
+
+            <x-input-error for="selectedItem" class="mt-2" />
+
         </div>
+
+        <div class="col-span-6 sm:col-span-3">
+
+            <x-label for="selectedItem"> {{__('Gender')}} </x-label>
+
+            <x-input.select :items="$areas" :selected="$selectedItem" wire:model.defer="selectedItem" wire:key="categories-field-{{ $editing->id }}"></x-input.select>
+
+            <x-input-error for="selectedItem" class="mt-2" />
+
+        </div>
+
+        <div class="col-span-6 sm:col-span-3">
+
+            <x-label for="selectedItem"> {{__('Required Degree Level')}} </x-label>
+
+            <x-input.select :items="$areas" :selected="$selectedItem" wire:model.defer="selectedItem" wire:key="categories-field-{{ $editing->id }}"></x-input.select>
+
+            <x-input-error for="selectedItem" class="mt-2" />
+
+        </div>
+
+
 
     </x-slot>
 

@@ -2,8 +2,12 @@
 
 namespace App\Http\Livewire\Admin\Jobs;
 
+use App\Http\Livewire\Admin\Datatable\WithCategories;
+use App\Http\Livewire\Admin\Datatable\WithCities;
 use App\Http\Livewire\Admin\Datatable\WithCountries;
+use App\Http\Livewire\Admin\Datatable\WithDivisions;
 use App\Http\Livewire\Admin\Datatable\WithSalaryTypes;
+use App\Models\Category;
 use App\Models\Company;
 use App\Models\Job;
 use Illuminate\Database\Eloquent\Collection;
@@ -11,7 +15,13 @@ use Livewire\Component;
 
 class JobForm extends Component
 {
+    use WithCategories;
+
     use WithCountries;
+
+    use WithCities;
+
+    use WithDivisions;
 
     use WithSalaryTypes;
 
@@ -20,6 +30,10 @@ class JobForm extends Component
     public Collection $companies;
 
     public $avatar;
+
+    public string $categoryType = 'area';
+
+    public $areas;
 
     public function rules(): array
     {
@@ -30,7 +44,7 @@ class JobForm extends Component
             'editing.company_id' => 'required|integer',
             'editing.country_id' => 'required|integer',
             'editing.division_id' => 'nullable|integer',
-            'editing.city_id' => 'nullable|integer',
+            'editing.city_id' => 'required|integer',
             'editing.closing_to_for_editing' => 'required',
             'editing.experience' => 'required',
             'editing.negotiable' => 'required|boolean',
@@ -44,6 +58,16 @@ class JobForm extends Component
     public function mount()
     {
         $this->companies = Company::teamByUser()->get();
+
+        $this->areas = Category::area()->orderBy('position')->get(['id', 'name', 'icon']);
+
+        $this->setDefaultCountry();
+
+        if ($this->editing->country()->value('has_division')) {
+            $this->setDefaultDivision();
+        } else {
+            $this->setDefaultCity();
+        }
     }
     public function save()
     {

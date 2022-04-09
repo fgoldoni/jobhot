@@ -27,6 +27,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Blade::directive('br2nl', function ($string) {
+            return "<?php echo preg_replace('/\<br(\s*)?\/?\>/i', \"\n\", $string); ?>";
+        });
+
         Component::macro('notify', function ($message) {
             $this->dispatchBrowserEvent('notify', $message);
         });
