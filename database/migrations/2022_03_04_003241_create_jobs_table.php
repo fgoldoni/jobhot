@@ -38,7 +38,7 @@ return new class extends Migration
             $table->date('urgent_to')->nullable();
             $table->date('highlight_to')->nullable();
             $table->datetime('live_at')->nullable();
-            $table->string('iframe')->nullable();
+            $table->text('iframe')->nullable();
 
             $table->softDeletes();
             $table->timestamps();

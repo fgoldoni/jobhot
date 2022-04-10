@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin\Jobs;
 
+use App\Enums\CategoryType;
 use App\Http\Livewire\Admin\Datatable\WithCategories;
 use App\Http\Livewire\Admin\Datatable\WithCities;
 use App\Http\Livewire\Admin\Datatable\WithCountries;
@@ -33,7 +34,13 @@ class JobForm extends Component
 
     public string $categoryType = 'area';
 
-    public $areas;
+    public Collection $areas;
+
+    public Collection $jobTypes;
+
+    public Collection $genders;
+
+    public Collection $jobLevels;
 
     public function rules(): array
     {
@@ -61,7 +68,21 @@ class JobForm extends Component
 
         $this->areas = Category::area()->orderBy('position')->get(['id', 'name', 'icon']);
 
+        $this->jobTypes = Category::type(CategoryType::JobType)->orderBy('position')->get(['id', 'name', 'icon']);
+
+        $this->genders = Category::type(CategoryType::Gender)->orderBy('position')->get(['id', 'name', 'icon']);
+
+        $this->jobLevels = Category::type(CategoryType::JobLevel)->orderBy('position')->get(['id', 'name', 'icon']);
+
         $this->setDefaultCountry();
+
+        $this->setDefaultCategory();
+
+        $this->setDefaultCategoryJobType();
+
+        $this->setDefaultCategoryGender();
+
+        $this->setDefaultCategoryJobLevels();
 
         if ($this->editing->country()->value('has_division')) {
             $this->setDefaultDivision();

@@ -16,8 +16,11 @@
                 this.activeIndex = this.items.findIndex(item => item.id === this.selectedIndex),
                 this.open=!0,
                 this.$nextTick(( ()=> {
-                    this.$refs.listbox.focus(),
-                    this.$refs.listbox.children[this.activeIndex].scrollIntoView({ block: 'nearest' })
+                    this.$refs.listbox.focus();
+                    if (this.$refs.listbox.children[this.activeIndex])
+                    {
+                        this.$refs.listbox.children[this.activeIndex].scrollIntoView({ block: 'nearest' })
+                    }
                 }))
             )
         },
@@ -31,11 +34,11 @@
             this.$refs.button.focus()
         },
         onArrowUp(){
-            this.activeIndex = this.activeIndex-1 < 0 ? this.optionCount - 1 : this.activeIndex - 1,
+            this.activeIndex = this.activeIndex-1 < 0 ? this.optionCount - 1 : this.activeIndex - 1;
             this.$refs.listbox.children[this.activeIndex].scrollIntoView({ block: 'nearest' })
        },
        onArrowDown(){
-            this.activeIndex = this.activeIndex + 1 > this.optionCount -1 ? 0 : this.activeIndex + 1,
+            this.activeIndex = this.activeIndex + 1 > this.optionCount -1 ? 0 : this.activeIndex + 1;
             this.$refs.listbox.children[this.activeIndex].scrollIntoView({ block: 'nearest' })
        },
        choose(e) {
@@ -44,7 +47,7 @@
        },
        setValue() {
             if (this.items && this.selectedIndex) {
-                this.name = this.items ? this.items.find(item => item.id === this.selectedIndex).name : ''
+                this.name = this.items && this.items.find(item => item.id === this.selectedIndex) ? this.items.find(item => item.id === this.selectedIndex).name : ''
             }
         },
        }"

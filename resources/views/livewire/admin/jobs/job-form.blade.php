@@ -188,32 +188,94 @@
 
         <div class="col-span-6 sm:col-span-3">
 
-            <x-label for="selectedItem"> {{__('Job Type')}} </x-label>
+            <x-label for="jobType"> {{__('Job Type') }} </x-label>
 
-            <x-input.select :items="$areas" :selected="$selectedItem" wire:model.defer="selectedItem" wire:key="categories-field-{{ $editing->id }}"></x-input.select>
+            <x-input.select :items="$jobTypes" :selected="$jobType" wire:model.defer="jobType" wire:key="categories-field-jobType-{{ $editing->id }}"></x-input.select>
 
-            <x-input-error for="selectedItem" class="mt-2" />
-
-        </div>
-
-        <div class="col-span-6 sm:col-span-3">
-
-            <x-label for="selectedItem"> {{__('Gender')}} </x-label>
-
-            <x-input.select :items="$areas" :selected="$selectedItem" wire:model.defer="selectedItem" wire:key="categories-field-{{ $editing->id }}"></x-input.select>
-
-            <x-input-error for="selectedItem" class="mt-2" />
+            <x-input-error for="jobType" class="mt-2" />
 
         </div>
 
         <div class="col-span-6 sm:col-span-3">
 
-            <x-label for="selectedItem"> {{__('Required Degree Level')}} </x-label>
+            <x-label for="gender"> {{__('Gender')}} </x-label>
 
-            <x-input.select :items="$areas" :selected="$selectedItem" wire:model.defer="selectedItem" wire:key="categories-field-{{ $editing->id }}"></x-input.select>
+            <x-input.select :items="$genders" :selected="$gender" wire:model.defer="gender" wire:key="categories-field-gender-{{ $editing->id }}"></x-input.select>
 
-            <x-input-error for="selectedItem" class="mt-2" />
+            <x-input-error for="gender" class="mt-2" />
 
+        </div>
+
+        <div class="col-span-6 sm:col-span-3">
+
+            <x-label for="jobLevel"> {{__('Required Degree Level')}} </x-label>
+
+            <x-input.select :items="$jobLevels" :selected="$jobLevel" wire:model.defer="jobLevel" wire:key="categories-field-jobLevel-{{ $editing->id }}"></x-input.select>
+
+            <x-input-error for="jobLevel" class="mt-2" />
+
+        </div>
+
+        <div class="col-span-6">
+            <h3 class="text-lg leading-6 font-medium text-gray-900">Make your Job Premium (Optional)</h3>
+        </div>
+
+        <div class="col-span-6 px-4">
+            <fieldset>
+                <legend class="sr-only">Pricing plans</legend>
+                <div class="relative bg-white rounded-md -space-y-px">
+                    <!-- Checked: "bg-indigo-50 border-indigo-200 z-10", Not Checked: "border-gray-200" -->
+                    <label class="rounded-tl-md rounded-tr-md relative border p-4 flex flex-col cursor-pointer md:pl-4 md:pr-6 md:grid md:grid-cols-3 focus:outline-none">
+                        <div class="flex items-center text-sm">
+                            <input type="radio" name="pricing-plan" value="Startup" class="h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500" aria-labelledby="pricing-plans-0-label" aria-describedby="pricing-plans-0-description-0 pricing-plans-0-description-1">
+                            <!-- Checked: "text-indigo-900", Not Checked: "text-gray-900" -->
+                            <span id="pricing-plans-0-label" class="ml-3 font-medium">Startup</span>
+                        </div>
+                        <p id="pricing-plans-0-description-0" class="ml-6 pl-1 text-sm md:ml-0 md:pl-0 md:text-center">
+                            <!-- Checked: "text-indigo-900", Not Checked: "text-gray-900" -->
+                            <span class="font-medium">$29 / mo</span>
+                            <!-- Checked: "text-indigo-700", Not Checked: "text-gray-500" -->
+                            <span>($290 / yr)</span>
+                        </p>
+                        <!-- Checked: "text-indigo-700", Not Checked: "text-gray-500" -->
+                        <p id="pricing-plans-0-description-1" class="ml-6 pl-1 text-sm md:ml-0 md:pl-0 md:text-right">Up to 5 active job postings</p>
+                    </label>
+
+                    <!-- Checked: "bg-indigo-50 border-indigo-200 z-10", Not Checked: "border-gray-200" -->
+                    <label class="relative border p-4 flex flex-col cursor-pointer md:pl-4 md:pr-6 md:grid md:grid-cols-3 focus:outline-none">
+                        <div class="flex items-center text-sm">
+                            <input type="radio" name="pricing-plan" value="Business" class="h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500" aria-labelledby="pricing-plans-1-label" aria-describedby="pricing-plans-1-description-0 pricing-plans-1-description-1">
+                            <!-- Checked: "text-indigo-900", Not Checked: "text-gray-900" -->
+                            <span id="pricing-plans-1-label" class="ml-3 font-medium">Business</span>
+                        </div>
+                        <p id="pricing-plans-1-description-0" class="ml-6 pl-1 text-sm md:ml-0 md:pl-0 md:text-center">
+                            <!-- Checked: "text-indigo-900", Not Checked: "text-gray-900" -->
+                            <span class="font-medium">$99 / mo</span>
+                            <!-- Checked: "text-indigo-700", Not Checked: "text-gray-500" -->
+                            <span>($990 / yr)</span>
+                        </p>
+                        <!-- Checked: "text-indigo-700", Not Checked: "text-gray-500" -->
+                        <p id="pricing-plans-1-description-1" class="ml-6 pl-1 text-sm md:ml-0 md:pl-0 md:text-right">Up to 25 active job postings</p>
+                    </label>
+
+                    <!-- Checked: "bg-indigo-50 border-indigo-200 z-10", Not Checked: "border-gray-200" -->
+                    <label class="rounded-bl-md rounded-br-md relative border p-4 flex flex-col cursor-pointer md:pl-4 md:pr-6 md:grid md:grid-cols-3 focus:outline-none">
+                        <div class="flex items-center text-sm">
+                            <input type="radio" name="pricing-plan" value="Enterprise" class="h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500" aria-labelledby="pricing-plans-2-label" aria-describedby="pricing-plans-2-description-0 pricing-plans-2-description-1">
+                            <!-- Checked: "text-indigo-900", Not Checked: "text-gray-900" -->
+                            <span id="pricing-plans-2-label" class="ml-3 font-medium">Enterprise</span>
+                        </div>
+                        <p id="pricing-plans-2-description-0" class="ml-6 pl-1 text-sm md:ml-0 md:pl-0 md:text-center">
+                            <!-- Checked: "text-indigo-900", Not Checked: "text-gray-900" -->
+                            <span class="font-medium">$249 / mo</span>
+                            <!-- Checked: "text-indigo-700", Not Checked: "text-gray-500" -->
+                            <span>($2490 / yr)</span>
+                        </p>
+                        <!-- Checked: "text-indigo-700", Not Checked: "text-gray-500" -->
+                        <p id="pricing-plans-2-description-1" class="ml-6 pl-1 text-sm md:ml-0 md:pl-0 md:text-right">Unlimited active job postings</p>
+                    </label>
+                </div>
+            </fieldset>
         </div>
 
 

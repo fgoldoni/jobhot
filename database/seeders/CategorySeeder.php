@@ -15,7 +15,10 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        Category::factory(16)->create();
-        Category::factory(16)->create(['type' => CategoryType::Industry]);
+        Category::factory(5)->create();
+        Category::factory(5)->create(['type' => CategoryType::Industry]);
+        Category::factory(5)->create(['type' => CategoryType::JobType]);
+        Category::factory(5)->create(['type' => CategoryType::JobLevel]);
+        Category::factory(5)->create(['type' => CategoryType::Gender]);
     }
 }

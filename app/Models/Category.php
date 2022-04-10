@@ -116,6 +116,11 @@ class Category extends Model
         return $query->where('type', CategoryType::Area);
     }
 
+    public function scopeType(Builder $query, CategoryType $type): Builder
+    {
+        return $query->where('type', $type);
+    }
+
     public function scopeIndustry(Builder $query): Builder
     {
         return $query->where('type', CategoryType::Industry);
