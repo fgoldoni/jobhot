@@ -36,6 +36,8 @@ class JobForm extends Component
 
     public Collection $areas;
 
+    public Collection $industries;
+
     public Collection $jobTypes;
 
     public Collection $genders;
@@ -68,6 +70,8 @@ class JobForm extends Component
 
         $this->areas = Category::area()->orderBy('position')->get(['id', 'name', 'icon']);
 
+        $this->industries = Category::industry()->orderBy('position')->get(['id', 'name', 'icon']);
+
         $this->jobTypes = Category::type(CategoryType::JobType)->orderBy('position')->get(['id', 'name', 'icon']);
 
         $this->genders = Category::type(CategoryType::Gender)->orderBy('position')->get(['id', 'name', 'icon']);
@@ -77,6 +81,8 @@ class JobForm extends Component
         $this->setDefaultCountry();
 
         $this->setDefaultCategory();
+
+        $this->setDefaultCategoryIndustry();
 
         $this->setDefaultCategoryJobType();
 

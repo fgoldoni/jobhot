@@ -14,6 +14,8 @@ trait WithCategories
 {
     public ?int $selectedItem = null;
 
+    public ?int $industry = null;
+
     public ?int $jobType = null;
 
     public ?int $gender = null;
@@ -28,6 +30,13 @@ trait WithCategories
     private function setDefaultCategory()
     {
         $this->selectedItem = $this->defaultCategory();
+    }
+
+    private function setDefaultCategoryIndustry()
+    {
+        $this->industry = ($attachCategory = $this->editing->categories()->type(CategoryType::Industry)->first())
+            ? $attachCategory->id
+            : Category::query()->type(CategoryType::Industry)->orderBy('position')->first()->id;
     }
 
     private function setDefaultCategoryJobType()
