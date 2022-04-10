@@ -33,19 +33,19 @@ trait WithSalaryTypes
     {
         return collect([
             [
-                'id' => 0,
+                'id' => 1,
                 'name' => ucfirst((SalaryType::Hour)->value),
             ],
             [
-                'id' => 1,
+                'id' => 2,
                 'name' => ucfirst((SalaryType::Day)->value),
             ],
             [
-                'id' => 2,
+                'id' => 3,
                 'name' => ucfirst((SalaryType::Month)->value),
             ],
             [
-                'id' => 3,
+                'id' => 4,
                 'name' => ucfirst((SalaryType::Year)->value),
             ]
         ]);

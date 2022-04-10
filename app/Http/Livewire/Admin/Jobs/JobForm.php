@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Admin\Jobs;
 
 use App\Enums\CategoryType;
+use App\Enums\JobState;
 use App\Http\Livewire\Admin\Datatable\WithCategories;
 use App\Http\Livewire\Admin\Datatable\WithCities;
 use App\Http\Livewire\Admin\Datatable\WithCountries;
@@ -12,7 +13,10 @@ use App\Models\Category;
 use App\Models\Company;
 use App\Models\Job;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Collection as StatesCollection;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class JobForm extends Component
 {
@@ -22,6 +26,8 @@ class JobForm extends Component
 
     use WithCities;
 
+    use WithFileUploads;
+
     use WithDivisions;
 
     use WithSalaryTypes;
@@ -29,6 +35,8 @@ class JobForm extends Component
     public Job $editing;
 
     public Collection $companies;
+
+    public StatesCollection $states;
 
     public $avatar;
 
@@ -43,6 +51,8 @@ class JobForm extends Component
     public Collection $genders;
 
     public Collection $jobLevels;
+
+    public int $selectedState = 1;
 
     public function rules(): array
     {
@@ -60,6 +70,7 @@ class JobForm extends Component
             'editing.salary_min' => 'required',
             'editing.salary_max' => 'required',
             'editing.salary_type' => 'required',
+            'editing.iframe' => 'required',
         ];
     }
 
@@ -95,12 +106,30 @@ class JobForm extends Component
         } else {
             $this->setDefaultCity();
         }
-    }
-    public function save()
-    {
-        $this->validate();
 
-        $this->editing->save();
+        $this->states = $this->getStates();
+
+        $this->selectedState = $this->findStateBy('name', ucfirst($this->editing->state->value))['id'];
+    }
+
+
+    public function saveJobDetails()
+    {
+        $this->editing->state = strtolower($this->findStateBy('id', $this->selectedState)['name']);
+
+        $validatedData = $this->validate([
+            'editing.name' => ['required', 'string', 'max:255'],
+            'editing.content' => ['required', 'string', 'min:4'],
+            'editing.closing_to_for_editing' => 'required',
+            'editing.experience' => 'required',
+            'editing.salary_min' => 'required',
+            'editing.salary_max' => 'required',
+            'editing.salary_type' => 'required',
+            'editing.state' => 'required',
+        ]);
+
+
+        $this->editing->update($validatedData['editing']);
 
         if (isset($this->avatar)) {
             $this->editing->updateAvatar($this->avatar);
@@ -109,8 +138,85 @@ class JobForm extends Component
         $this->notify('The Job has been successfully updated');
     }
 
+    public function saveCompany()
+    {
+        $validatedData = $this->validate([
+            'editing.company_id' => 'required|integer',
+        ]);
+
+        $this->editing->update($validatedData['editing']);
+
+        $industries = $this->editing->categories()->industry()->get();
+
+        $this->editing->detachCategories($industries);
+
+        $this->editing->syncCategories([$this->industry], false);
+
+
+        $this->notify('The Job has been successfully updated');
+    }
+
+    public function saveJobLocation()
+    {
+        $validatedData = $this->validate([
+            'editing.country_id' => 'required|integer',
+            'editing.division_id' => 'nullable|integer',
+            'editing.city_id' => 'nullable|integer',
+            'editing.iframe' => 'required',
+        ]);
+
+        $this->editing->update($validatedData['editing']);
+
+        $this->notify('The Job Location has been successfully updated');
+    }
+
+    public function saveJobAttribute()
+    {
+        $validatedData = $this->validate([
+            'selectedItem' => 'required|integer',
+            'jobType' => 'required|integer',
+            'gender' => 'required|integer',
+            'jobLevel' => 'required|integer',
+        ]);
+
+        $detachCategories = $this->editing->categories()->whereNot('type', CategoryType::Industry)->get();
+
+        $this->editing->detachCategories($detachCategories);
+
+        $this->editing->syncCategories(Arr::flatten($validatedData), false);
+
+        $this->notify('The Job Attribute has been successfully updated');
+    }
+
     public function render()
     {
         return view('livewire.admin.jobs.job-form');
+    }
+
+    private function findStateBy(string $key, $value): array
+    {
+        return $this->states->filter(fn ($s) => $s[$key] === $value)->first();
+    }
+
+    private function getStates(): StatesCollection
+    {
+        return collect([
+            [
+                'id' => 1,
+                'name' => ucfirst((JobState::Draft)->value),
+            ],
+            [
+                'id' => 2,
+                'name' => ucfirst((JobState::Published)->value),
+            ],
+            [
+                'id' => 3,
+                'name' => ucfirst((JobState::Archived)->value),
+            ],
+            [
+                'id' => 4,
+                'name' => ucfirst((JobState::Hold)->value),
+            ]
+        ]);
     }
 }

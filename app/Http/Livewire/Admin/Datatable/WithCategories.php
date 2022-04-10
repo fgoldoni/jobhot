@@ -24,12 +24,13 @@ trait WithCategories
 
     public function mountWithCategories()
     {
-        $this->selectedItem = $this->loadCategories()->first()->id;
     }
 
     private function setDefaultCategory()
     {
-        $this->selectedItem = $this->defaultCategory();
+        $this->selectedItem = ($attachCategory = $this->editing->categories()->type(CategoryType::Area)->first())
+            ? $attachCategory->id
+            : Category::query()->type(CategoryType::Area)->orderBy('position')->first()->id;
     }
 
     private function setDefaultCategoryIndustry()
@@ -60,10 +61,6 @@ trait WithCategories
             : Category::query()->type(CategoryType::JobLevel)->orderBy('position')->first()->id;
     }
 
-    private function defaultCategory()
-    {
-        return ($attachCategory = $this->editing->categories->first()) ? $attachCategory->id : $this->loadCategories()->first()->id;
-    }
 
     private function loadCategories(): Collection|array
     {

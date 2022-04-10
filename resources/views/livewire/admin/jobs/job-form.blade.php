@@ -1,5 +1,5 @@
 <div>
-    <x-form-section submit="save" class="mt-8">
+    <x-form-section submit="saveJobDetails" class="mt-8">
 
         <x-slot name="title">
 
@@ -14,6 +14,22 @@
         </x-slot>
 
         <x-slot name="form" class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+
+            <div class="col-span-6">
+
+                <x-label for="avatar"> {{__('Avatar')}} </x-label>
+
+                <x-input.file-upload wire:model="avatar" id="avatar" error="{{ $errors->first('avatar') }}">
+                    @if ($avatar)
+                        <img src="{{ $avatar->temporaryUrl() }}" alt="Avatar">
+                    @else
+                        <img src="{{ $editing->avatar_url }}" alt="Avatar">
+                    @endif
+                </x-input.file-upload>
+
+                <x-input-error for="avatar" class="mt-2" />
+
+            </div>
 
             <div class="col-span-6">
 
@@ -120,6 +136,13 @@
             </div>
 
 
+            <div class="col-span-6">
+                <x-label for="state"> {{__('State')}} </x-label>
+                <x-input.dot-select :items="$states" :selected="$selectedState" wire:model.defer="selectedState" wire:key="states-field-{{ $editing->id }}"></x-input.dot-select>
+                <x-input-error for="state" class="mt-2" />
+            </div>
+
+
 
         </x-slot>
 
@@ -135,7 +158,7 @@
         </x-slot>
     </x-form-section>
 
-    <x-form-section submit="save" class="mt-8">
+    <x-form-section submit="saveCompany" class="mt-8">
 
         <x-slot name="title">
 
@@ -185,7 +208,7 @@
         </x-slot>
     </x-form-section>
 
-    <x-form-section submit="save" class="mt-8">
+    <x-form-section submit="saveJobLocation" class="mt-8">
 
         <x-slot name="title">
 
@@ -201,7 +224,7 @@
 
         <x-slot name="form" class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
 
-            <div class="col-span-6 sm:col-span-3">
+            <div class="col-span-6">
                 <x-label for="countries"> {{__('Countries')}} </x-label>
                 <x-input.admin-countries-select :items="$countries" wire:model="editing.country_id" wire:key="search-countries"></x-input.admin-countries-select>
                 @if ($errors->has('editing.country_id'))
@@ -210,7 +233,7 @@
             </div>
 
             @if($showCityField)
-                <div class="col-span-6 sm:col-span-3">
+                <div class="col-span-6">
                     <x-label for="cities"> {{__('Cities')}} </x-label>
                     <x-input.admin-cities-select :items="$cities" wire:model="editing.city_id" wire:key="search-cities"></x-input.admin-cities-select>
                     @if ($errors->has('editing.city_id'))
@@ -218,7 +241,7 @@
                     @endif
                 </div>
             @else
-                <div class="col-span-6 sm:col-span-3">
+                <div class="col-span-6">
                     <x-label for="divisions"> {{__('Division')}} </x-label>
                     <x-input.admin-divisions-select :items="$divisions" wire:model="editing.division_id" wire:key="search-divisions"></x-input.admin-divisions-select>
                     @if ($errors->has('editing.division_id'))
@@ -251,7 +274,7 @@
         </x-slot>
     </x-form-section>
 
-    <x-form-section submit="save" class="mt-8">
+    <x-form-section submit="saveJobAttribute" class="mt-8">
 
         <x-slot name="title">
 

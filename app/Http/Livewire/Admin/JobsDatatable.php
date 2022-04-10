@@ -22,10 +22,15 @@ use Livewire\WithFileUploads;
 class JobsDatatable extends Component
 {
     use WithSorting;
+
     use WithPerPagePagination;
+
     use WithBulkActions;
+
     use WithCachedRows;
+
     use WithFileUploads;
+
     use WithCategories;
 
     use WithCompanies;
