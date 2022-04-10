@@ -17,9 +17,14 @@ class JobController extends Controller
         $this->job = $job;
     }
 
+    public function index()
+    {
+        return view('jobs.index');
+    }
+
     public function show (string $slug)
     {
-        return view('jobs.job')
-            ->with('job', $this->job->with('company', 'categories:id,name')->where('slug', $slug)->first());
+        return view('jobs.show')
+            ->with('job', $this->job->with('company', 'country', 'city', 'division', 'categories:id,name,type')->where('slug', $slug)->first());
     }
 }

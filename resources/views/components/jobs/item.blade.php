@@ -10,7 +10,7 @@
 
                 <div class="flex-shrink-0">
 
-                    <a href="{{ route('jobs.job', ['slug' => $row->slug]) }}">
+                    <a href="{{ route('jobs.show', $row->slug) }}">
 
                         <img class="h-10 w-10 rounded-full cursor-pointer" src="{{ $row->avatar_url }}" alt="{{ $row->name }}">
 
@@ -22,13 +22,13 @@
 
                     <p class="text-sm font-medium text-gray-900">
 
-                        <a href="{{ route('jobs.job', ['slug' => $row->slug]) }}" class="hover:underline font-bold">{{ $row->company->name }}</a>
+                        <a href="{{ route('jobs.show', $row->slug) }}" class="hover:underline font-bold">{{ $row->company->name }}</a>
 
                     </p>
 
                     <p class="text-sm text-gray-500">
 
-                        <a href="{{ route('jobs.job', ['slug' => $row->slug]) }}" class="hover:underline">
+                        <a href="{{ route('jobs.show', $row->slug) }}" class="hover:underline">
 
                             <time datetime="2020-12-09T11:43:00">{{ $row->live_at_formatted }}</time>
 
@@ -54,7 +54,7 @@
 
                 <div class="flex-shrink-0 justify-self-stretch">
 
-                    <a href="{{ route('jobs.job', ['slug' => $row->slug]) }}" class="text-xs text-indigo-500 hover:text-indigo-900 font-bold underline">
+                    <a href="{{ route('jobs.show', $row->slug) }}" class="text-xs text-indigo-500 hover:text-indigo-900 font-bold underline">
 
                         Details <span aria-hidden="true">&rarr;</span>
 
@@ -76,7 +76,7 @@
 
                         </div>
 
-                        <div class="ml-3.5 text-sm font-medium text-gray-900">Remote</div>
+                        <div class="ml-3.5 text-sm font-medium text-gray-900">{{ $row->categories->firstWhere('type', \App\Enums\CategoryType::JobType) ? $row->categories->firstWhere('type', \App\Enums\CategoryType::JobType)->name : '' }}</div>
 
                     </a>
 
@@ -84,7 +84,7 @@
 
             </ul>
 
-            <a href="{{ route('jobs.job', ['slug' => $row->slug]) }}" class="hover:underline font-semibold">
+            <a href="{{ route('jobs.show', $row->slug) }}" class="hover:underline font-semibold">
 
                 <h2 id="question-title-81614" class="mt-4 text-base font-medium text-indigo-900 text-xl">{{ $row->name }}</h2>
 
@@ -111,7 +111,7 @@
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd" />
                       </svg>
 
-                    <span class="font-medium text-gray-900 text-xs md:text-sm">$120k – $140k</span>
+                    <span class="font-medium text-gray-900 text-xs md:text-sm">${{ number_format($row->salary_min/1000, 1) }}k – ${{ number_format($row->salary_max/1000, 1) }}k</span>
 
                     <span class="sr-only">Salary expectation</span>
 
@@ -127,7 +127,7 @@
 
                     <span class="inline-flex items-center text-sm">
 
-                          <a href="{{ route('jobs.job', ['slug' => $row->slug]) }}" class="inline-flex items-center space-x-2 text-indigo-400 hover:text-indigo-500 cursor-pointer">
+                          <a href="{{ route('jobs.show', $row->slug) }}" class="inline-flex items-center space-x-2 text-indigo-400 hover:text-indigo-500 cursor-pointer">
 
                               <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />

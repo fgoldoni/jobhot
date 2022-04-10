@@ -135,7 +135,7 @@
             @endauth
         </div>
         <nav class="hidden lg:py-2 lg:flex lg:space-x-8" aria-label="Global">
-            <x-job-nav-link href="{{ route('jobs') }}" :active="request()->routeIs('jobs')">
+            <x-job-nav-link href="{{ route('jobs.index') }}" :active="request()->routeIs('jobs.index')">
                 {{ __('jobs') }}
             </x-job-nav-link>
 
@@ -154,7 +154,7 @@
         id="mobile-menu">
         <div class="pt-2 pb-3 space-y-1">
             <!-- Current: "bg-gray-100 text-gray-900", Default: "text-gray-900 hover:bg-gray-50 hover:text-gray-900" -->
-            <x-responsive-nav-link href="{{ route('jobs') }}" :active="request()->routeIs('jobs')">
+            <x-responsive-nav-link href="{{ route('jobs.index') }}" :active="request()->routeIs('jobs.index')">
                 {{ __('Jobs') }}
             </x-responsive-nav-link>
 

@@ -9,7 +9,7 @@
                 </div>
                 <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
                     <!-- Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" -->
-                    <x-nav-link href="{{ route('jobs') }}" :active="request()->routeIs('jobs')">
+                    <x-nav-link href="{{ route('jobs.index') }}" :active="request()->routeIs('jobs.index')">
                         {{ __('jobs') }}
                     </x-nav-link>
 
@@ -139,7 +139,7 @@
         id="mobile-menu">
         <div class="pt-2 pb-3 space-y-1">
             <!-- Current: "bg-indigo-50 border-indigo-500 text-indigo-700", Default: "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700" -->
-            <x-responsive-nav-link href="{{ route('jobs') }}" :active="request()->routeIs('jobs')">
+            <x-responsive-nav-link href="{{ route('jobs.index') }}" :active="request()->routeIs('jobs.index')">
                 {{ __('Jobs') }}
             </x-responsive-nav-link>
 

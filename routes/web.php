@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ImpersonationController;
+use App\Http\Controllers\JobController;
 use App\Http\Controllers\TeamController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,22 +23,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/jobs', function () {
-    return view('jobs.index');
-})->name('jobs');
 
 Route::get('/companies', function () {
     return view('companies');
 })->name('companies');
 
 Route::get('/companies/{slug}', function () {
-    return view('jobs.job');
+    return view('jobs.show');
 })->name('companies.company');
 
 
-Route::controller(\App\Http\Controllers\JobController::class)->group(function () {
-    Route::get('/jobs/{slug}', 'show')->name('jobs.job');
-});
+Route::resource('jobs', JobController::class);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
