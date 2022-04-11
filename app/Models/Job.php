@@ -6,19 +6,15 @@ use App\Enums\SalaryType;
 use App\Traits\BelongsToUser;
 use App\Traits\Categorizable;
 use App\Traits\HasAvatar;
-use App\Traits\HasTeams;
 use App\Traits\JobAttribute;
 use App\Traits\WithinDays;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Carbon;
 use Modules\Countries\Entities\City;
 use Modules\Countries\Entities\Country;
 use Modules\Countries\Entities\Division;
-use Mpociot\Teamwork\Traits\UsedByTeams;
 use Nicolaslopezj\Searchable\SearchableTrait;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -182,6 +178,7 @@ class Job extends Model
     {
         return $this->slug;
     }
+
     public function getRouteKeyName()
     {
         return 'slug';

@@ -22,6 +22,8 @@ class JobFactory extends Factory
     {
         return [
             'name' => $this->faker->jobTitle,
+            'phone' => $this->faker->phoneNumber,
+            'view_count' => $this->faker->numberBetween(0, 100),
             'content' => $this->faker->sentence(100),
             'user_id' => $this->faker->numberBetween(1, 10),
             'team_id' => $this->faker->numberBetween(1, 5),

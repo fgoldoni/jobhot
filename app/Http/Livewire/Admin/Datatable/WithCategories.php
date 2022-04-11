@@ -61,7 +61,6 @@ trait WithCategories
             : Category::query()->type(CategoryType::JobLevel)->orderBy('position')->first()->id;
     }
 
-
     private function loadCategories(): Collection|array
     {
         return Category::query()->area()->orderBy('position')->get(['id', 'name', 'icon']);

@@ -1,11 +1,12 @@
 <?php
 namespace App\Providers;
 
+use App\Events\JobViewCount;
+use App\Listeners\JobViewCountHandler;
 use App\Listeners\Teamwork\JoinTeamListener;
 use App\Models\Company;
 use App\Observers\CompanyObserver;
 use Illuminate\Auth\Events\Login;
-use Illuminate\Auth\Events\Logout;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -26,9 +27,10 @@ class EventServiceProvider extends ServiceProvider
             JoinTeamListener::class,
         ],
 
-        Logout::class => [
-
+        JobViewCount::class => [
+            JobViewCountHandler::class
         ]
+
     ];
 
     /**

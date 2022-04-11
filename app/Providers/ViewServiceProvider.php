@@ -4,7 +4,6 @@ namespace App\Providers;
 use App\View\Composers\AreasComposer;
 use App\View\Composers\IndustriesComposer;
 use App\View\Composers\JobsComposer;
-use App\View\Composers\SingleJobComposer;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 

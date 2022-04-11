@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Livewire\Admin\Jobs;
 
 use App\Enums\CategoryType;
@@ -74,7 +73,6 @@ class JobForm extends Component
         ];
     }
 
-
     public function mount()
     {
         $this->companies = Company::teamByUser()->get();
@@ -112,7 +110,6 @@ class JobForm extends Component
         $this->selectedState = $this->findStateBy('name', ucfirst($this->editing->state->value))['id'];
     }
 
-
     public function saveJobDetails()
     {
         $this->editing->state = strtolower($this->findStateBy('id', $this->selectedState)['name']);
@@ -127,7 +124,6 @@ class JobForm extends Component
             'editing.salary_type' => 'required',
             'editing.state' => 'required',
         ]);
-
 
         $this->editing->update($validatedData['editing']);
 
@@ -151,7 +147,6 @@ class JobForm extends Component
         $this->editing->detachCategories($industries);
 
         $this->editing->syncCategories([$this->industry], false);
-
 
         $this->notify('The Job has been successfully updated');
     }

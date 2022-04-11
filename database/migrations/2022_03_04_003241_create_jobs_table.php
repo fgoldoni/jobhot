@@ -18,6 +18,7 @@ return new class extends Migration
 
             $table->json('name');
             $table->string('slug');
+            $table->string('phone')->nullable();
             $table->longText('content')->nullable();
             $table->smallInteger('experience')->unsigned()->nullable();
             $table->integer('salary_min')->unsigned()->nullable();
@@ -39,6 +40,7 @@ return new class extends Migration
             $table->date('highlight_to')->nullable();
             $table->datetime('live_at')->nullable();
             $table->text('iframe')->nullable();
+            $table->integer('view_count')->default(0);
 
             $table->softDeletes();
             $table->timestamps();

@@ -9,7 +9,6 @@ use App\Traits\HasTeams;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Mpociot\Teamwork\Traits\UsedByTeams;
 use Nicolaslopezj\Searchable\SearchableTrait;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -143,7 +142,6 @@ class Company extends Model
     public function scopeTeamByUser($query)
     {
         static::teamGuard();
-        $query->where($query->getQuery()->from.'.team_id', auth()->user()->currentTeam->getKey());
+        $query->where($query->getQuery()->from . '.team_id', auth()->user()->currentTeam->getKey());
     }
-
 }

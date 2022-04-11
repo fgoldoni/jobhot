@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -13,7 +12,6 @@ class JobController extends Controller
         return view('admin.jobs.index');
     }
 
-
     public function create()
     {
         //
@@ -23,7 +21,6 @@ class JobController extends Controller
     {
         //
     }
-
 
     public function show(Job $job)
     {

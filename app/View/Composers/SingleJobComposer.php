@@ -1,6 +1,4 @@
 <?php
-
-
 namespace App\View\Composers;
 
 use App\Models\Job;
@@ -17,5 +15,4 @@ class SingleJobComposer
     {
         $view->with('companies', Job::with('company')->where('slug', request()->get('slug'))->get(['id', 'name', 'avatar_path']));
     }
-
 }

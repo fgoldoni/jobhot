@@ -1,9 +1,8 @@
 <?php
-
 namespace App\Http\Controllers;
 
+use App\Events\JobViewCount;
 use App\Models\Job;
-use Illuminate\Http\Request;
 
 class JobController extends Controller
 {
@@ -22,9 +21,11 @@ class JobController extends Controller
         return view('jobs.index');
     }
 
-    public function show (string $slug)
+    public function show(Job $job)
     {
+        JobViewCount::dispatch($job);
+
         return view('jobs.show')
-            ->with('job', $this->job->with('company', 'country', 'city', 'division', 'categories:id,name,type')->where('slug', $slug)->first());
+            ->with('job', $job->load('company', 'country', 'city', 'division', 'categories:id,name,type'));
     }
 }

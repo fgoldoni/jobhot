@@ -17,6 +17,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         __DIR__ . '/app/Models',
         __DIR__ . '/app/Scopes',
         __DIR__ . '/app/Providers',
+        __DIR__ . '/app/Events',
     ]);
 
     // Define what rule sets will be applied

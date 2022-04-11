@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Livewire\Jobs;
 
 use Livewire\Component;

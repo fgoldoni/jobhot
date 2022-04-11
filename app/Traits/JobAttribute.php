@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Traits;
 
 use Illuminate\Support\Carbon;
@@ -25,7 +24,6 @@ trait JobAttribute
     {
         return $this->created_at?->diffForHumans();
     }
-
 
     public function getLiveAtFormattedAttribute()
     {
