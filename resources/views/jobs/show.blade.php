@@ -20,7 +20,7 @@
                             </div>
                         </li>
                         <li>
-                            <div class="flex items-center">
+                            <div class="hidden md:flex items-center">
                                 <!-- Heroicon name: solid/chevron-right -->
                                 <svg class="flex-shrink-0 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                     <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
@@ -47,94 +47,53 @@
                     {{ $job->name }}
                 </h2>
                 <div class="mt-1 flex flex-col sm:flex-row sm:flex-wrap sm:mt-0 sm:space-x-6">
-                    <div class="mt-2 flex items-center text-sm text-gray-500">
+                    @if($job->urgent)
+
+                        <div class="mt-2 inline">
+                            <!-- Heroicon name: solid/briefcase -->
+                            <a href="#" class="relative inline-flex items-center rounded-full animate-pulse border border-rose-300 px-3 py-0.5">
+                                <div class="absolute flex-shrink-0 flex items-center justify-center">
+                                    <span class="h-1.5 w-1.5 rounded-full bg-rose-500" aria-hidden="true"></span>
+                                </div>
+                                <div class="ml-3.5 text-sm font-medium text-rose-500">Urgent</div>
+                            </a>
+                        </div>
+
+                    @endif
+
+
+                    <div class="mt-2 inline">
                         <!-- Heroicon name: solid/briefcase -->
-                        <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                            <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd" />
-                            <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z" />
-                        </svg>
-                        {{ $job->categories->firstWhere('type', \App\Enums\CategoryType::JobType) ? $job->categories->firstWhere('type', \App\Enums\CategoryType::JobType)->name : '' }}
+                        <a href="#" class="relative inline-flex items-center rounded-full border border-gray-300 px-3 py-0.5">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 h-4 w-4 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            <div class="ml-3.5 text-sm font-medium text-gray-500">{{ $job->city_id ? $job->city->name : $job->division->name }}, {{ $job->country->name }}</div>
+                        </a>
                     </div>
-                    <div class="mt-2 flex items-center text-sm text-gray-500">
-                        <!-- Heroicon name: solid/location-marker -->
-                        <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                            <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
-                        </svg>
-                        {{ $job->city_id ? $job->city->name : $job->division->name }}, {{ $job->country->name }}
-                    </div>
-                    <div class="mt-2 flex items-center text-sm text-gray-500">
-                        <!-- Heroicon name: solid/currency-dollar -->
-                        <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                            <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z" />
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd" />
-                        </svg>
-                        ${{ number_format($job->salary_min/1000, 1) }}k – ${{ number_format($job->salary_max/1000, 1) }}k
-                    </div>
-                    <div class="mt-2 flex items-center text-sm text-gray-500">
-                        <!-- Heroicon name: solid/calendar -->
-                        <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
-                        </svg>
-                        Closing on  {{ $job->closing_to_formatted }}
+
+                    <div class="mt-2 inline">
+                        <!-- Heroicon name: solid/briefcase -->
+                        <a href="#" class="relative inline-flex items-center rounded-full border border-gray-300 px-3 py-0.5">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 h-4 w-4 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            <div class="ml-3.5 text-sm font-medium text-gray-500">
+                                Closing on  {{ $job->closing_to_formatted }}
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>
             <div class="mt-5 flex lg:mt-0 lg:ml-4">
-                <span class="hidden sm:block">
-                  <button type="button" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    <!-- Heroicon name: solid/pencil -->
-                    <svg class="-ml-1 mr-2 h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                      <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-                    </svg>
-                    Edit
-                  </button>
-                </span>
-
-                <span class="hidden sm:block ml-3">
-                  <button type="button" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    <!-- Heroicon name: solid/link -->
-                    <svg class="-ml-1 mr-2 h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                      <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
-                    </svg>
-                    View
-                  </button>
-                </span>
-
                 <span class="sm:ml-3">
-                  <button type="button" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    <!-- Heroicon name: solid/check -->
-                    <svg class="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                    </svg>
-                    Publish
-                  </button>
-                </span>
-
-                <!-- Dropdown -->
-                <span class="ml-3 relative sm:hidden">
-                  <button type="button" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" id="mobile-menu-button" aria-expanded="false" aria-haspopup="true">
-                    More
-                      <!-- Heroicon name: solid/chevron-down -->
-                    <svg class="-mr-1 ml-2 h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                      <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                    </svg>
-                  </button>
-
-                    <!--
-                      Dropdown menu, show/hide based on menu state.
-
-                      Entering: "transition ease-out duration-200"
-                        From: "transform opacity-0 scale-95"
-                        To: "transform opacity-100 scale-100"
-                      Leaving: "transition ease-in duration-75"
-                        From: "transform opacity-100 scale-100"
-                        To: "transform opacity-0 scale-95"
-                    -->
-                  <div class="origin-top-right absolute right-0 mt-2 -mr-1 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="mobile-menu-button" tabindex="-1">
-                    <!-- Active: "bg-gray-100", Not Active: "" -->
-                    <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="mobile-menu-item-0">Edit</a>
-                    <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="mobile-menu-item-1">View</a>
-                  </div>
+                     <x-outline-button>
+                        <svg class="-ml-1 mr-3 h-5 w-5 text-indigo-500 group-hover:text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                        </svg>
+                        Apply Now
+                    </x-outline-button>
                 </span>
             </div>
         </div>
@@ -153,28 +112,125 @@
                             <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
                                 <div class="sm:col-span-1">
                                     <dt class="text-sm font-medium text-gray-500">Job Type</dt>
-                                    <dd class="mt-1 text-sm text-gray-900">{{ $job->categories->firstWhere('type', \App\Enums\CategoryType::JobType)?->name }}</dd>
+                                    <dd class="mt-1 text-sm">
+                                        <div class="flex items-center space-x-2">
+                                            <!-- Heroicon name: solid/lock-open -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                            </svg>
+                                            <span class="text-indigo-700 text-sm font-medium">{{ $job->categories->firstWhere('type', \App\Enums\CategoryType::JobType)?->name }}</span>
+                                        </div>
+                                    </dd>
                                 </div>
                                 <div class="sm:col-span-1">
                                     <dt class="text-sm font-medium text-gray-500">Job Level</dt>
-                                    <dd class="mt-1 text-sm text-gray-900">{{ $job->categories->firstWhere('type', \App\Enums\CategoryType::JobLevel)?->name }}</dd>
+                                    <dd class="mt-1 text-sm text-gray-900">
+                                        <div class="flex items-center space-x-2">
+                                            <!-- Heroicon name: solid/lock-open -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                <path d="M12 14l9-5-9-5-9 5 9 5z" />
+                                                <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
+                                            </svg>
+                                            <span class="text-indigo-700 text-sm font-medium">{{ $job->categories->firstWhere('type', \App\Enums\CategoryType::JobLevel)?->name }}</span>
+                                        </div>
+                                    </dd>
                                 </div>
                                 <div class="sm:col-span-1">
                                     <dt class="text-sm font-medium text-gray-500">Gender</dt>
-                                    <dd class="mt-1 text-sm text-gray-900">{{ $job->categories->firstWhere('type', \App\Enums\CategoryType::Gender)?->name }}</dd>
+                                    <dd class="mt-1 text-sm text-gray-900">
+                                        <div class="flex items-center space-x-2">
+                                            <!-- Heroicon name: solid/lock-open -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                            <span class="text-indigo-700 text-sm font-medium">
+                                                {{ $job->categories->firstWhere('type', \App\Enums\CategoryType::Gender)?->name }}
+                                            </span>
+                                        </div>
+                                    </dd>
                                 </div>
                                 <div class="sm:col-span-1">
                                     <dt class="text-sm font-medium text-gray-500">Experience</dt>
-                                    <dd class="mt-1 text-sm text-gray-900">{{ $job->experience }}</dd>
+                                    <dd class="mt-1 text-sm text-gray-900">
+                                        <div class="flex items-center space-x-2">
+                                            <!-- Heroicon name: solid/lock-open -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                                            </svg>
+                                            <span class="text-indigo-700 text-sm font-medium">
+                                                {{ $job->experience }} Year
+                                            </span>
+                                        </div>
+                                    </dd>
                                 </div>
                                 <div class="sm:col-span-1">
-                                    <dt class="text-sm font-medium text-gray-500">Gender</dt>
-                                    <dd class="mt-1 text-sm text-gray-900">{{ $job->categories->firstWhere('type', \App\Enums\CategoryType::Gender)?->name }}</dd>
+                                    <dt class="text-sm font-medium text-gray-500">Salary</dt>
+                                    <dd class="mt-1 text-sm text-gray-900">
+                                        <div class="flex items-center space-x-2">
+                                            <!-- Heroicon name: solid/lock-open -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                            <span class="text-indigo-700 text-sm font-medium">
+                                                ${{ $job->salary_min }} – ${{ $job->salary_max }} Per {{ ucfirst($job->salary_type->value) }}
+                                            </span>
+                                            @if($job->negotiable)
+                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-green-100 text-green-800">
+                                                  <svg class="-ml-0.5 mr-1.5 h-2 w-2 text-green-400" fill="currentColor" viewBox="0 0 8 8">
+                                                    <circle cx="4" cy="4" r="3" />
+                                                  </svg>
+                                                  Negotiable
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </dd>
                                 </div>
                                 <div class="sm:col-span-1">
-                                    <dt class="text-sm font-medium text-gray-500">Salary expectation / {{ ucfirst($job->salary_type->value) }}</dt>
-                                    <dd class="mt-1 text-sm text-gray-900">${{ number_format($job->salary_min/1000, 1) }}k – ${{ number_format($job->salary_max/1000, 1) }}k</dd>
+                                    <dt class="text-sm font-medium text-gray-500">Job Id </dt>
+                                    <dd class="mt-1 text-sm text-gray-900">
+                                        <div class="flex items-center space-x-2">
+                                            <!-- Heroicon name: solid/lock-open -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
+                                            </svg>
+                                            <span class="text-indigo-700 text-sm font-medium">
+                                                {{ $job->id }}
+                                            </span>
+                                        </div>
+                                    </dd>
                                 </div>
+
+                                <div class="sm:col-span-1">
+                                    <dt class="text-sm font-medium text-gray-500">Phone Number</dt>
+                                    <dd class="mt-1 text-sm text-gray-900">
+                                        <div class="flex items-center space-x-2">
+                                            <!-- Heroicon name: solid/lock-open -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M16 3h5m0 0v5m0-5l-6 6M5 3a2 2 0 00-2 2v1c0 8.284 6.716 15 15 15h1a2 2 0 002-2v-3.28a1 1 0 00-.684-.948l-4.493-1.498a1 1 0 00-1.21.502l-1.13 2.257a11.042 11.042 0 01-5.516-5.517l2.257-1.128a1 1 0 00.502-1.21L9.228 3.683A1 1 0 008.279 3H5z" />
+                                            </svg>
+                                            <span class="text-indigo-700 text-sm font-medium">
+                                                +237 999999999
+                                            </span>
+                                        </div>
+                                    </dd>
+                                </div>
+                                <div class="sm:col-span-1">
+                                    <dt class="text-sm font-medium text-gray-500">Job Views </dt>
+                                    <dd class="mt-1 text-sm text-gray-900">
+                                        <div class="flex items-center space-x-2">
+                                            <!-- Heroicon name: solid/lock-open -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                            </svg>
+                                            <span class="text-indigo-700 text-sm font-medium">
+                                                91
+                                            </span>
+                                        </div>
+                                    </dd>
+                                </div>
+
                                 <div class="sm:col-span-2">
                                     <dt class="text-sm font-medium text-gray-500">Job Description</dt>
                                     <dd class="mt-1 text-sm text-gray-900">
@@ -454,7 +510,7 @@
                     <div class="mt-6 flex flex-col justify-stretch">
                         <button type="button" class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Advance to offer</button>
                     </div>
-                    <div class="mt-6 flex flex-col justify-stretch">
+                    <div class="mt-6 flex items-center justify-center">
                         {!! $job->iframe !!}
                     </div>
                 </div>

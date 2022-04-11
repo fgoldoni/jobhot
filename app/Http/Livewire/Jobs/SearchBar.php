@@ -34,7 +34,7 @@ class SearchBar extends Component
     public function updatedSelectedJob()
     {
         if ($model = Job::search($this->searchJob)->find($this->selectedJob)) {
-            return redirect()->route('jobs.job', ['slug' => $model->slug]);
+            return redirect()->route('jobs.show', $model->slug);
         } else {
             if ($model = Company::search($this->searchJob)->find($this->selectedJob)) {
                 return redirect()->route('companies.company', ['slug' => $model->slug]);
