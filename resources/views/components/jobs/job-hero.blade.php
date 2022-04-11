@@ -4,12 +4,12 @@
     <!-- This example requires Tailwind CSS v2.0+ -->
     <div>
         <div>
-            <img class="h-32 w-full object-cover lg:h-48" src="https://laravel.cm/images/profile-banner.png" alt="">
+            <img class="h-32 w-full object-cover lg:h-48" src="{{ $job->company->avatar_url }}" alt="{{ $job->company->name }}">
         </div>
         <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 lg:max-w-7xl">
             <div class="-mt-12 sm:-mt-16 sm:flex sm:items-end sm:space-x-5">
                 <div class="flex">
-                    <img class="h-24 w-24 rounded-full ring-4 ring-white sm:h-32 sm:w-32" src="{{ $job->company->avatar_url }}" alt="{{ $job->company->name }}">
+                    <img class="h-24 w-24 rounded-full ring-4 ring-white sm:h-32 sm:w-32" src="{{ $job->avatar_url }}" alt="{{ $job->name }}">
                 </div>
                 <div class="mt-6 sm:flex-1 sm:min-w-0 sm:flex sm:items-center sm:justify-end sm:space-x-6 sm:pb-1">
                     <div class="sm:hidden md:block mt-6 min-w-0 flex-1">

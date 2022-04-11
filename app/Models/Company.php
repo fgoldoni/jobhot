@@ -144,4 +144,9 @@ class Company extends Model
         static::teamGuard();
         $query->where($query->getQuery()->from . '.team_id', auth()->user()->currentTeam->getKey());
     }
+
+    protected function defaultAvatarUrl(): string
+    {
+        return asset('default/profile-banner.png');
+    }
 }
