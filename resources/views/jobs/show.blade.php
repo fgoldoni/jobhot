@@ -1,6 +1,6 @@
 <x-guest-layout>
 
-    <x-jobs.job-hero :company="$job->company"></x-jobs.job-hero>
+    <x-jobs.job-hero :job="$job"></x-jobs.job-hero>
 
     <main class="py-10">
 
@@ -84,6 +84,19 @@
                             </div>
                         </a>
                     </div>
+
+                    <div class="mt-2 inline">
+                            <!-- Heroicon name: solid/briefcase -->
+                            <a href="#" class="relative inline-flex items-center rounded-full border border-gray-300 px-3 py-0.5">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 h-4 w-4 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                                <div class="ml-3.5 text-sm font-medium text-gray-500">
+                                   {{ $job->view_count }}
+                                </div>
+                            </a>
+                        </div>
                 </div>
             </div>
             <div class="mt-5 flex lg:mt-0 lg:ml-4">
@@ -111,7 +124,7 @@
                         <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
                             <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
                                 <div class="sm:col-span-1">
-                                    <dt class="text-sm font-medium text-gray-500">Job Type</dt>
+                                    <dt class="text-sm font-medium text-gray-500">Employment Status</dt>
                                     <dd class="mt-1 text-sm">
                                         <div class="flex items-center space-x-2">
                                             <!-- Heroicon name: solid/lock-open -->
@@ -173,7 +186,7 @@
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                             </svg>
                                             <span class="text-indigo-700 text-sm font-medium">
-                                                ${{ $job->salary_min }} – ${{ $job->salary_max }} Per {{ ucfirst($job->salary_type->value) }}
+                                                ${{ $job->salary_min }} – ${{ $job->salary_max }}
                                             </span>
                                             @if($job->negotiable)
                                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-green-100 text-green-800">
@@ -186,6 +199,38 @@
                                         </div>
                                     </dd>
                                 </div>
+
+
+                                <div class="sm:col-span-1">
+                                    <dt class="text-sm font-medium text-gray-500">Salary Period</dt>
+                                    <dd class="mt-1 text-sm text-gray-900">
+                                        <div class="flex items-center space-x-2">
+                                            <!-- Heroicon name: solid/lock-open -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                            </svg>
+                                            <span class="text-indigo-700 text-sm font-medium">
+                                                {{ ucfirst($job->salary_type->value) }}
+                                            </span>
+                                        </div>
+                                    </dd>
+                                </div>
+
+                                <div class="sm:col-span-1">
+                                    <dt class="text-sm font-medium text-gray-500">Published on</dt>
+                                    <dd class="mt-1 text-sm text-gray-900">
+                                        <div class="flex items-center space-x-2">
+                                            <!-- Heroicon name: solid/lock-open -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                            <span class="text-indigo-700 text-sm font-medium">
+                                                {{ $job->live_at->diffForHumans() }}
+                                            </span>
+                                        </div>
+                                    </dd>
+                                </div>
+
                                 <div class="sm:col-span-1">
                                     <dt class="text-sm font-medium text-gray-500">Job Id </dt>
                                     <dd class="mt-1 text-sm text-gray-900">
@@ -196,36 +241,6 @@
                                             </svg>
                                             <span class="text-indigo-700 text-sm font-medium">
                                                 {{ $job->id }}
-                                            </span>
-                                        </div>
-                                    </dd>
-                                </div>
-
-                                <div class="sm:col-span-1">
-                                    <dt class="text-sm font-medium text-gray-500">Phone Number</dt>
-                                    <dd class="mt-1 text-sm text-gray-900">
-                                        <div class="flex items-center space-x-2">
-                                            <!-- Heroicon name: solid/lock-open -->
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M16 3h5m0 0v5m0-5l-6 6M5 3a2 2 0 00-2 2v1c0 8.284 6.716 15 15 15h1a2 2 0 002-2v-3.28a1 1 0 00-.684-.948l-4.493-1.498a1 1 0 00-1.21.502l-1.13 2.257a11.042 11.042 0 01-5.516-5.517l2.257-1.128a1 1 0 00.502-1.21L9.228 3.683A1 1 0 008.279 3H5z" />
-                                            </svg>
-                                            <span class="text-indigo-700 text-sm font-medium">
-                                                {{ $job->phone }}
-                                            </span>
-                                        </div>
-                                    </dd>
-                                </div>
-                                <div class="sm:col-span-1">
-                                    <dt class="text-sm font-medium text-gray-500">Job Views </dt>
-                                    <dd class="mt-1 text-sm text-gray-900">
-                                        <div class="flex items-center space-x-2">
-                                            <!-- Heroicon name: solid/lock-open -->
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                            </svg>
-                                            <span class="text-indigo-700 text-sm font-medium">
-                                                 {{ $job->view_count }}
                                             </span>
                                         </div>
                                     </dd>
@@ -282,98 +297,15 @@
                     <div class="bg-white shadow sm:rounded-lg sm:overflow-hidden">
                         <div class="divide-y divide-gray-200">
                             <div class="px-4 py-5 sm:px-6">
-                                <h2 id="notes-title" class="text-lg font-medium text-gray-900">Notes</h2>
+                                <h2 id="notes-title" class="text-lg font-medium text-gray-900">Similar Jobs</h2>
                             </div>
                             <div class="px-4 py-6 sm:px-6">
-                                <ul role="list" class="space-y-8">
-                                    <li>
-                                        <div class="flex space-x-3">
-                                            <div class="flex-shrink-0">
-                                                <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
-                                            </div>
-                                            <div>
-                                                <div class="text-sm">
-                                                    <a href="#" class="font-medium text-gray-900">Leslie Alexander</a>
-                                                </div>
-                                                <div class="mt-1 text-sm text-gray-700">
-                                                    <p>Ducimus quas delectus ad maxime totam doloribus reiciendis ex. Tempore dolorem maiores. Similique voluptatibus tempore non ut.</p>
-                                                </div>
-                                                <div class="mt-2 text-sm space-x-2">
-                                                    <span class="text-gray-500 font-medium">4d ago</span>
-                                                    <span class="text-gray-500 font-medium">&middot;</span>
-                                                    <button type="button" class="text-gray-900 font-medium">Reply</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-
-                                    <li>
-                                        <div class="flex space-x-3">
-                                            <div class="flex-shrink-0">
-                                                <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
-                                            </div>
-                                            <div>
-                                                <div class="text-sm">
-                                                    <a href="#" class="font-medium text-gray-900">Michael Foster</a>
-                                                </div>
-                                                <div class="mt-1 text-sm text-gray-700">
-                                                    <p>Et ut autem. Voluptatem eum dolores sint necessitatibus quos. Quis eum qui dolorem accusantium voluptas voluptatem ipsum. Quo facere iusto quia accusamus veniam id explicabo et aut.</p>
-                                                </div>
-                                                <div class="mt-2 text-sm space-x-2">
-                                                    <span class="text-gray-500 font-medium">4d ago</span>
-                                                    <span class="text-gray-500 font-medium">&middot;</span>
-                                                    <button type="button" class="text-gray-900 font-medium">Reply</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-
-                                    <li>
-                                        <div class="flex space-x-3">
-                                            <div class="flex-shrink-0">
-                                                <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
-                                            </div>
-                                            <div>
-                                                <div class="text-sm">
-                                                    <a href="#" class="font-medium text-gray-900">Dries Vincent</a>
-                                                </div>
-                                                <div class="mt-1 text-sm text-gray-700">
-                                                    <p>Expedita consequatur sit ea voluptas quo ipsam recusandae. Ab sint et voluptatem repudiandae voluptatem et eveniet. Nihil quas consequatur autem. Perferendis rerum et.</p>
-                                                </div>
-                                                <div class="mt-2 text-sm space-x-2">
-                                                    <span class="text-gray-500 font-medium">4d ago</span>
-                                                    <span class="text-gray-500 font-medium">&middot;</span>
-                                                    <button type="button" class="text-gray-900 font-medium">Reply</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
+                                <ul role="list" class="divide-y space-y-5 p-4 divide-gray-200">
+                                    @forelse($rows as $row)
+                                        <x-jobs.item :row="$row" wire:key="item-{{$row->id}}"></x-jobs.item>
+                                    @empty
+                                    @endforelse
                                 </ul>
-                            </div>
-                        </div>
-                        <div class="bg-gray-50 px-4 py-6 sm:px-6">
-                            <div class="flex space-x-3">
-                                <div class="flex-shrink-0">
-                                    <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80" alt="">
-                                </div>
-                                <div class="min-w-0 flex-1">
-                                    <form action="#">
-                                        <div>
-                                            <label for="comment" class="sr-only">About</label>
-                                            <textarea id="comment" name="comment" rows="3" class="shadow-sm block w-full focus:ring-blue-500 focus:border-blue-500 sm:text-sm border border-gray-300 rounded-md" placeholder="Add a note"></textarea>
-                                        </div>
-                                        <div class="mt-3 flex items-center justify-between">
-                                            <a href="#" class="group inline-flex items-start text-sm space-x-2 text-gray-500 hover:text-gray-900">
-                                                <!-- Heroicon name: solid/question-mark-circle -->
-                                                <svg class="flex-shrink-0 h-5 w-5 text-gray-400 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
-                                                </svg>
-                                                <span> Some HTML is okay. </span>
-                                            </a>
-                                            <button type="submit" class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Comment</button>
-                                        </div>
-                                    </form>
-                                </div>
                             </div>
                         </div>
                     </div>

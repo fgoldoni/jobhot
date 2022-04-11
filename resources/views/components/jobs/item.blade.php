@@ -111,9 +111,26 @@
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd" />
                       </svg>
 
-                    <span class="font-medium text-gray-900 text-xs md:text-sm">${{ number_format($row->salary_min/1000, 1) }}k – ${{ number_format($row->salary_max/1000, 1) }}k</span>
+                    <span class="font-medium text-gray-500 text-xs md:text-sm">${{ $row->salary_min }} – ${{ $row->salary_max }}</span>
 
                     <span class="sr-only">Salary expectation</span>
+
+                  </button>
+
+                </span>
+
+                <span class="inline-flex items-center text-sm">
+
+                  <button type="button" class="inline-flex items-center space-x-2 text-gray-400 hover:text-gray-500">
+
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                      </svg>
+
+                    <span class="font-medium text-gray-500 text-xs md:text-sm">{{ $row->view_count }}</span>
+
+                    <span class="sr-only">View Count</span>
 
                   </button>
 

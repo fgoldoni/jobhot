@@ -26,6 +26,7 @@ class JobController extends Controller
         JobViewCount::dispatch($job);
 
         return view('jobs.show')
-            ->with('job', $job->load('company', 'country', 'city', 'division', 'categories:id,name,type'));
+            ->with('job', $job->load('company', 'country', 'city', 'division', 'categories:id,name,type'))
+            ->with('rows', $this->job->published()->with(['company', 'country:id,name', 'city:id,name', 'division:id,name', 'categories'])->inRandomOrder()->whereNot('jobs.id', $job->id)->where('company_id', $job->company_id)->take(4)->get());
     }
 }
