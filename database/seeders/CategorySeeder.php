@@ -223,5 +223,32 @@ class CategorySeeder extends Seeder
         Category::factory()->create(['name' => 'Not required', 'type' => CategoryType::Gender]);
         Category::factory()->create(['name' => 'Female', 'type' => CategoryType::Gender]);
         Category::factory()->create(['name' => 'Male', 'type' => CategoryType::Gender]);
+
+        Category::factory()->create(['name' => 'Be involved in every step of the product design cycle from discovery to developer handoff and user acceptance testing.', 'type' => CategoryType::Responsibility]);
+        Category::factory()->create(['name' => 'Work with BAs, product managers and tech teams to lead the Product Design', 'type' => CategoryType::Responsibility]);
+        Category::factory()->create(['name' => 'Maintain quality of the design process and ensure that when designs are translated into code they accurately reflect the design specifications.', 'type' => CategoryType::Responsibility]);
+        Category::factory()->create(['name' => 'Accurately estimate design tickets during planning sessions.', 'type' => CategoryType::Responsibility]);
+        Category::factory()->create(['name' => 'Contribute to sketching sessions involving non-designersCreate, iterate and maintain UI deliverables including sketch files, style guides, high fidelity prototypes, micro interaction specifications and pattern libraries.', 'type' => CategoryType::Responsibility]);
+        Category::factory()->create(['name' => 'Ensure design choices are data led by identifying assumptions to test each sprint, and work with the analysts in your team to plan moderated usability test sessions.', 'type' => CategoryType::Responsibility]);
+        Category::factory()->create(['name' => 'Design pixel perfect responsive UI’s and understand that adopting common interface patterns is better for UX than reinventing the wheel', 'type' => CategoryType::Responsibility]);
+
+        Category::factory()->create(['name' => 'Data Intelligence related experience will be a plus.', 'type' => CategoryType::Skill]);
+        Category::factory()->create(['name' => 'Strong excel skills and analytical thinking.', 'type' => CategoryType::Skill]);
+        Category::factory()->create(['name' => 'Advanced knowledge in MS Office tools is must.', 'type' => CategoryType::Skill]);
+        Category::factory()->create(['name' => 'Able to frequently visit factories and showrooms.', 'type' => CategoryType::Skill]);
+        Category::factory()->create(['name' => 'Excellent analytical skills, strong decision support, and interpersonal skills.', 'type' => CategoryType::Skill]);
+        Category::factory()->create(['name' => 'Strong interpersonal skills, ability to communicate and manage well at all levels of the organization.', 'type' => CategoryType::Skill]);
+        Category::factory()->create(['name' => 'You have at least 3 years’ experience working as a Product Designer.', 'type' => CategoryType::Skill]);
+        Category::factory()->create(['name' => 'You have experience using Sketch and InVision or Framer X.', 'type' => CategoryType::Skill]);
+        Category::factory()->create(['name' => 'You have some previous experience working in an agile environment – Think two-week sprints.', 'type' => CategoryType::Skill]);
+        Category::factory()->create(['name' => 'You are familiar using Jira and Confluence in your workflow.', 'type' => CategoryType::Skill]);
+        Category::factory()->create(['name' => 'Computer applications.', 'type' => CategoryType::Skill]);
+        Category::factory()->create(['name' => 'Networking management.', 'type' => CategoryType::Skill]);
+        Category::factory()->create(['name' => 'Database management systems.', 'type' => CategoryType::Skill]);
+        Category::factory()->create(['name' => 'System analysis.', 'type' => CategoryType::Skill]);
+        Category::factory()->create(['name' => 'Web programming.', 'type' => CategoryType::Skill]);
+        Category::factory()->create(['name' => 'Web development and design.', 'type' => CategoryType::Skill]);
+
+        Category::factory()->create(['name' => 'You are familiar using Jira and Confluence in your workflow.', 'type' => CategoryType::Benefit]);
     }
 }

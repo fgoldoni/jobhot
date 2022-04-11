@@ -45,6 +45,10 @@ class JobForm extends Component
 
     public Collection $industries;
 
+    public Collection $responsibilities;
+
+    public Collection $skills;
+
     public Collection $jobTypes;
 
     public Collection $genders;
@@ -87,6 +91,10 @@ class JobForm extends Component
 
         $this->jobLevels = Category::type(CategoryType::JobLevel)->orderBy('position')->get(['id', 'name', 'icon']);
 
+        $this->responsibilities = Category::type(CategoryType::Responsibility)->orderBy('position')->get(['id', 'name', 'icon']);
+
+        $this->skills = Category::type(CategoryType::Skill)->orderBy('position')->get(['id', 'name', 'icon']);
+
         $this->setDefaultCountry();
 
         $this->setDefaultCategory();
@@ -98,6 +106,10 @@ class JobForm extends Component
         $this->setDefaultCategoryGender();
 
         $this->setDefaultCategoryJobLevels();
+
+        $this->setDefaultCategoryResponsibilities();
+
+        $this->setDefaultCategorySkills();
 
         if ($this->editing->country()->value('has_division')) {
             $this->setDefaultDivision();
@@ -179,6 +191,41 @@ class JobForm extends Component
         $this->editing->detachCategories($detachCategories);
 
         $this->editing->syncCategories(Arr::flatten($validatedData), false);
+
+        $this->notify('The Job Attribute has been successfully updated');
+    }
+
+    public function saveJobResponsibility()
+    {
+        $validatedData = $this->validate([
+            'responsibility' => 'required|integer',
+        ]);
+
+        $this->editing->syncCategories([$validatedData['responsibility']], false);
+
+        $this->editing->load('categories');
+
+        $this->notify('The Job Attribute has been successfully updated');
+    }
+
+    public function saveJobSkill()
+    {
+        $validatedData = $this->validate([
+            'skill' => 'required|integer',
+        ]);
+
+        $this->editing->syncCategories([$validatedData['skill']], false);
+
+        $this->editing->load('categories');
+
+        $this->notify('The Job Attribute has been successfully updated');
+    }
+
+    public function removeJobCategory(int $responsibilityId)
+    {
+        $this->editing->detachCategories([$responsibilityId]);
+
+        $this->editing->load('categories');
 
         $this->notify('The Job Attribute has been successfully updated');
     }

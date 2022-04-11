@@ -22,6 +22,10 @@ trait WithCategories
 
     public ?int $jobLevel = null;
 
+    public ?int $responsibility = null;
+
+    public ?int $skill = null;
+
     public function mountWithCategories()
     {
     }
@@ -59,6 +63,16 @@ trait WithCategories
         $this->jobLevel = ($attachCategory = $this->editing->categories()->type(CategoryType::JobLevel)->first())
             ? $attachCategory->id
             : Category::query()->type(CategoryType::JobLevel)->orderBy('position')->first()->id;
+    }
+
+    private function setDefaultCategoryResponsibilities()
+    {
+        $this->responsibility = Category::query()->type(CategoryType::Responsibility)->orderBy('position')->first()->id;
+    }
+
+    private function setDefaultCategorySkills()
+    {
+        $this->skill = Category::query()->type(CategoryType::Skill)->orderBy('position')->first()->id;
     }
 
     private function loadCategories(): Collection|array

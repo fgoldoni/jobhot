@@ -41,7 +41,11 @@ class JobSeeder extends Seeder
             $jobLevel = Category::type(CategoryType::JobLevel)->inRandomOrder()->first();
             $gender = Category::type(CategoryType::Gender)->inRandomOrder()->first();
 
-            $job->syncCategories([$industry->id, $jobType->id, $jobLevel->id, $gender->id], false);
+            $responsibility = Category::type(CategoryType::Responsibility)->inRandomOrder()->first();
+
+            $skill = Category::type(CategoryType::Skill)->inRandomOrder()->first();
+
+            $job->syncCategories([$industry->id, $jobType->id, $jobLevel->id, $gender->id, $responsibility->id, $skill->id], false);
         });
 
 
@@ -64,7 +68,11 @@ class JobSeeder extends Seeder
             $jobLevel = Category::type(CategoryType::JobLevel)->inRandomOrder()->first();
             $gender = Category::type(CategoryType::Gender)->inRandomOrder()->first();
 
-            $job->syncCategories([$industry->id, $jobType->id, $jobLevel->id, $gender->id], false);
+            $responsibility = Category::type(CategoryType::Responsibility)->inRandomOrder()->first();
+
+            $skill = Category::type(CategoryType::Skill)->inRandomOrder()->first();
+
+            $job->syncCategories([$industry->id, $jobType->id, $jobLevel->id, $gender->id, $responsibility->id, $skill->id], false);
         });
 
 
@@ -103,7 +111,11 @@ class JobSeeder extends Seeder
             $jobLevel = Category::type(CategoryType::JobLevel)->inRandomOrder()->first();
             $gender = Category::type(CategoryType::Gender)->inRandomOrder()->first();
 
-            $job->syncCategories([$industry->id, $jobType->id, $jobLevel->id, $gender->id], false);
+            $responsibility = Category::type(CategoryType::Responsibility)->inRandomOrder()->first();
+
+            $skill = Category::type(CategoryType::Skill)->inRandomOrder()->first();
+
+            $job->syncCategories([$industry->id, $jobType->id, $jobLevel->id, $gender->id, $responsibility->id, $skill->id], false);
         });
 
 
@@ -126,7 +138,11 @@ class JobSeeder extends Seeder
             $jobLevel = Category::type(CategoryType::JobLevel)->inRandomOrder()->first();
             $gender = Category::type(CategoryType::Gender)->inRandomOrder()->first();
 
-            $job->syncCategories([$industry->id, $jobType->id, $jobLevel->id, $gender->id], false);
+            $responsibility = Category::type(CategoryType::Responsibility)->inRandomOrder()->first();
+
+            $skill = Category::type(CategoryType::Skill)->inRandomOrder()->first();
+
+            $job->syncCategories([$industry->id, $jobType->id, $jobLevel->id, $gender->id, $responsibility->id, $skill->id], false);
         });
     }
 }

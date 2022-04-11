@@ -345,6 +345,130 @@
         </x-slot>
     </x-form-section>
 
+    <x-form-section submit="saveJobResponsibility" class="mt-8">
+
+        <x-slot name="title">
+
+            {{ __('Job Responsibilities') }}
+
+        </x-slot>
+
+        <x-slot name="description">
+
+            {{ __('Update your Job Attributes.') }}
+
+        </x-slot>
+
+        <x-slot name="form" class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+
+            <!-- This example requires Tailwind CSS v2.0+ -->
+            <div class="col-span-6">
+                <dd class="text-sm text-gray-900">
+                    <ul role="list" class="border border-gray-200 rounded-md divide-y divide-gray-200">
+                        @foreach($editing->categories->where('type', '=', \App\Enums\CategoryType::Responsibility)->all() as $category)
+                            <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
+                                <div class="w-0 flex-1 flex items-center">
+                                    <!-- Heroicon name: solid/paper-clip -->
+                                    <span class="flex-1 w-0 truncate"> {{ $category->name }} </span>
+                                </div>
+                                <div class="ml-4 flex-shrink-0">
+                                    <a wire:click.prevent="removeJobCategory({{ $category->id }})" class="cursor-pointer hover:underline font-medium text-blue-600 hover:text-blue-500"> Remove </a>
+                                </div>
+                            </li>
+                        @endforeach
+                    </ul>
+                </dd>
+            </div>
+
+            <div class="col-span-6">
+
+                <x-input.select :items="$responsibilities" :selected="$responsibility" wire:model.defer="responsibility" wire:key="categories-field-responsibilities-{{ $editing->id }}"></x-input.select>
+
+                <x-input-error for="responsibility" class="mt-2" />
+
+            </div>
+            <div class="col-span-6">
+                <dt class="text-right text-sm font-medium text-gray-500 hover:underline cursor-pointer">New Responsibility</dt>
+            </div>
+
+
+
+        </x-slot>
+
+        <x-slot name="actions">
+
+            <x-action-message class="mr-3" on="saved">
+
+                {{ __('Saved.') }}
+
+            </x-action-message>
+
+            <x-button wire:loading.attr="disabled"> {{ __('Add Responsibility') }}</x-button>
+        </x-slot>
+    </x-form-section>
+
+    <x-form-section submit="saveJobSkill" class="mt-8">
+
+        <x-slot name="title">
+
+            {{ __('Job Skills & Qualifications') }}
+
+        </x-slot>
+
+        <x-slot name="description">
+
+            {{ __('Update your Job Attributes.') }}
+
+        </x-slot>
+
+        <x-slot name="form" class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+
+            <!-- This example requires Tailwind CSS v2.0+ -->
+            <div class="col-span-6">
+                <dd class="text-sm text-gray-900">
+                    <ul role="list" class="border border-gray-200 rounded-md divide-y divide-gray-200">
+                        @foreach($editing->categories->where('type', '=', \App\Enums\CategoryType::Skill)->all() as $category)
+                            <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
+                                <div class="w-0 flex-1 flex items-center">
+                                    <!-- Heroicon name: solid/paper-clip -->
+                                    <span class="flex-1 w-0 truncate"> {{ $category->name }} </span>
+                                </div>
+                                <div class="ml-4 flex-shrink-0">
+                                    <a wire:click.prevent="removeJobCategory({{ $category->id }})" class="cursor-pointer hover:underline font-medium text-blue-600 hover:text-blue-500"> Remove </a>
+                                </div>
+                            </li>
+                        @endforeach
+                    </ul>
+                </dd>
+            </div>
+
+            <div class="col-span-6">
+
+                <x-input.select :items="$skills" :selected="$skill" wire:model.defer="skill" wire:key="categories-field-skills-{{ $editing->id }}"></x-input.select>
+
+                <x-input-error for="skill" class="mt-2" />
+
+            </div>
+            <div class="col-span-6">
+                <dt class="text-right text-sm font-medium text-gray-500 hover:underline cursor-pointer">New Responsibility</dt>
+            </div>
+
+
+
+        </x-slot>
+
+        <x-slot name="actions">
+
+            <x-action-message class="mr-3" on="saved">
+
+                {{ __('Saved.') }}
+
+            </x-action-message>
+
+            <x-button wire:loading.attr="disabled"> {{ __('Add Responsibility') }}</x-button>
+        </x-slot>
+    </x-form-section>
+
     <x-form-section submit="save" class="mt-8">
 
         <x-slot name="title">
