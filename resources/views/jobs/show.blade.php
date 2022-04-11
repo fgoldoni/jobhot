@@ -152,29 +152,37 @@
                         <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
                             <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
                                 <div class="sm:col-span-1">
-                                    <dt class="text-sm font-medium text-gray-500">Application for</dt>
-                                    <dd class="mt-1 text-sm text-gray-900">Backend Developer</dd>
+                                    <dt class="text-sm font-medium text-gray-500">Job Type</dt>
+                                    <dd class="mt-1 text-sm text-gray-900">{{ $job->categories->firstWhere('type', \App\Enums\CategoryType::JobType)?->name }}</dd>
                                 </div>
                                 <div class="sm:col-span-1">
-                                    <dt class="text-sm font-medium text-gray-500">Email address</dt>
-                                    <dd class="mt-1 text-sm text-gray-900">ricardocooper@example.com</dd>
+                                    <dt class="text-sm font-medium text-gray-500">Job Level</dt>
+                                    <dd class="mt-1 text-sm text-gray-900">{{ $job->categories->firstWhere('type', \App\Enums\CategoryType::JobLevel)?->name }}</dd>
                                 </div>
                                 <div class="sm:col-span-1">
-                                    <dt class="text-sm font-medium text-gray-500">Salary expectation</dt>
-                                    <dd class="mt-1 text-sm text-gray-900">$120,000</dd>
+                                    <dt class="text-sm font-medium text-gray-500">Gender</dt>
+                                    <dd class="mt-1 text-sm text-gray-900">{{ $job->categories->firstWhere('type', \App\Enums\CategoryType::Gender)?->name }}</dd>
                                 </div>
                                 <div class="sm:col-span-1">
-                                    <dt class="text-sm font-medium text-gray-500">Phone</dt>
-                                    <dd class="mt-1 text-sm text-gray-900">+1 555-555-5555</dd>
+                                    <dt class="text-sm font-medium text-gray-500">Experience</dt>
+                                    <dd class="mt-1 text-sm text-gray-900">{{ $job->experience }}</dd>
+                                </div>
+                                <div class="sm:col-span-1">
+                                    <dt class="text-sm font-medium text-gray-500">Gender</dt>
+                                    <dd class="mt-1 text-sm text-gray-900">{{ $job->categories->firstWhere('type', \App\Enums\CategoryType::Gender)?->name }}</dd>
+                                </div>
+                                <div class="sm:col-span-1">
+                                    <dt class="text-sm font-medium text-gray-500">Salary expectation / {{ ucfirst($job->salary_type->value) }}</dt>
+                                    <dd class="mt-1 text-sm text-gray-900">${{ number_format($job->salary_min/1000, 1) }}k – ${{ number_format($job->salary_max/1000, 1) }}k</dd>
                                 </div>
                                 <div class="sm:col-span-2">
-                                    <dt class="text-sm font-medium text-gray-500">About</dt>
+                                    <dt class="text-sm font-medium text-gray-500">Job Description</dt>
                                     <dd class="mt-1 text-sm text-gray-900">
                                         {!! $job->content !!}
                                     </dd>
                                 </div>
                                 <div class="sm:col-span-2">
-                                    <dt class="text-sm font-medium text-gray-500">Attachments</dt>
+                                    <dt class="text-sm font-medium text-gray-500">Benefits</dt>
                                     <dd class="mt-1 text-sm text-gray-900">
                                         <ul role="list" class="border border-gray-200 rounded-md divide-y divide-gray-200">
                                             <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
@@ -445,6 +453,9 @@
                     </div>
                     <div class="mt-6 flex flex-col justify-stretch">
                         <button type="button" class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Advance to offer</button>
+                    </div>
+                    <div class="mt-6 flex flex-col justify-stretch">
+                        {!! $job->iframe !!}
                     </div>
                 </div>
             </section>

@@ -212,8 +212,8 @@ class CategorySeeder extends Seeder
         Category::factory()->create(['name' => 'Non-Matriculation', 'type' => CategoryType::JobLevel]);
         Category::factory()->create(['name' => 'Matriculation/O-Level', 'type' => CategoryType::JobLevel]);
         Category::factory()->create(['name' => 'Intermediate/A-Level', 'type' => CategoryType::JobLevel]);
-        Category::factory()->create(['name' => 'Bachelors', 'type' => CategoryType::JobLevel]);
-        Category::factory()->create(['name' => 'Masters', 'type' => CategoryType::JobLevel]);
+        Category::factory()->create(['name' => 'Bachelor', 'type' => CategoryType::JobLevel]);
+        Category::factory()->create(['name' => 'Master', 'type' => CategoryType::JobLevel]);
         Category::factory()->create(['name' => 'MPhil/MS', 'type' => CategoryType::JobLevel]);
         Category::factory()->create(['name' => 'PHD/Doctorate', 'type' => CategoryType::JobLevel]);
         Category::factory()->create(['name' => 'Certification', 'type' => CategoryType::JobLevel]);

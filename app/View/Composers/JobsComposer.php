@@ -15,7 +15,7 @@ class JobsComposer
     public function compose(View $view)
     {
         $view->with('industries', Category::industry()->orderBy('position')->get(['id', 'name', 'icon']));
-        $view->with('areas', Category::withCount(['jobs' => fn ($query) => $query->published()])->area()->orderBy('position')->get(['id', 'name', 'icon']));
-        $view->with('companies', Company::get(['id', 'name', 'avatar_path']));
+        $view->with('areas', Category::has('jobs')->withCount(['jobs' => fn ($query) => $query->published()])->area()->orderBy('position')->get(['id', 'name', 'icon']));
+        $view->with('companies', Company::has('jobs')->get(['id', 'name', 'avatar_path']));
     }
 }

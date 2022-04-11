@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Enums\CategoryType;
 use App\Enums\JobState;
+use App\Models\Category;
 use App\Models\Job;
 use Faker\Generator as Faker;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -33,7 +35,14 @@ class JobSeeder extends Seeder
 
             return [];
 
-        })->create(['live_at' => $faker->dateTimeInInterval('now', '-1 days')]);
+        })->create(['live_at' => $faker->dateTimeInInterval('now', '-1 days')])->each(function ($job) {
+            $industry = Category::industry()->inRandomOrder()->first();
+            $jobType = Category::type(CategoryType::JobType)->inRandomOrder()->first();
+            $jobLevel = Category::type(CategoryType::JobLevel)->inRandomOrder()->first();
+            $gender = Category::type(CategoryType::Gender)->inRandomOrder()->first();
+
+            $job->syncCategories([$industry->id, $jobType->id, $jobLevel->id, $gender->id], false);
+        });
 
 
         Job::factory(100)->state(function (array $attributes) {
@@ -49,7 +58,14 @@ class JobSeeder extends Seeder
             }
 
             return [];
-        })->create(['live_at' => $faker->dateTimeInInterval('-1 days', '-2 days')]);
+        })->create(['live_at' => $faker->dateTimeInInterval('-1 days', '-2 days')])->each(function ($job) {
+            $industry = Category::industry()->inRandomOrder()->first();
+            $jobType = Category::type(CategoryType::JobType)->inRandomOrder()->first();
+            $jobLevel = Category::type(CategoryType::JobLevel)->inRandomOrder()->first();
+            $gender = Category::type(CategoryType::Gender)->inRandomOrder()->first();
+
+            $job->syncCategories([$industry->id, $jobType->id, $jobLevel->id, $gender->id], false);
+        });
 
 
         Job::factory(100)->state(function (array $attributes) {
@@ -81,7 +97,14 @@ class JobSeeder extends Seeder
             }
 
             return [];
-        })->create(['live_at' => $faker->dateTimeInInterval('-7 days', '-30 days')]);
+        })->create(['live_at' => $faker->dateTimeInInterval('-7 days', '-30 days')])->each(function ($job) {
+            $industry = Category::industry()->inRandomOrder()->first();
+            $jobType = Category::type(CategoryType::JobType)->inRandomOrder()->first();
+            $jobLevel = Category::type(CategoryType::JobLevel)->inRandomOrder()->first();
+            $gender = Category::type(CategoryType::Gender)->inRandomOrder()->first();
+
+            $job->syncCategories([$industry->id, $jobType->id, $jobLevel->id, $gender->id], false);
+        });
 
 
         Job::factory(100)->state(function (array $attributes) {
@@ -97,6 +120,13 @@ class JobSeeder extends Seeder
             }
             return [];
 
-        })->create(['live_at' => $faker->dateTimeInInterval('-30 days', '-60 days')]);
+        })->create(['live_at' => $faker->dateTimeInInterval('-30 days', '-60 days')])->each(function ($job) {
+            $industry = Category::industry()->inRandomOrder()->first();
+            $jobType = Category::type(CategoryType::JobType)->inRandomOrder()->first();
+            $jobLevel = Category::type(CategoryType::JobLevel)->inRandomOrder()->first();
+            $gender = Category::type(CategoryType::Gender)->inRandomOrder()->first();
+
+            $job->syncCategories([$industry->id, $jobType->id, $jobLevel->id, $gender->id], false);
+        });
     }
 }

@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\JobState;
+use App\Enums\SalaryType;
 use App\Models\Company;
 use App\Models\Job;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -26,13 +27,14 @@ class JobFactory extends Factory
             'team_id' => $this->faker->numberBetween(1, 5),
             'country_id' => $this->faker->numberBetween(1, 200),
             'state' => $this->faker->randomElement([JobState::Draft, JobState::Published, JobState::Archived, JobState::Hold]),
+            'salary_type' => $this->faker->randomElement([SalaryType::Day, SalaryType::Hour, SalaryType::Month, SalaryType::Year]),
             'closing_to' => $this->faker->dateTimeInInterval('now', '+30 days'),
             'urgent_to' => $this->faker->randomElement([$this->faker->dateTimeInInterval('now', '+30 days'), null, null, null, null]),
             'highlight_to' => $this->faker->randomElement([$this->faker->dateTimeInInterval('now', '+30 days'), null, null, null, null]),
             'live_at' => $this->faker->randomElement([$this->faker->dateTimeInInterval('-5 days', 'now'), null]),
             'experience' => $this->faker->numberBetween(1,5),
-            'salary_min' => $this->faker->numberBetween(38000, 55000),
-            'salary_max' => $this->faker->numberBetween(55000, 200000),
+            'salary_min' => $this->faker->randomElement([38000, 40000, 45000, 50000, 55000, 60000, 65000]),
+            'salary_max' => $this->faker->randomElement([70000, 75000, 80000, 85000, 90000]),
         ];
     }
 
