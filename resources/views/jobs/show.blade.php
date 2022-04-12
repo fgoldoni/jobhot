@@ -348,218 +348,371 @@
                                 </div>
 
                                 <div class="sm:col-span-1">
+
                                     <dt class="text-sm font-medium text-gray-500">Published on</dt>
+
                                     <dd class="mt-1 text-sm text-gray-900">
+
                                         <div class="flex items-center space-x-2">
-                                            <!-- Heroicon name: solid/lock-open -->
+
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                             </svg>
+
                                             <span class="text-indigo-700 text-sm font-medium">
+
                                                 {{ $job->live_at->diffForHumans() }}
+
                                             </span>
+
                                         </div>
+
                                     </dd>
+
                                 </div>
 
                                 <div class="sm:col-span-1">
+
                                     <dt class="text-sm font-medium text-gray-500">Job Id </dt>
+
                                     <dd class="mt-1 text-sm text-gray-900">
+
                                         <div class="flex items-center space-x-2">
-                                            <!-- Heroicon name: solid/lock-open -->
+
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
                                             </svg>
+
                                             <span class="text-indigo-700 text-sm font-medium">
+
                                                 {{ $job->id }}
+
                                             </span>
+
                                         </div>
+
                                     </dd>
+
                                 </div>
 
                                 <div class="sm:col-span-2">
+
                                     <dt class="text-sm font-medium text-gray-500">Job Description</dt>
+
                                     <dd class="mt-1 text-sm text-gray-900">
+
                                         {!! $job->content !!}
+
                                     </dd>
+
                                 </div>
+
                                 <div class="sm:col-span-2">
+
                                     <dt class="text-sm font-medium text-gray-500">Responsibilities</dt>
+
                                     <dd class="mt-1 text-gray-700">
+
                                         <ul role="list">
+
                                             @foreach($job->categories->where('type', '=', \App\Enums\CategoryType::Responsibility)->all() as $category)
+
                                                 <li class="pr-4 py-3 flex items-center justify-between text-sm">
+
                                                     <div class="w-0 flex-1 flex items-center">
-                                                        <!-- Heroicon name: solid/paper-clip -->
+
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 h-5 w-5 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                             <path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4" />
                                                         </svg>
+
                                                         <span class="ml-2 flex-1 w-0 text-sm"> {{ $category->name }} </span>
+
                                                     </div>
+
                                                 </li>
+
                                             @endforeach
+
                                         </ul>
+
                                     </dd>
+
                                 </div>
 
                                 <div class="sm:col-span-2">
+
                                     <dt class="text-sm font-medium text-gray-500">Skills & Qualifications</dt>
+
                                     <dd class="mt-1 text-sm text-gray-700">
+
                                         <ul role="list">
+
                                             @foreach($job->categories->where('type', '=', \App\Enums\CategoryType::Skill)->all() as $category)
+
                                                 <li class="pr-4 py-3 flex items-center justify-between text-sm">
+
                                                     <div class="w-0 flex-1 flex items-center">
-                                                        <!-- Heroicon name: solid/paper-clip -->
+
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 h-5 w-5 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                             <path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4" />
                                                         </svg>
+
                                                         <span class="ml-2 flex-1 w-0 text-sm"> {{ $category->name }} </span>
+
                                                     </div>
+
                                                 </li>
+
                                             @endforeach
+
                                         </ul>
+
                                     </dd>
+
                                 </div>
 
                                 <div class="sm:col-span-2">
+
                                     <dt class="text-sm font-medium text-gray-500">Benefits</dt>
+
                                     <dd class="mt-1 text-sm text-gray-700">
+
                                         <ul role="list">
+
                                             @foreach($job->categories->where('type', '=', \App\Enums\CategoryType::Benefit)->all() as $category)
+
                                                 <li class="pr-4 py-3 flex items-center justify-between text-sm">
+
                                                     <div class="w-0 flex-1 flex items-center">
-                                                        <!-- Heroicon name: solid/paper-clip -->
+
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 h-5 w-5 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                             <path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4" />
                                                         </svg>
+
                                                         <span class="ml-2 flex-1 w-0 text-sm"> {{ $category->name }} </span>
+
                                                     </div>
+
                                                 </li>
+
                                             @endforeach
+
                                         </ul>
+
                                     </dd>
+
                                 </div>
+
                             </dl>
+
                         </div>
+
                         <div>
+
                             <a href="#" class="block bg-gray-50 text-sm font-medium text-gray-500 text-center px-4 py-4 hover:text-gray-700 sm:rounded-b-lg">Apply Now</a>
+
                         </div>
+
                     </div>
+
                 </section>
 
-                <!-- Comments-->
                 <section aria-labelledby="notes-title">
+
                     <div class="bg-white shadow sm:rounded-lg sm:overflow-hidden">
+
                         <div class="divide-y divide-gray-200">
+
                             <div class="px-4 py-5 sm:px-6">
+
                                 <h2 id="notes-title" class="text-lg font-medium text-gray-900">Related Jobs</h2>
+
                             </div>
+
                             <div class="px-4 py-6 sm:px-6">
+
                                 <ul role="list" class="divide-y space-y-5 p-4 divide-gray-200">
-                                    @forelse($rows as $row)
+
+                                    @foreach($rows as $row)
+
                                         <x-jobs.item :row="$row" wire:key="item-{{$row->id}}"></x-jobs.item>
-                                    @empty
-                                    @endforelse
+
+                                    @endforeach
+
                                 </ul>
+
                             </div>
+
                         </div>
+
                     </div>
+
                 </section>
+
             </div>
 
             <section aria-labelledby="timeline-title" class="lg:col-start-3 lg:col-span-1">
+
                 <div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:px-6">
+
                     <h2 id="timeline-title" class="text-lg font-medium text-gray-900">Tips for candidates</h2>
 
-                    <!-- Activity Feed -->
                     <div class="mt-6 flow-root">
+
                         <ul role="list" class="-mb-8">
+
                             <li>
+
                                 <div class="relative pb-8">
+
                                     <span class="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true"></span>
+
                                     <div class="relative flex space-x-3">
                                         <div>
-                      <span class="h-8 w-8 rounded-full bg-green-500 flex items-center justify-center ring-8 ring-white">
-                        <!-- Heroicon name: solid/check -->
-                        <svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                        </svg>
-                      </span>
+                                          <span class="h-8 w-8 rounded-full bg-green-500 flex items-center justify-center ring-8 ring-white">
+
+                                              <svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+
+                                                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+
+                                              </svg>
+
+                                          </span>
+
                                         </div>
+
                                         <div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
+
                                             <div>
+
                                                 <p class="text-sm text-gray-500">Check if the offer matches your profile</p>
+
                                             </div>
+
                                             <div class="text-right text-sm whitespace-nowrap text-gray-500">
+
                                                 <time datetime="2020-09-20">#1</time>
+
                                             </div>
+
                                         </div>
+
                                     </div>
+
                                 </div>
+
                             </li>
 
                             <li>
+
                                 <div class="relative pb-8">
+
                                     <span class="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true"></span>
+
                                     <div class="relative flex space-x-3">
                                         <div>
-                      <span class="h-8 w-8 rounded-full bg-green-500 flex items-center justify-center ring-8 ring-white">
-                        <!-- Heroicon name: solid/check -->
-                        <svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                        </svg>
-                      </span>
+
+                                            <span class="h-8 w-8 rounded-full bg-green-500 flex items-center justify-center ring-8 ring-white">
+
+
+                                                <svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+
+                                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+
+                                                </svg>
+
+                                            </span>
                                         </div>
+
                                         <div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
+
                                             <div>
+
                                                 <p class="text-sm text-gray-500">Check the closing date</p>
+
                                             </div>
+
                                             <div class="text-right text-sm whitespace-nowrap text-gray-500">
+
                                                 <time datetime="2020-09-22">#2</time>
+
                                             </div>
+
                                         </div>
+
                                     </div>
+
                                 </div>
+
                             </li>
 
                             <li>
+
                                 <div class="relative pb-8">
+
                                     <div class="relative flex space-x-3">
+
                                         <div>
-                      <span class="h-8 w-8 rounded-full bg-green-500 flex items-center justify-center ring-8 ring-white">
-                        <!-- Heroicon name: solid/check -->
-                        <svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                        </svg>
-                      </span>
+
+                                            <span class="h-8 w-8 rounded-full bg-green-500 flex items-center justify-center ring-8 ring-white">
+
+                                                <svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+
+                                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+
+                                                </svg>
+
+                                            </span>
+
                                         </div>
+
                                         <div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
+
                                             <div>
+
                                                 <p class="text-sm text-gray-500">Meet the employer in a professional location</p>
+
                                             </div>
+
                                             <div class="text-right text-sm whitespace-nowrap text-gray-500">
+
                                                 <time datetime="2020-10-04">#3</time>
+
                                             </div>
+
                                         </div>
+
                                     </div>
+
                                 </div>
+
                             </li>
+
                         </ul>
+
                     </div>
+
                     <div class="mt-6 flex flex-col justify-stretch">
+
                         <button type="button" class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Get started</button>
+
                     </div>
+
                     <div class="mt-6 flex items-center justify-center">
+
                         {!! $job->iframe !!}
+
                     </div>
+
                 </div>
+
             </section>
+
         </div>
     </main>
 
 
 
-    <!-- Section 6 -->
     <section>
         <footer class="bg-white" aria-labelledby="footer-heading">
             <h2 id="footer-heading" class="sr-only">Footer</h2>
