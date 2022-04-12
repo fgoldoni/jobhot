@@ -26,6 +26,8 @@ trait WithCategories
 
     public ?int $skill = null;
 
+    public ?int $benefit = null;
+
     public function mountWithCategories()
     {
     }
@@ -73,6 +75,11 @@ trait WithCategories
     private function setDefaultCategorySkills()
     {
         $this->skill = Category::query()->type(CategoryType::Skill)->orderBy('position')->first()->id;
+    }
+
+    private function setDefaultCategoryBenefits()
+    {
+        $this->benefit = Category::query()->type(CategoryType::Benefit)->orderBy('position')->first()->id;
     }
 
     private function loadCategories(): Collection|array

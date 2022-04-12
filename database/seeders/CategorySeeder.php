@@ -249,6 +249,8 @@ class CategorySeeder extends Seeder
         Category::factory()->create(['name' => 'Web programming.', 'type' => CategoryType::Skill]);
         Category::factory()->create(['name' => 'Web development and design.', 'type' => CategoryType::Skill]);
 
-        Category::factory()->create(['name' => 'You are familiar using Jira and Confluence in your workflow.', 'type' => CategoryType::Benefit]);
+        Category::factory()->create(['name' => 'International working environment with communication in English and German language.', 'type' => CategoryType::Benefit]);
+        Category::factory()->create(['name' => 'Interesting career opportunities and extensive range of qualification and further training programs.', 'type' => CategoryType::Benefit]);
+        Category::factory()->create(['name' => 'Compatibility of family and career certified by work and family audit.', 'type' => CategoryType::Benefit]);
     }
 }

@@ -47,6 +47,8 @@ class JobForm extends Component
 
     public Collection $responsibilities;
 
+    public Collection $benefits;
+
     public Collection $skills;
 
     public Collection $jobTypes;
@@ -93,6 +95,8 @@ class JobForm extends Component
 
         $this->responsibilities = Category::type(CategoryType::Responsibility)->orderBy('position')->get(['id', 'name', 'icon']);
 
+        $this->benefits = Category::type(CategoryType::Benefit)->orderBy('position')->get(['id', 'name', 'icon']);
+
         $this->skills = Category::type(CategoryType::Skill)->orderBy('position')->get(['id', 'name', 'icon']);
 
         $this->setDefaultCountry();
@@ -110,6 +114,8 @@ class JobForm extends Component
         $this->setDefaultCategoryResponsibilities();
 
         $this->setDefaultCategorySkills();
+
+        $this->setDefaultCategoryBenefits();
 
         if ($this->editing->country()->value('has_division')) {
             $this->setDefaultDivision();
@@ -215,6 +221,19 @@ class JobForm extends Component
         ]);
 
         $this->editing->syncCategories([$validatedData['skill']], false);
+
+        $this->editing->load('categories');
+
+        $this->notify('The Job Attribute has been successfully updated');
+    }
+
+    public function saveJobBenefit()
+    {
+        $validatedData = $this->validate([
+            'benefit' => 'required|integer',
+        ]);
+
+        $this->editing->syncCategories([$validatedData['benefit']], false);
 
         $this->editing->load('categories');
 

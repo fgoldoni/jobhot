@@ -45,7 +45,9 @@ class JobSeeder extends Seeder
 
             $skill = Category::type(CategoryType::Skill)->inRandomOrder()->first();
 
-            $job->syncCategories([$industry->id, $jobType->id, $jobLevel->id, $gender->id, $responsibility->id, $skill->id], false);
+            $benefit = Category::type(CategoryType::Benefit)->inRandomOrder()->first();
+
+            $job->syncCategories([$industry->id, $jobType->id, $jobLevel->id, $gender->id, $responsibility->id, $skill->id, $benefit->id], false);
         });
 
 
@@ -72,7 +74,9 @@ class JobSeeder extends Seeder
 
             $skill = Category::type(CategoryType::Skill)->inRandomOrder()->first();
 
-            $job->syncCategories([$industry->id, $jobType->id, $jobLevel->id, $gender->id, $responsibility->id, $skill->id], false);
+            $benefit = Category::type(CategoryType::Benefit)->inRandomOrder()->first();
+
+            $job->syncCategories([$industry->id, $jobType->id, $jobLevel->id, $gender->id, $responsibility->id, $skill->id, $benefit->id], false);
         });
 
 
@@ -115,7 +119,9 @@ class JobSeeder extends Seeder
 
             $skill = Category::type(CategoryType::Skill)->inRandomOrder()->first();
 
-            $job->syncCategories([$industry->id, $jobType->id, $jobLevel->id, $gender->id, $responsibility->id, $skill->id], false);
+            $benefit = Category::type(CategoryType::Benefit)->inRandomOrder()->first();
+
+            $job->syncCategories([$industry->id, $jobType->id, $jobLevel->id, $gender->id, $responsibility->id, $skill->id, $benefit->id], false);
         });
 
 
@@ -142,7 +148,9 @@ class JobSeeder extends Seeder
 
             $skill = Category::type(CategoryType::Skill)->inRandomOrder()->first();
 
-            $job->syncCategories([$industry->id, $jobType->id, $jobLevel->id, $gender->id, $responsibility->id, $skill->id], false);
+            $benefit = Category::type(CategoryType::Benefit)->inRandomOrder()->first();
+
+            $job->syncCategories([$industry->id, $jobType->id, $jobLevel->id, $gender->id, $responsibility->id, $skill->id, $benefit->id], false);
         });
     }
 }

@@ -101,12 +101,12 @@
             </div>
             <div class="mt-5 flex lg:mt-0 lg:ml-4">
                 <span class="sm:ml-3">
-                     <x-outline-button>
-                        <svg class="-ml-1 mr-3 h-5 w-5 text-indigo-500 group-hover:text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                     <x-button>
+                        <svg class="-ml-1 mr-3 h-5 w-5 text-white group-hover:text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                           <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
                         </svg>
                         Apply Now
-                    </x-outline-button>
+                    </x-button>
                 </span>
             </div>
         </div>
@@ -261,7 +261,7 @@
                                                     <div class="w-0 flex-1 flex items-center">
                                                         <!-- Heroicon name: solid/paper-clip -->
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 h-5 w-5 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4" />
                                                         </svg>
                                                         <span class="ml-2 flex-1 w-0 text-sm"> {{ $category->name }} </span>
                                                     </div>
@@ -280,7 +280,26 @@
                                                     <div class="w-0 flex-1 flex items-center">
                                                         <!-- Heroicon name: solid/paper-clip -->
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 h-5 w-5 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4" />
+                                                        </svg>
+                                                        <span class="ml-2 flex-1 w-0 text-sm"> {{ $category->name }} </span>
+                                                    </div>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </dd>
+                                </div>
+
+                                <div class="sm:col-span-2">
+                                    <dt class="text-sm font-medium text-gray-500">Benefits</dt>
+                                    <dd class="mt-1 text-sm text-gray-700">
+                                        <ul role="list">
+                                            @foreach($job->categories->where('type', '=', \App\Enums\CategoryType::Benefit)->all() as $category)
+                                                <li class="pr-4 py-3 flex items-center justify-between text-sm">
+                                                    <div class="w-0 flex-1 flex items-center">
+                                                        <!-- Heroicon name: solid/paper-clip -->
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 h-5 w-5 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4" />
                                                         </svg>
                                                         <span class="ml-2 flex-1 w-0 text-sm"> {{ $category->name }} </span>
                                                     </div>
