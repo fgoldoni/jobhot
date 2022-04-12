@@ -19,10 +19,15 @@ use Livewire\WithFileUploads;
 class CompaniesDatatable extends Component
 {
     use WithSorting;
+
     use WithPerPagePagination;
+
     use WithBulkActions;
+
     use WithCachedRows;
+
     use WithFileUploads;
+
     use WithCategories;
 
     public bool $showDeleteModal = false;
@@ -144,8 +149,6 @@ class CompaniesDatatable extends Component
 
         $this->showEditModal = false;
 
-        $this->editing->syncCategories([$this->selectedItem]);
-
         $this->notify('The company has been successfully updated');
     }
 
@@ -163,12 +166,12 @@ class CompaniesDatatable extends Component
     public function getRowsQueryProperty()
     {
         $query = Company::query()
-            ->with(['user:id,name', 'categories:id,name', 'jobs:id,company_id'])
+            ->with(['user:id,name', 'team:id,name', 'jobs:id,company_id'])
             ->when($this->filters['search'], fn ($query, $search) => $query->search($search))
             ->when($this->filters['state'], fn ($query, $state) => $query->where('state', $state))
             ->when($this->filters['date-min'], fn ($query, $date) => $query->where('created_at', '>=', Carbon::parse($date)))
             ->when($this->filters['date-max'], fn ($query, $date) => $query->where('created_at', '<=', Carbon::parse($date)))
-            ->where('team_id', auth()->user()->currentTeam->getKey());
+            ->WithTeam();
 
         return $this->applySorting($query);
     }

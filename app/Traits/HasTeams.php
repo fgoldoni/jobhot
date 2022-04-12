@@ -14,21 +14,13 @@ trait HasTeams
      */
     protected static function bootHasTeams()
     {
-        if (auth()->check() && auth()->user()->hasRole(User::Executive)) {
-            static::addGlobalScope('team', function (Builder $builder) {
+        static::saving(function (Model $model) {
+            if (!isset($model->team_id)) {
                 static::teamGuard();
 
-                $builder->where($builder->getQuery()->from . '.team_id', auth()->user()->currentTeam->getKey());
-            });
-
-            static::saving(function (Model $model) {
-                if (!isset($model->team_id)) {
-                    static::teamGuard();
-
-                    $model->team_id = auth()->user()->currentTeam->getKey();
-                }
-            });
-        }
+                $model->team_id = auth()->user()->currentTeam->getKey();
+            }
+        });
     }
 
     public function scopeAllTeams(Builder $query)
@@ -40,6 +32,13 @@ trait HasTeams
     {
         return $this->belongsTo(Config::get('teamwork.team_model'));
     }
+    public function scopeWithTeam($query)
+    {
+        static::teamGuard();
+
+        $query->where($query->getQuery()->from . '.team_id', auth()->user()->currentTeam->getKey());
+    }
+
 
     protected static function teamGuard()
     {

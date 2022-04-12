@@ -6,6 +6,7 @@ use App\Enums\SalaryType;
 use App\Traits\BelongsToUser;
 use App\Traits\Categorizable;
 use App\Traits\HasAvatar;
+use App\Traits\HasTeams;
 use App\Traits\JobAttribute;
 use App\Traits\WithinDays;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -104,10 +105,28 @@ use Spatie\Translatable\HasTranslations;
  * @method static \Illuminate\Database\Eloquent\Builder|Job liveWithinDays($days)
  * @method static \Illuminate\Database\Eloquent\Builder|Job registeredWithinDays($days)
  * @method static \Illuminate\Database\Eloquent\Builder|Job whereLiveAt($value)
+ * @property string|null $phone
+ * @property int|null $experience
+ * @property int|null $salary_min
+ * @property int|null $salary_max
+ * @property SalaryType $salary_type
+ * @property int $negotiable
+ * @property string|null $iframe
+ * @property int $view_count
+ * @property mixed $closing_to_for_editing
+ * @property-read bool|null $urgent
+ * @method static \Illuminate\Database\Eloquent\Builder|Job whereExperience($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Job whereIframe($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Job whereNegotiable($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Job wherePhone($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Job whereSalaryMax($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Job whereSalaryMin($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Job whereSalaryType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Job whereViewCount($value)
  */
 class Job extends Model
 {
-    use HasFactory, HasSlug, HasTranslations, Categorizable, HasAvatar, BelongsToUser, SearchableTrait, SoftDeletes, WithinDays, JobAttribute;
+    use HasFactory, HasSlug, HasTranslations, Categorizable, HasAvatar, BelongsToUser, SearchableTrait, SoftDeletes, WithinDays, JobAttribute, HasTeams;
 
     protected $guarded = [];
 

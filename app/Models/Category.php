@@ -47,6 +47,7 @@ use Spatie\Translatable\HasTranslations;
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Job[] $jobs
  * @property-read int|null $jobs_count
+ * @method static Builder|Category type(\App\Enums\CategoryType $type)
  */
 class Category extends Model
 {

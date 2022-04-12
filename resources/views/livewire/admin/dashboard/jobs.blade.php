@@ -9,7 +9,7 @@
         <p class="ml-16 text-sm font-medium text-gray-500 truncate">{{ __('Total Jobs') }}</p>
     </dt>
     <dd class="ml-16 pb-6 flex items-baseline sm:pb-7">
-        <p class="text-2xl font-semibold text-gray-900">{{ $rows->count() }}</p>
+        <p class="text-2xl font-semibold text-gray-900">{{ $rows }}</p>
         <p class="ml-2 flex items-baseline text-sm font-semibold text-red-600">
             <!-- Heroicon name: solid/arrow-sm-down -->
             <svg class="self-center flex-shrink-0 h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">

@@ -101,7 +101,7 @@
                                </th>
                                <x-table.heading sortable wire:click="sortBy('id')" :direction="$sorts['id'] ?? null">{{ __('table.id') }}</x-table.heading>
                                <x-table.heading sortable wire:click="sortBy('name')" :direction="$sorts['name'] ?? null">{{ __('table.name') }}</x-table.heading>
-                               <x-table.heading>Industry</x-table.heading>
+                               <x-table.heading>Team</x-table.heading>
                                <x-table.heading sortable wire:click="sortBy('state')" :direction="$sorts['state'] ?? null">{{ __('table.status') }}</x-table.heading>
                                <x-table.heading sortable wire:click="sortBy('created_at')" :direction="$sorts['created_at'] ?? null">{{ __('table.created') }}</x-table.heading>
                                <x-table.heading/>
@@ -155,13 +155,11 @@
                                            </div>
                                        </x-table.cell>
                                        <x-table.cell>
-                                           @foreach ($row->categories as $category)
-                                               <p class="flex items-center">
-                                                   <x-icon.solid type="{{$category->icon}}" class="mr-1.5 h-5 w-5 text-gray-500"/>
+                                           <p class="flex items-center">
+                                               <x-icon.solid type="academic" class="mr-1.5 h-5 w-5 text-gray-500"/>
 
-                                                   <span class="truncate text-gray-700">{{ $category->name }}</span>
-                                               </p>
-                                           @endforeach
+                                               <span class="truncate text-gray-700">{{ $row->team->name }}</span>
+                                           </p>
                                            <span class="text-sm text-indigo-500 hover:underline cursor-pointer">{{ $row->jobs ? $row->jobs->count() : 0 }}  Job(s)</span>
                                        </x-table.cell>
                                        <x-table.cell>
@@ -183,27 +181,9 @@
                                            <div class="text-gray-500">Last Modified: {{ $row->updated_at->diffForHumans() }}</div>
                                        </x-table.cell>
                                        <x-table.cell class="px-6 py-4">
-                                           <x-dropdown align="right" width="w-32">
-                                               <x-slot name="trigger">
-                                                   <button type="button" class="bg-gray-100 rounded-full flex items-center text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500" id="menu-button" aria-expanded="true" aria-haspopup="true">
-                                                       <span class="sr-only">Open options</span>
-                                                       <!-- Heroicon name: solid/dots-vertical -->
-                                                       <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                           <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
-                                                       </svg>
-                                                   </button>
-                                               </x-slot>
-
-                                               <x-slot name="content">
-                                                   <x-dropdown-link wire:click="edit({{ $row->id }})" class="group flex items-center cursor-pointer">
-                                                       <svg class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                           <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
-                                                           <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" />
-                                                       </svg>
-                                                       Edit
-                                                   </x-dropdown-link>
-                                               </x-slot>
-                                           </x-dropdown>
+                                           <x-button.link wire:click="edit({{ $row->id }})" class="font-medium text-indigo-500 hover:text-indigo-900 hover:underline">
+                                               Edit
+                                           </x-button.link>
                                        </x-table.cell>
                                    </x-table.row>
                                @empty
@@ -268,19 +248,6 @@
                                     @endif
                                 </x-input.file-upload>
 
-                            </div>
-
-                            <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
-                                <x-label for="name" class="sm:mt-px sm:pt-2">{{ __('Industry') }} </x-label>
-                                <div class="mt-1 sm:mt-0 sm:col-span-2">
-                                    <x-input.select :items="$industries" :selected="$selectedItem" wire:model.defer="selectedItem" wire:key="categories-field-{{ $editing->id }}"></x-input.select>
-                                    @if ($errors->has('selectedItem'))
-                                        <p class="mt-2 text-sm text-red-600">{{ $errors->first('selectedItem') }}</p>
-                                     @endif
-                                </div>
-                                @if ($errors->has('selectedItem'))
-                                    <p class="mt-2 text-sm text-red-600">{{ $errors->first('selectedItem') }}</p>
-                                @endif
                             </div>
 
                             <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">

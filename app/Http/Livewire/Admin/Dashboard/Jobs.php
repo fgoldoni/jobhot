@@ -8,6 +8,6 @@ class Jobs extends Component
 {
     public function render()
     {
-        return view('livewire.admin.dashboard.jobs', ['rows' => Job::all()]);
+        return view('livewire.admin.dashboard.jobs', ['rows' => Job::withTeam()->count()]);
     }
 }

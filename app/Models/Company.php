@@ -69,6 +69,10 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $slug
  * @property-read mixed $created_at_formatted
  * @method static \Illuminate\Database\Eloquent\Builder|Company whereSlug($value)
+ * @property \Illuminate\Support\Carbon|null $live_at
+ * @property-read bool|null $is_new
+ * @method static \Illuminate\Database\Eloquent\Builder|Company whereLiveAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Company withTeam()
  */
 class Company extends Model
 {
@@ -137,12 +141,6 @@ class Company extends Model
     public function getIsNewAttribute(): ?bool
     {
         return $this->live_at?->isToday();
-    }
-
-    public function scopeTeamByUser($query)
-    {
-        static::teamGuard();
-        $query->where($query->getQuery()->from . '.team_id', auth()->user()->currentTeam->getKey());
     }
 
     protected function defaultAvatarUrl(): string
