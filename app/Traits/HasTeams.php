@@ -1,7 +1,6 @@
 <?php
 namespace App\Traits;
 
-use App\Models\User;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -32,13 +31,6 @@ trait HasTeams
     {
         return $this->belongsTo(Config::get('teamwork.team_model'));
     }
-    public function scopeWithTeam($query)
-    {
-        static::teamGuard();
-
-        $query->where($query->getQuery()->from . '.team_id', auth()->user()->currentTeam->getKey());
-    }
-
 
     protected static function teamGuard()
     {

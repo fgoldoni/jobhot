@@ -38,6 +38,6 @@ trait WithCountries
 
     public function setDefaultCountry()
     {
-        $this->searchCountry = $this->editing->country ? $this->editing->country->name : '';
+        $this->searchCountry = $this->editing->country?->name;
     }
 }

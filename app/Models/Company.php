@@ -1,14 +1,17 @@
 <?php
 namespace App\Models;
 
+use App\Builders\CompanyBuilder;
 use App\Enums\CompanyState;
 use App\Traits\BelongsToUser;
 use App\Traits\Categorizable;
 use App\Traits\HasAvatar;
 use App\Traits\HasTeams;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use JetBrains\PhpStorm\Pure;
 use Nicolaslopezj\Searchable\SearchableTrait;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -73,6 +76,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read bool|null $is_new
  * @method static \Illuminate\Database\Eloquent\Builder|Company whereLiveAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Company withTeam()
+ * @method static CompanyBuilder|Company inTeam()
  */
 class Company extends Model
 {
@@ -147,4 +151,10 @@ class Company extends Model
     {
         return asset('default/profile-banner.png');
     }
+
+    #[Pure]
+ public function newEloquentBuilder($query): Builder
+ {
+     return new CompanyBuilder($query);
+ }
 }

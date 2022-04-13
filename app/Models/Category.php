@@ -1,10 +1,14 @@
 <?php
 namespace App\Models;
 
+use App\Builders\CategoryBuilder;
+use App\Collections\CategoryCollection;
 use App\Enums\CategoryType;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use JetBrains\PhpStorm\Pure;
 use Nicolaslopezj\Searchable\SearchableTrait;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -48,6 +52,9 @@ use Spatie\Translatable\HasTranslations;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Job[] $jobs
  * @property-read int|null $jobs_count
  * @method static Builder|Category type(\App\Enums\CategoryType $type)
+ * @method static CategoryCollection|static[] all($columns = ['*'])
+ * @method static CategoryCollection|static[] get($columns = ['*'])
+ * @method static CategoryBuilder|Category positionAsc()
  */
 class Category extends Model
 {
@@ -112,21 +119,6 @@ class Category extends Model
         return $attributes;
     }
 
-    public function scopeArea(Builder $query): Builder
-    {
-        return $query->where('type', CategoryType::Area);
-    }
-
-    public function scopeType(Builder $query, CategoryType $type): Builder
-    {
-        return $query->where('type', $type);
-    }
-
-    public function scopeIndustry(Builder $query): Builder
-    {
-        return $query->where('type', CategoryType::Industry);
-    }
-
     protected static function boot()
     {
         parent::boot();
@@ -135,4 +127,15 @@ class Category extends Model
             $model->position = Category::max('position') + 1;
         });
     }
+
+    public function newCollection(array $models = []): Collection
+    {
+        return new CategoryCollection($models);
+    }
+
+    #[Pure]
+ public function newEloquentBuilder($query): Builder
+ {
+     return new CategoryBuilder($query);
+ }
 }

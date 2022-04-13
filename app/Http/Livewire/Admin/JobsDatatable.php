@@ -248,8 +248,7 @@ class JobsDatatable extends Component
     public function render()
     {
         return view('livewire.admin.jobs-datatable', [
-            'rows' => $this->rows,
-            'categories' => $this->loadCategories()
+            'rows' => $this->rows
         ]);
     }
 }

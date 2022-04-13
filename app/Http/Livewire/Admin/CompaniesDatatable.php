@@ -171,7 +171,7 @@ class CompaniesDatatable extends Component
             ->when($this->filters['state'], fn ($query, $state) => $query->where('state', $state))
             ->when($this->filters['date-min'], fn ($query, $date) => $query->where('created_at', '>=', Carbon::parse($date)))
             ->when($this->filters['date-max'], fn ($query, $date) => $query->where('created_at', '<=', Carbon::parse($date)))
-            ->WithTeam();
+            ->inTeam();
 
         return $this->applySorting($query);
     }
@@ -223,8 +223,7 @@ class CompaniesDatatable extends Component
     public function render()
     {
         return view('livewire.admin.companies-datatable', [
-            'rows' => $this->rows,
-            'categories' => $this->loadCategories()
+            'rows' => $this->rows
         ]);
     }
 }

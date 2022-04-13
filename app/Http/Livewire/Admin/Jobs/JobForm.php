@@ -59,6 +59,8 @@ class JobForm extends Component
 
     public int $selectedState = 1;
 
+    protected Collection $categories;
+
     public function rules(): array
     {
         return [
@@ -81,41 +83,29 @@ class JobForm extends Component
 
     public function mount()
     {
-        $this->companies = Company::teamByUser()->get();
+        $this->companies = Company::inTeam()->get();
 
-        $this->areas = Category::area()->orderBy('position')->get(['id', 'name', 'icon']);
+        $this->categories = Category::query()->positionAsc()->get();
 
-        $this->industries = Category::industry()->orderBy('position')->get(['id', 'name', 'icon']);
+        $this->areas = $this->categories->areas();
 
-        $this->jobTypes = Category::type(CategoryType::JobType)->orderBy('position')->get(['id', 'name', 'icon']);
+        $this->industries = $this->categories->industries();
 
-        $this->genders = Category::type(CategoryType::Gender)->orderBy('position')->get(['id', 'name', 'icon']);
+        $this->jobTypes = $this->categories->jobTypes();
 
-        $this->jobLevels = Category::type(CategoryType::JobLevel)->orderBy('position')->get(['id', 'name', 'icon']);
+        $this->genders = $this->categories->genders();
 
-        $this->responsibilities = Category::type(CategoryType::Responsibility)->orderBy('position')->get(['id', 'name', 'icon']);
+        $this->jobLevels = $this->categories->jobLevels();
 
-        $this->benefits = Category::type(CategoryType::Benefit)->orderBy('position')->get(['id', 'name', 'icon']);
+        $this->responsibilities = $this->categories->responsibilities();
 
-        $this->skills = Category::type(CategoryType::Skill)->orderBy('position')->get(['id', 'name', 'icon']);
+        $this->benefits = $this->categories->benefits();
+
+        $this->skills = $this->categories->skills();
+
+        $this->initCategories();
 
         $this->setDefaultCountry();
-
-        $this->setDefaultCategory();
-
-        $this->setDefaultCategoryIndustry();
-
-        $this->setDefaultCategoryJobType();
-
-        $this->setDefaultCategoryGender();
-
-        $this->setDefaultCategoryJobLevels();
-
-        $this->setDefaultCategoryResponsibilities();
-
-        $this->setDefaultCategorySkills();
-
-        $this->setDefaultCategoryBenefits();
 
         if ($this->editing->country()->value('has_division')) {
             $this->setDefaultDivision();

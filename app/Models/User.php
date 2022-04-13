@@ -2,7 +2,6 @@
 namespace App\Models;
 
 use App\Traits\HasAvatar;
-use App\Traits\HasTeams;
 use App\Traits\Impersonate;
 use App\Traits\WithinDays;
 use Illuminate\Contracts\Auth\MustVerifyEmail;

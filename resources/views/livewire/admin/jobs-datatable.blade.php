@@ -159,11 +159,6 @@
                                             </div>
                                         </x-table.cell>
                                         <x-table.cell>
-                                            @foreach ($row->categories as $category)
-                                                <p class="flex items-center">
-                                                    <span class="truncate text-gray-700">{{ $row->company->name }}</span>
-                                                </p>
-                                            @endforeach
                                             <div class="text-gray-500">by:  <x-button.link>{{ $row->user->name }}</x-button.link></div>
                                         </x-table.cell>
                                         <x-table.cell>
@@ -320,19 +315,6 @@
                                     </div>
                                 </div>
                             @endif
-
-                            <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
-                                <x-label for="name" class="sm:mt-px sm:pt-2">{{ __('Area') }} </x-label>
-                                <div class="mt-1 sm:mt-0 sm:col-span-2">
-                                    <x-input.select :items="$areas" :selected="$selectedItem" wire:model.defer="selectedItem" wire:key="categories-field-{{ $editing->id }}"></x-input.select>
-                                    @if ($errors->has('selectedItem'))
-                                        <p class="mt-2 text-sm text-red-600">{{ $errors->first('selectedItem') }}</p>
-                                    @endif
-                                </div>
-                                @if ($errors->has('selectedItem'))
-                                    <p class="mt-2 text-sm text-red-600">{{ $errors->first('selectedItem') }}</p>
-                                @endif
-                            </div>
 
                             <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
                                 <x-label for="state" class="sm:mt-px sm:pt-2">{{ __('State') }} </x-label>

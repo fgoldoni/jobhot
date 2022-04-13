@@ -123,6 +123,7 @@ use Spatie\Translatable\HasTranslations;
  * @method static \Illuminate\Database\Eloquent\Builder|Job whereSalaryMin($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Job whereSalaryType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Job whereViewCount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Job withTeam()
  */
 class Job extends Model
 {

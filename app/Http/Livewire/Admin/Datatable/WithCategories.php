@@ -1,8 +1,6 @@
 <?php
 namespace App\Http\Livewire\Admin\Datatable;
 
-use App\Enums\CategoryType;
-use App\Models\Category;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
@@ -28,62 +26,80 @@ trait WithCategories
 
     public ?int $benefit = null;
 
+    protected ?Collection $attachCategories = null;
+
     public function mountWithCategories()
     {
     }
 
+    public function initCategories()
+    {
+        $this->attachCategories = $this->editing->categories()->get();
+
+        $this->setDefaultCategory();
+
+        $this->setDefaultCategoryIndustry();
+
+        $this->setDefaultCategoryJobType();
+
+        $this->setDefaultCategoryGender();
+
+        $this->setDefaultCategoryJobLevels();
+
+        $this->setDefaultCategoryResponsibilities();
+
+        $this->setDefaultCategorySkills();
+
+        $this->setDefaultCategoryBenefits();
+    }
+
     private function setDefaultCategory()
     {
-        $this->selectedItem = ($attachCategory = $this->editing->categories()->type(CategoryType::Area)->first())
-            ? $attachCategory->id
-            : Category::query()->type(CategoryType::Area)->orderBy('position')->first()->id;
+        $this->attachCategories = $this->attachCategories ?: $this->editing->categories()->get();
+
+        $this->selectedItem = 1;
     }
 
     private function setDefaultCategoryIndustry()
     {
-        $this->industry = ($attachCategory = $this->editing->categories()->type(CategoryType::Industry)->first())
+        $this->industry = ($attachCategory = $this->attachCategories->industries()->first())
             ? $attachCategory->id
-            : Category::query()->type(CategoryType::Industry)->orderBy('position')->first()->id;
+            : $this->categories->industries()->first()->id;
     }
 
     private function setDefaultCategoryJobType()
     {
-        $this->jobType = ($attachCategory = $this->editing->categories()->type(CategoryType::JobType)->first())
+        $this->jobType = ($attachCategory = $this->attachCategories->jobTypes()->first())
             ? $attachCategory->id
-            : Category::query()->type(CategoryType::JobType)->orderBy('position')->first()->id;
+            : $this->categories->jobTypes()->first()->id;
     }
 
     private function setDefaultCategoryGender()
     {
-        $this->gender = ($attachCategory = $this->editing->categories()->type(CategoryType::Gender)->first())
+        $this->gender = ($attachCategory = $this->attachCategories->genders()->first())
             ? $attachCategory->id
-            : Category::query()->type(CategoryType::Gender)->orderBy('position')->first()->id;
+            : $this->categories->genders()->first()->id;
     }
 
     private function setDefaultCategoryJobLevels()
     {
-        $this->jobLevel = ($attachCategory = $this->editing->categories()->type(CategoryType::JobLevel)->first())
+        $this->jobLevel = ($attachCategory = $this->attachCategories->jobLevels()->first())
             ? $attachCategory->id
-            : Category::query()->type(CategoryType::JobLevel)->orderBy('position')->first()->id;
+            : $this->categories->jobLevels()->first()->id;
     }
 
     private function setDefaultCategoryResponsibilities()
     {
-        $this->responsibility = Category::query()->type(CategoryType::Responsibility)->orderBy('position')->first()->id;
+        $this->responsibility = $this->categories->responsibilities()->first()->id;
     }
 
     private function setDefaultCategorySkills()
     {
-        $this->skill = Category::query()->type(CategoryType::Skill)->orderBy('position')->first()->id;
+        $this->skill = $this->categories->skills()->first()->id;
     }
 
     private function setDefaultCategoryBenefits()
     {
-        $this->benefit = Category::query()->type(CategoryType::Benefit)->orderBy('position')->first()->id;
-    }
-
-    private function loadCategories(): Collection|array
-    {
-        return Category::query()->area()->orderBy('position')->get(['id', 'name', 'icon']);
+        $this->benefit = $this->categories->benefits()->first()->id;
     }
 }
