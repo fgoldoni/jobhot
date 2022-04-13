@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Livewire\Admin\Datatable;
 
+use App\Enums\CategoryType;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -55,11 +56,13 @@ trait WithCategories
 
     private function setDefaultCategory()
     {
-        $attachCategory = $this->editing->categories()->type($this->categoryType)->first();
+        $type = $this->categoryType === 'area' ? CategoryType::Area : CategoryType::Industry;
+
+        $attachCategory = $this->editing->categories()->type($type)->first();
 
         $this->selectedItem = $attachCategory
             ? $attachCategory->id
-            : Category::query()->type($this->categoryType)->positionAsc()->get()->first()->id;
+            : Category::query()->type($type)->positionAsc()->get()->first()->id;
     }
 
     private function setDefaultCategoryIndustry()

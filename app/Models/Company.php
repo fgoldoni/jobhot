@@ -77,6 +77,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Company whereLiveAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Company withTeam()
  * @method static CompanyBuilder|Company inTeam()
+ * @method static CompanyBuilder|Company published()
  */
 class Company extends Model
 {

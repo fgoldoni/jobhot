@@ -21,7 +21,7 @@ class CategoryBuilder extends Builder
         return $this;
     }
 
-    public function type(string $type): self
+    public function type(CategoryType $type): self
     {
         $this->where('type', $type);
 

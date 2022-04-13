@@ -46,7 +46,7 @@ class JobFactory extends Factory
             //
         })->afterCreating(function (Job $job) {
             $job->syncCategories([$this->faker->numberBetween(1, 10)]);
-            $job->company_id = Company::where('team_id', $job->team_id)->inRandomOrder()->first()->id;
+            $job->company_id = Company::where('team_id', $job->team_id)->published()->inRandomOrder()->first()->id;
             $job->save();
         });
     }

@@ -55,6 +55,7 @@ use Spatie\Translatable\HasTranslations;
  * @method static CategoryCollection|static[] all($columns = ['*'])
  * @method static CategoryCollection|static[] get($columns = ['*'])
  * @method static CategoryBuilder|Category positionAsc()
+ * @method static CategoryBuilder|Category published()
  */
 class Category extends Model
 {
