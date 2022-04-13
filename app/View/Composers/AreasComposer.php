@@ -14,8 +14,6 @@ class AreasComposer
 {
     public function compose(View $view)
     {
-        $view->with('industries', Category::industry()->orderBy('position')->get(['id', 'name', 'icon']));
-        $view->with('areas', Category::area()->orderBy('position')->get(['id', 'name', 'icon']));
         $view->with('companies', Company::get(['id', 'name', 'avatar_path']));
     }
 }

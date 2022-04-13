@@ -153,8 +153,8 @@ class Company extends Model
     }
 
     #[Pure]
- public function newEloquentBuilder($query): Builder
- {
-     return new CompanyBuilder($query);
- }
+     public function newEloquentBuilder($query): Builder
+     {
+         return new CompanyBuilder($query);
+     }
 }
