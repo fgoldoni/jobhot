@@ -51,7 +51,10 @@
                                 </a>
                             @endforeach
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $row->id }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            <div class="text-gray-900">{{ $row->lastLogin?->logged_in_at->diffForHumans() }}</div>
+                            <div class="text-green-700">{{ $row->lastLogin?->logged_in_ip }}</div>
+                        </td>
                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <a href="#" wire:click="test" class="text-indigo-600 hover:text-indigo-900">Edit</a>
                         </td>

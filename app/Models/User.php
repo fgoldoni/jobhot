@@ -137,4 +137,14 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->ownedTeams()->where('personal_team', true)->first();
     }
+
+    public function logins()
+    {
+        return $this->hasMany(Login::class);
+    }
+
+    public function lastLogin()
+    {
+        return $this->hasOne(Login::class)->latestOfMany('logged_in_at');
+    }
 }

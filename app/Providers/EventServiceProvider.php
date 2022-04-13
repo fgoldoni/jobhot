@@ -3,6 +3,7 @@ namespace App\Providers;
 
 use App\Events\JobViewCount;
 use App\Listeners\JobViewCountHandler;
+use App\Listeners\LoginListener;
 use App\Listeners\Teamwork\JoinTeamListener;
 use App\Models\Company;
 use App\Observers\CompanyObserver;
@@ -25,6 +26,7 @@ class EventServiceProvider extends ServiceProvider
 
         Login::class => [
             JoinTeamListener::class,
+            LoginListener::class,
         ],
 
         JobViewCount::class => [
