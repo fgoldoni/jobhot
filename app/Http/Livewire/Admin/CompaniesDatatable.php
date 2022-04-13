@@ -173,7 +173,7 @@ class CompaniesDatatable extends Component
             ->when($this->filters['state'], fn ($query, $state) => $query->where('state', $state))
             ->when($this->filters['date-min'], fn ($query, $date) => $query->where('created_at', '>=', Carbon::parse($date)))
             ->when($this->filters['date-max'], fn ($query, $date) => $query->where('created_at', '<=', Carbon::parse($date)))
-            ->inTeam();
+            ->where('team_id', auth()->user()->currentTeam->getKey());
 
         return $this->applySorting($query);
     }
