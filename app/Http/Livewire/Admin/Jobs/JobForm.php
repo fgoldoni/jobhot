@@ -83,9 +83,9 @@ class JobForm extends Component
 
     public function mount()
     {
-        $this->companies = Company::inTeam()->get();
+        $this->companies = Company::inTeam()->published()->get();
 
-        $this->categories = Category::query()->positionAsc()->get();
+        $this->categories = Category::query()->published()->positionAsc()->get();
 
         $this->areas = $this->categories->areas();
 
@@ -108,9 +108,13 @@ class JobForm extends Component
         $this->setDefaultCountry();
 
         if ($this->editing->country()->value('has_division')) {
+
             $this->setDefaultDivision();
+
         } else {
+
             $this->setDefaultCity();
+
         }
 
         $this->states = $this->getStates();
@@ -123,20 +127,30 @@ class JobForm extends Component
         $this->editing->state = strtolower($this->findStateBy('id', $this->selectedState)['name']);
 
         $validatedData = $this->validate([
+
             'editing.name' => ['required', 'string', 'max:255'],
+
             'editing.content' => ['required', 'string', 'min:4'],
+
             'editing.closing_to_for_editing' => 'required',
+
             'editing.experience' => 'required',
+
             'editing.salary_min' => 'required',
+
             'editing.salary_max' => 'required',
+
             'editing.salary_type' => 'required',
+
             'editing.state' => 'required',
         ]);
 
         $this->editing->update($validatedData['editing']);
 
         if (isset($this->avatar)) {
+
             $this->editing->updateAvatar($this->avatar);
+
         }
 
         $this->notify('The Job has been successfully updated');
@@ -145,7 +159,9 @@ class JobForm extends Component
     public function saveCompany()
     {
         $validatedData = $this->validate([
+
             'editing.company_id' => 'required|integer',
+
         ]);
 
         $this->editing->update($validatedData['editing']);
@@ -154,17 +170,25 @@ class JobForm extends Component
 
         $this->editing->detachCategories($industries);
 
-        $this->editing->syncCategories([$this->industry], false);
+        if ($attachCategory = $this->editing->company->categories()->industry()->first()) {
 
-        $this->notify('The Job has been successfully updated');
+            $this->editing->syncCategories([$attachCategory?->id], false);
+
+        }
+
+        $this->notify('The Company has been successfully updated');
     }
 
     public function saveJobLocation()
     {
         $validatedData = $this->validate([
+
             'editing.country_id' => 'required|integer',
+
             'editing.division_id' => 'nullable|integer',
+
             'editing.city_id' => 'nullable|integer',
+
             'editing.iframe' => 'required',
         ]);
 
@@ -176,10 +200,15 @@ class JobForm extends Component
     public function saveJobAttribute()
     {
         $validatedData = $this->validate([
+
             'selectedItem' => 'required|integer',
+
             'jobType' => 'required|integer',
+
             'gender' => 'required|integer',
+
             'jobLevel' => 'required|integer',
+
         ]);
 
         $detachCategories = $this->editing->categories()->whereNot('type', CategoryType::Industry)->get();
@@ -194,7 +223,9 @@ class JobForm extends Component
     public function saveJobResponsibility()
     {
         $validatedData = $this->validate([
+
             'responsibility' => 'required|integer',
+
         ]);
 
         $this->editing->syncCategories([$validatedData['responsibility']], false);
@@ -207,7 +238,9 @@ class JobForm extends Component
     public function saveJobSkill()
     {
         $validatedData = $this->validate([
+
             'skill' => 'required|integer',
+
         ]);
 
         $this->editing->syncCategories([$validatedData['skill']], false);
@@ -220,7 +253,9 @@ class JobForm extends Component
     public function saveJobBenefit()
     {
         $validatedData = $this->validate([
+
             'benefit' => 'required|integer',
+
         ]);
 
         $this->editing->syncCategories([$validatedData['benefit']], false);

@@ -14,6 +14,5 @@ class AreasComposer
 {
     public function compose(View $view)
     {
-        $view->with('companies', Company::get(['id', 'name', 'avatar_path']));
     }
 }

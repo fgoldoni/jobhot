@@ -101,7 +101,7 @@
                                </th>
                                <x-table.heading sortable wire:click="sortBy('id')" :direction="$sorts['id'] ?? null">{{ __('table.id') }}</x-table.heading>
                                <x-table.heading sortable wire:click="sortBy('name')" :direction="$sorts['name'] ?? null">{{ __('table.name') }}</x-table.heading>
-                               <x-table.heading>Team</x-table.heading>
+                               <x-table.heading>Industry</x-table.heading>
                                <x-table.heading sortable wire:click="sortBy('state')" :direction="$sorts['state'] ?? null">{{ __('table.status') }}</x-table.heading>
                                <x-table.heading sortable wire:click="sortBy('created_at')" :direction="$sorts['created_at'] ?? null">{{ __('table.created') }}</x-table.heading>
                                <x-table.heading/>
@@ -156,9 +156,11 @@
                                        </x-table.cell>
                                        <x-table.cell>
                                            <p class="flex items-center">
-                                               <x-icon.solid type="academic" class="mr-1.5 h-5 w-5 text-gray-500"/>
+                                               @foreach($row->categories as $category)
+                                                   <x-icon.solid type="academic" class="mr-1.5 h-5 w-5 text-gray-500"/>
 
-                                               <span class="truncate text-gray-700">{{ $row->team->name }}</span>
+                                                   <span class="truncate text-gray-700">{{ $category->name }}</span>
+                                               @endforeach
                                            </p>
                                            <span class="text-sm text-indigo-500 hover:underline cursor-pointer">{{ $row->jobs ? $row->jobs->count() : 0 }}  Job(s)</span>
                                        </x-table.cell>
@@ -259,6 +261,18 @@
                                      @endif
                                 </div>
                             </div>
+
+                            <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
+                                <x-label for="name" class="sm:mt-px sm:pt-2">{{ __('Industry') }} </x-label>
+                                <div class="mt-1 sm:mt-0 sm:col-span-2">
+                                    <x-input.select :items="$industries" :selected="$selectedItem" wire:model.defer="selectedItem" wire:key="companies-field-selectedItem-{{ $editing->id }}"></x-input.select>
+                                </div>
+                                @if ($errors->has('selectedItem'))
+                                    <p class="mt-2 text-sm text-red-600">{{ $errors->first('selectedItem') }}</p>
+                                @endif
+                            </div>
+
+
                             @if($showEditor)
                                 <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
                                     <x-label for="content" class="sm:mt-px sm:pt-2">{{ __('Content') }} </x-label>

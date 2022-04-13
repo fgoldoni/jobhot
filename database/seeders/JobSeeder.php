@@ -22,14 +22,21 @@ class JobSeeder extends Seeder
     public function run(Faker $faker)
     {
         Job::factory(100)->state(function (array $attributes) {
+
             $city = City::where('country_id', $attributes['country_id'])->inRandomOrder()->first();
+
             $division = Division::where('country_id', $attributes['country_id'])->inRandomOrder()->first();
 
             if ($city) {
+
                 return ['city_id' => $city->id];
+
             } else {
+
                 if ($division) {
+
                     return ['division_id' => $division->id];
+                    
                 }
             }
 
@@ -37,8 +44,11 @@ class JobSeeder extends Seeder
 
         })->create(['live_at' => $faker->dateTimeInInterval('now', '-1 days')])->each(function ($job) {
             $industry = Category::industry()->inRandomOrder()->first();
+
             $jobType = Category::type(CategoryType::JobType)->inRandomOrder()->first();
+
             $jobLevel = Category::type(CategoryType::JobLevel)->inRandomOrder()->first();
+
             $gender = Category::type(CategoryType::Gender)->inRandomOrder()->first();
 
             $responsibility = Category::type(CategoryType::Responsibility)->inRandomOrder()->first();

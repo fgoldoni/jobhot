@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Livewire\Admin\Datatable;
 
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
@@ -30,13 +31,12 @@ trait WithCategories
 
     public function mountWithCategories()
     {
+        $this->setDefaultCategory();
     }
 
     public function initCategories()
     {
         $this->attachCategories = $this->editing->categories()->get();
-
-        $this->setDefaultCategory();
 
         $this->setDefaultCategoryIndustry();
 
@@ -55,9 +55,11 @@ trait WithCategories
 
     private function setDefaultCategory()
     {
-        $this->attachCategories = $this->attachCategories ?: $this->editing->categories()->get();
+        $attachCategory = $this->editing->categories()->type($this->categoryType)->first();
 
-        $this->selectedItem = 1;
+        $this->selectedItem = $attachCategory
+            ? $attachCategory->id
+            : Category::query()->type($this->categoryType)->positionAsc()->get()->first()->id;
     }
 
     private function setDefaultCategoryIndustry()

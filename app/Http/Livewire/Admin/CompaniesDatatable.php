@@ -147,6 +147,8 @@ class CompaniesDatatable extends Component
             $this->editing->updateAvatar($this->avatar);
         }
 
+        $this->editing->syncCategories([$this->selectedItem]);
+
         $this->showEditModal = false;
 
         $this->notify('The company has been successfully updated');
@@ -166,7 +168,7 @@ class CompaniesDatatable extends Component
     public function getRowsQueryProperty()
     {
         $query = Company::query()
-            ->with(['user:id,name', 'team:id,name', 'jobs:id,company_id'])
+            ->with(['user:id,name', 'team:id,name', 'jobs:id,company_id', 'categories:id,name'])
             ->when($this->filters['search'], fn ($query, $search) => $query->search($search))
             ->when($this->filters['state'], fn ($query, $state) => $query->where('state', $state))
             ->when($this->filters['date-min'], fn ($query, $date) => $query->where('created_at', '>=', Carbon::parse($date)))

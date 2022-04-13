@@ -246,16 +246,6 @@
 
             </div>
 
-            <div class="col-span-6">
-
-                <x-label for="industry"> {{__('Industry')}} </x-label>
-
-                <x-input.select :items="$industries" :selected="$industry" wire:model.defer="industry" wire:key="categories-field-industries-{{ $editing->id }}"></x-input.select>
-
-                <x-input-error for="industry" class="mt-2" />
-
-            </div>
-
         </x-slot>
 
         <x-slot name="actions">

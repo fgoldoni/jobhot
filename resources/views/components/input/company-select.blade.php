@@ -44,9 +44,19 @@
            this.open = !1
        },
        setValue() {
-           if (this.items && this.selectedIndex) {
-                this.name = this.items ? this.items.find(item => item.id === this.selectedIndex).name : '';
-                this.avatar_url = this.items ? this.items.find(item => item.id === this.selectedIndex).avatar_url : '';
+
+           if (this.items && this.selectedIndex && this.items.find(item => item.id === this.selectedIndex)) {
+
+                this.name =  this.items.find(item => item.id === this.selectedIndex).name;
+
+                this.avatar_url = this.items.find(item => item.id === this.selectedIndex).avatar_url;
+
+           } else {
+
+                this.name = ''
+
+                this.avatar_url = ''
+
            }
         },
        }"

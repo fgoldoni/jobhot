@@ -11,8 +11,10 @@ use App\Http\Livewire\Admin\Datatable\WithCountries;
 use App\Http\Livewire\Admin\Datatable\WithDivisions;
 use App\Http\Livewire\Admin\Datatable\WithPerPagePagination;
 use App\Http\Livewire\Admin\Datatable\WithSorting;
+use App\Models\Company;
 use App\Models\Job;
 use Illuminate\Auth\AuthManager;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection as StatesCollection;
@@ -47,13 +49,15 @@ class JobsDatatable extends Component
 
     public bool $showFilters = false;
 
-    public bool $showEditor = true;
+    public bool $showEditor = false;
 
     public int $selectedState = 1;
 
     public string $categoryType = 'area';
 
     public StatesCollection $states;
+
+    public Collection $companies;
 
     public $avatar;
 
@@ -93,6 +97,8 @@ class JobsDatatable extends Component
         $this->editing = $this->makeBlankJob();
 
         $this->states = $this->getStates();
+
+        $this->companies = Company::inTeam()->published()->get(['id', 'name', 'avatar_path', 'team_id']);
     }
 
     public function toggleShowFilters()
@@ -167,12 +173,12 @@ class JobsDatatable extends Component
         $this->editing->save();
 
         if (isset($this->avatar)) {
+
             $this->editing->updateAvatar($this->avatar);
+
         }
 
         $this->showEditModal = false;
-
-        $this->editing->syncCategories([$this->selectedItem]);
 
         $this->notify('The company has been successfully updated');
     }
@@ -191,7 +197,7 @@ class JobsDatatable extends Component
     public function getRowsQueryProperty()
     {
         $query = Job::query()
-            ->with(['user:id,name', 'company:id,name', 'categories:id,name,icon', 'country:id,name', 'city:id,name', 'division:id,name'])
+            ->with(['user:id,name', 'company:id,name', 'categories:id,name,icon,type', 'country:id,name', 'city:id,name', 'division:id,name'])
             ->when($this->filters['search'], fn ($query, $search) => $query->search($search))
             ->when($this->filters['state'], fn ($query, $state) => $query->where('state', $state))
             ->when($this->filters['date-min'], fn ($query, $date) => $query->where('created_at', '>=', Carbon::parse($date)))

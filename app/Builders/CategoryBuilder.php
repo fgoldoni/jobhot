@@ -21,9 +21,16 @@ class CategoryBuilder extends Builder
         return $this;
     }
 
-    public function type(CategoryType $type): self
+    public function type(string $type): self
     {
         $this->where('type', $type);
+
+        return $this;
+    }
+
+    public function published(): self
+    {
+        $this->where('online', true);
 
         return $this;
     }
