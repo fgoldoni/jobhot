@@ -11,6 +11,6 @@ class Companies extends Component
 
     public function render()
     {
-        return view('livewire.admin.dashboard.companies', ['rows' => Company::withTeam()->count()]);
+        return view('livewire.admin.dashboard.companies', ['rows' => Company::inTeam()->count()]);
     }
 }

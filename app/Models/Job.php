@@ -1,6 +1,8 @@
 <?php
 namespace App\Models;
 
+use App\Builders\CompanyBuilder;
+use App\Builders\JobBuilder;
 use App\Enums\JobState;
 use App\Enums\SalaryType;
 use App\Traits\BelongsToUser;
@@ -9,10 +11,12 @@ use App\Traits\HasAvatar;
 use App\Traits\HasTeams;
 use App\Traits\JobAttribute;
 use App\Traits\WithinDays;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use JetBrains\PhpStorm\Pure;
 use Modules\Countries\Entities\City;
 use Modules\Countries\Entities\Country;
 use Modules\Countries\Entities\Division;
@@ -236,5 +240,11 @@ class Job extends Model
     public function scopePublished($query)
     {
         return $query->where('state', JobState::Published);
+    }
+
+    #[Pure]
+    public function newEloquentBuilder($query): Builder
+    {
+        return new JobBuilder($query);
     }
 }
