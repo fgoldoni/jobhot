@@ -284,39 +284,62 @@
 
                     @foreach($industries->chunk(8) as $chunks)
 
-                        <div class="grid grid-cols-1 gap-y-10 auto-rows-min md:grid-cols-2 md:gap-x-6">
-
                             @foreach($chunks->chunk(4) as $chunk)
 
-                                <fieldset>
+                                <div class="grid grid-cols-1 gap-y-10 py-4 auto-rows-min md:gap-x-6" wire:key="chunk-{{ $loop->index }}">
 
-                                    <div class="space-y-6 sm:space-y-4">
+                                    <fieldset>
 
-                                        @foreach($chunk as $industry)
+                                        <div class="space-y-6 sm:space-y-4">
 
-                                            <a href="javascript:;" class="flex items-center text-sm hover:underline">
+                                            @foreach($chunk as $area)
 
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 transition mr-1.5 h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                                    <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" />
-                                                </svg>
+                                                @php
+                                                    $isSelected = in_array($area->id, $filters['categories']);
+                                                @endphp
 
-                                                <span class="text-gray-500">
-                                                    {{ $industry->name }}
-                                                </span>
+                                                <input x-model="selected" id="area-{{ $area->id }}" value="{{ $area->id }}" type="checkbox" class="hidden">
 
-                                            </a>
+                                                <label  for="area-{{ $area->id }}">
 
-                                        @endforeach
 
-                                    </div>
+                                                    <div class="{{ $isSelected ? 'bg-gray-100 text-gray-900 ' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 '}} group flex items-center px-2 py-2 text-sm font-medium rounded-md">
 
-                                </fieldset>
+                                                        <x-icon.solid type="{{ $area->icon }}" class="text-gray-400 group-hover:text-gray-500 mr-3 flex-shrink-0 h-6 w-6" x-ignore/>
+
+                                                        <span class="flex flex-1 inline-block">
+
+                                                        {{ $area->name }}
+
+                                                            @if($isSelected)
+                                                                <svg class="ml-2 h-5 w-5 text-green-400" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                            </svg>
+                                                            @endif
+
+                                                    </span>
+
+                                                        @if($area->jobs_count)
+
+                                                            <span class="{{ $isSelected ? 'bg-white ' : 'bg-gray-100 group-hover:bg-gray-200 '}} ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full">
+                                                            {{ $area->jobs_count }}
+                                                        </span>
+
+                                                        @endif
+                                                    </div>
+
+                                                </label>
+
+                                            @endforeach
+
+                                        </div>
+
+                                    </fieldset>
+
+                                </div>
 
                             @endforeach
-
-                        </div>
-
-                    @endforeach
+                        @endforeach
 
                 </div>
 

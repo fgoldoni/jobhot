@@ -1,6 +1,4 @@
 <?php
-
-
 namespace App\Builders;
 
 use App\Enums\CategoryType;
@@ -13,7 +11,6 @@ use Illuminate\Database\Eloquent\Builder;
  */
 class CategoryBuilder extends Builder
 {
-
     public function area(): self
     {
         $this->where('type', CategoryType::Area);
@@ -48,5 +45,4 @@ class CategoryBuilder extends Builder
 
         return $this;
     }
-
 }

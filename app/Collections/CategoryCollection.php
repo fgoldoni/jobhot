@@ -1,6 +1,4 @@
 <?php
-
-
 namespace App\Collections;
 
 use App\Enums\CategoryType;
@@ -52,5 +50,4 @@ class CategoryCollection extends Collection
     {
         return $this->filter(fn ($category) => $category->type === CategoryType::Skill);
     }
-
 }

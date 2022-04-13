@@ -108,13 +108,9 @@ class JobForm extends Component
         $this->setDefaultCountry();
 
         if ($this->editing->country()->value('has_division')) {
-
             $this->setDefaultDivision();
-
         } else {
-
             $this->setDefaultCity();
-
         }
 
         $this->states = $this->getStates();
@@ -148,9 +144,7 @@ class JobForm extends Component
         $this->editing->update($validatedData['editing']);
 
         if (isset($this->avatar)) {
-
             $this->editing->updateAvatar($this->avatar);
-
         }
 
         $this->notify('The Job has been successfully updated');
@@ -171,9 +165,7 @@ class JobForm extends Component
         $this->editing->detachCategories($industries);
 
         if ($attachCategory = $this->editing->company->categories()->industry()->first()) {
-
             $this->editing->syncCategories([$attachCategory?->id], false);
-
         }
 
         $this->notify('The Company has been successfully updated');

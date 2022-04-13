@@ -1,9 +1,6 @@
 <?php
-
 namespace Database\Seeders;
 
-use App\Models\User;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
@@ -51,8 +48,7 @@ class RoleSeeder extends Seeder
 
             DB::table('role_has_permissions')
                 ->insert(
-                    collect($permissionIds)->map(fn ($id) =>
-                    [
+                    collect($permissionIds)->map(fn ($id) => [
                         'role_id' => $role->id,
                         'permission_id' => $id
                     ])->toArray()

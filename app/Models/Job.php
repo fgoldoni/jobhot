@@ -1,7 +1,6 @@
 <?php
 namespace App\Models;
 
-use App\Builders\CompanyBuilder;
 use App\Builders\JobBuilder;
 use App\Enums\JobState;
 use App\Enums\SalaryType;

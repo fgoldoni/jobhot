@@ -1,5 +1,4 @@
 <?php
-
 namespace Database\Seeders;
 
 use App\Enums\CategoryType;
@@ -142,7 +141,6 @@ class CategorySeeder extends Seeder
         Category::factory()->create(['name' => 'Warehousing']);
         Category::factory()->create(['name' => 'Web Developer']);
         Category::factory()->create(['name' => 'Web Marketing']);
-
 
         Category::factory()->create(['name' => 'Information Technology', 'type' => CategoryType::Industry]);
         Category::factory()->create(['name' => 'Telecommunication/ISP', 'type' => CategoryType::Industry]);

@@ -173,9 +173,7 @@ class JobsDatatable extends Component
         $this->editing->save();
 
         if (isset($this->avatar)) {
-
             $this->editing->updateAvatar($this->avatar);
-
         }
 
         $this->showEditModal = false;

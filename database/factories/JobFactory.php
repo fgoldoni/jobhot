@@ -1,5 +1,4 @@
 <?php
-
 namespace Database\Factories;
 
 use App\Enums\JobState;
@@ -34,7 +33,7 @@ class JobFactory extends Factory
             'urgent_to' => $this->faker->randomElement([$this->faker->dateTimeInInterval('now', '+30 days'), null, null, null, null]),
             'highlight_to' => $this->faker->randomElement([$this->faker->dateTimeInInterval('now', '+30 days'), null, null, null, null]),
             'live_at' => $this->faker->randomElement([$this->faker->dateTimeInInterval('-5 days', 'now'), null]),
-            'experience' => $this->faker->numberBetween(1,5),
+            'experience' => $this->faker->numberBetween(1, 5),
             'salary_min' => $this->faker->randomElement([38000, 40000, 45000, 50000, 55000, 60000, 65000]),
             'salary_max' => $this->faker->randomElement([70000, 75000, 80000, 85000, 90000]),
         ];
@@ -50,5 +49,4 @@ class JobFactory extends Factory
             $job->save();
         });
     }
-
 }

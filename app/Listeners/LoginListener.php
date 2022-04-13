@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Listeners;
-
 
 class LoginListener
 {

@@ -1,9 +1,6 @@
 <?php
-
-
 namespace App\Builders;
 
-use App\Enums\CategoryType;
 use App\Enums\CompanyState;
 use Illuminate\Database\Eloquent\Builder;
 

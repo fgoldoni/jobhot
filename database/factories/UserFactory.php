@@ -1,5 +1,4 @@
 <?php
-
 namespace Database\Factories;
 
 use App\Models\Team;
@@ -52,7 +51,7 @@ class UserFactory extends Factory
         return $this->has(
             Team::factory()
                 ->state(function (array $attributes, User $user) {
-                    return ['name' => $user->name.'\'s Team', 'owner_id' => $user->id];
+                    return ['name' => $user->name . '\'s Team', 'owner_id' => $user->id];
                 }),
             'teams'
         );
