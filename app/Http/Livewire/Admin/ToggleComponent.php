@@ -20,7 +20,6 @@ class ToggleComponent extends Component
     public function updatedIsActive(bool $value)
     {
         $this->model->setAttribute($this->field, $value)->save();
-        $this->model->setAttribute($this->field, $value)->save();
     }
 
     public function render()

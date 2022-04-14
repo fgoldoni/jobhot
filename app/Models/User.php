@@ -11,6 +11,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Config;
 use Laravel\Sanctum\HasApiTokens;
 use Mpociot\Teamwork\Traits\UserHasTeams;
+use Nicolaslopezj\Searchable\SearchableTrait;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
@@ -67,7 +68,7 @@ use Spatie\Permission\Traits\HasRoles;
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles, Impersonate, HasAvatar, UserHasTeams, WithinDays;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, Impersonate, HasAvatar, UserHasTeams, WithinDays, SearchableTrait;
 
     const Administrator = 'Administrator';
 
@@ -111,6 +112,14 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $appends = [
         'avatar_url',
+    ];
+
+    protected $searchable = [
+        'columns' => [
+            'users.id' => 10,
+            'users.name' => 10,
+            'users.email' => 10,
+        ]
     ];
 
     /**
