@@ -164,9 +164,9 @@
 
                                             <x-table.cell>
 
-                                                <button wire:click="edit('{{ $row->slug }}')" class="ml-1 text-indigo-600 hover:text-indigo-900 hover:underline">
+                                                <button wire:click="edit('{{ $row->id }}')" class="ml-1 text-indigo-600 hover:text-indigo-900 hover:underline">
 
-                                                    {{$row->id}}
+                                                    {{ $row->id }}
 
                                                 </button>
 
