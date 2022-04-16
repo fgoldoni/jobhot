@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection as StatesCollection;
+use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -133,6 +134,13 @@ class UsersDatatable extends Component
     public function save()
     {
         $this->validate();
+
+        if (!$this->editing->getKey())
+        {
+            $this->editing->password = bcrypt('Str::random(10)');
+            $this->editing->attachTeam(auth()->user()->currentTeam);
+        }
+
 
         $this->editing->save();
 
