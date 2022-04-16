@@ -5,9 +5,11 @@ use App\Http\Livewire\Admin\Datatable\WithBulkActions;
 use App\Http\Livewire\Admin\Datatable\WithCachedRows;
 use App\Http\Livewire\Admin\Datatable\WithCategories;
 use App\Http\Livewire\Admin\Datatable\WithPerPagePagination;
+use App\Http\Livewire\Admin\Datatable\WithRoles;
 use App\Http\Livewire\Admin\Datatable\WithSorting;
 use App\Models\Company;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection as StatesCollection;
@@ -23,6 +25,8 @@ class UsersDatatable extends Component
     use WithBulkActions;
 
     use WithCachedRows;
+
+    use WithRoles;
 
     use WithFileUploads;
 
@@ -66,6 +70,7 @@ class UsersDatatable extends Component
         return [
             'editing.name' => 'required|min:3',
             'editing.email' => 'required|max:255|unique:users,email,' . $this->editing->id,
+            'selectedRole' => 'required|int',
             'avatar' => 'nullable|image|mimes:jpg,jpeg,png|max:1024',
         ];
     }
@@ -117,6 +122,8 @@ class UsersDatatable extends Component
 
             $this->editing = $user->load('roles:id,name');
 
+            $this->setDefaultRole();
+
             $this->avatar = null;
         }
 
@@ -134,6 +141,8 @@ class UsersDatatable extends Component
             $this->editing->updateAvatar($this->avatar);
 
         }
+
+        $this->editing->syncRoles($this->selectedRole);
 
         $this->showEditModal = false;
 

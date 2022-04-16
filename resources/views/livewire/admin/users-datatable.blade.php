@@ -62,28 +62,37 @@
                     @php
                         $isOneSelected = (is_array($selected) && count($selected) > 0) || (!is_array($selected) && count($selected->toArray()) > 0);
                     @endphp
+
                     @if($isOneSelected)
                         <!-- Row actions -->
+
                             <x-row-actions>
+
                                 <button type="button" wire:click="exportSelected" class="btn-secondary inline-flex items-center px-2.5 py-1.5 text-xs font-medium disabled:cursor-not-allowed disabled:opacity-30">
-                                    <!-- Heroicon name: solid/mail -->
+
                                     <svg xmlns="http://www.w3.org/2000/svg" class="-ml-0.5 mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                                     </svg>
+
                                     <span>CSV</span>
+
                                 </button>
+
                                 <button type="button" wire:click="$toggle('showDeleteModal')" class="btn-secondary inline-flex items-center px-2.5 py-1.5 text-xs font-medium disabled:cursor-not-allowed disabled:opacity-30">
-                                    <!-- Heroicon name: solid/mail -->
+
                                     <svg xmlns="http://www.w3.org/2000/svg" class="-ml-0.5 mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                     </svg>
+
                                     <span>DELETE</span>
+
                                 </button>
+
                             </x-row-actions>
                     @endif
 
 
-                    <!-- Companies Table -->
+                    <!-- Users Table -->
                         <x-table>
                             <x-slot name="head">
 
@@ -375,27 +384,63 @@
             <x-slot name="content">
                 <div class="space-y-8 sm:space-y-5">
                     <div>
+
                         <div class="mt-6 sm:mt-5 space-y-6 sm:space-y-5">
+
                             <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-center border-t border-gray-200 sm:pt-5">
+
                                 <x-label for="avatar" class="sm:mt-px sm:pt-2">{{ __('Logo') }} </x-label>
+
                                 <x-input.file-upload wire:model="avatar" id="avatar" error="{{ $errors->first('avatar') }}">
+
                                     @if ($avatar)
+
                                         <img src="{{ $avatar->temporaryUrl() }}" alt="Avatar">
+
                                     @else
+
                                         <img src="{{ $editing->avatar_url }}" alt="Avatar">
+
                                     @endif
+
                                 </x-input.file-upload>
 
                             </div>
 
                             <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
-                                <x-label for="name" class="sm:mt-px sm:pt-2">{{ __('Name') }} </x-label>
+
+                                <x-label for="name" class="sm:mt-px sm:pt-2">{{ __('Role') }} </x-label>
+
                                 <div class="mt-1 sm:mt-0 sm:col-span-2">
-                                    <x-input type="text" wire:model.defer="editing.name" id="name"  placeholder="Name" class="max-w-lg w-full"/>
-                                    @if ($errors->has('editing.name'))
-                                        <p class="mt-2 text-sm text-red-600">{{ $errors->first('editing.name') }}</p>
-                                    @endif
+
+                                    <x-input.dot-select :items="$roles" :selected="$selectedRole" wire:model.defer="selectedRole" wire:key="companies-field-selectedRole-{{ $editing->id }}"></x-input.dot-select>
+
                                 </div>
+
+                                @if ($errors->has('selectedRole'))
+
+                                    <p class="mt-2 text-sm text-red-600">{{ $errors->first('selectedRole') }}</p>
+
+                                @endif
+
+                            </div>
+
+                            <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
+
+                                <x-label for="name" class="sm:mt-px sm:pt-2">{{ __('Name') }} </x-label>
+
+                                <div class="mt-1 sm:mt-0 sm:col-span-2">
+
+                                    <x-input type="text" wire:model.defer="editing.name" id="name"  placeholder="Name" class="max-w-lg w-full"/>
+
+                                    @if ($errors->has('editing.name'))
+
+                                        <p class="mt-2 text-sm text-red-600">{{ $errors->first('editing.name') }}</p>
+
+                                    @endif
+
+                                </div>
+
                             </div>
 
                             <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
@@ -407,6 +452,7 @@
                                     @endif
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>

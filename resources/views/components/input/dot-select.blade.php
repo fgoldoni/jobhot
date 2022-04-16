@@ -60,6 +60,7 @@
             aria-expanded="true"
             aria-labelledby="listbox-label">
             <div class="flex items-center">
+
                 <template x-if="name === 'Draft'">
                     <span aria-label="Draft" class="bg-rose-400 flex-shrink-0 inline-block h-2 w-2 rounded-full"></span>
                 </template>
@@ -74,6 +75,18 @@
 
                 <template x-if="name === 'Hold'">
                     <span aria-label="Hold" class="bg-amber-400 flex-shrink-0 inline-block h-2 w-2 rounded-full"></span>
+                </template>
+
+                <template x-if="name === 'Administrator'">
+                    <span aria-label="Draft" class="bg-pink-400 flex-shrink-0 inline-block h-2 w-2 rounded-full"></span>
+                </template>
+
+                <template x-if="name === 'Executive'">
+                    <span aria-label="Published" class="bg-purple-400 flex-shrink-0 inline-block h-2 w-2 rounded-full"></span>
+                </template>
+
+                <template x-if="name === 'User'">
+                    <span aria-label="Archived" class="bg-blue-400 flex-shrink-0 inline-block h-2 w-2 rounded-full"></span>
                 </template>
 
                 <span class="ml-3 block truncate" x-text="name"> </span>
@@ -148,6 +161,18 @@
 
                             <template x-if="item.name === 'Hold'">
                                 <span aria-label="Hold" class="bg-amber-400 flex-shrink-0 inline-block h-2 w-2 rounded-full"></span>
+                            </template>
+
+                            <template x-if="item.name === 'Administrator'">
+                                <span aria-label="Administrator" class="bg-pink-400 flex-shrink-0 inline-block h-2 w-2 rounded-full"></span>
+                            </template>
+
+                            <template x-if="item.name === 'Executive'">
+                                <span aria-label="Executive" class="bg-purple-400 flex-shrink-0 inline-block h-2 w-2 rounded-full"></span>
+                            </template>
+
+                            <template x-if="item.name === 'User'">
+                                <span aria-label="User" class="bg-blue-400 flex-shrink-0 inline-block h-2 w-2 rounded-full"></span>
                             </template>
 
                             <span
