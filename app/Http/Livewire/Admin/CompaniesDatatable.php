@@ -110,6 +110,7 @@ class CompaniesDatatable extends Component
 
         if ($this->editing->getKey()) {
             $this->editing = $this->makeBlankCompany();
+
             $this->avatar = null;
         }
 

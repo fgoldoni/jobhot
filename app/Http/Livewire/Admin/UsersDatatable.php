@@ -3,13 +3,10 @@ namespace App\Http\Livewire\Admin;
 
 use App\Http\Livewire\Admin\Datatable\WithBulkActions;
 use App\Http\Livewire\Admin\Datatable\WithCachedRows;
-use App\Http\Livewire\Admin\Datatable\WithCategories;
 use App\Http\Livewire\Admin\Datatable\WithPerPagePagination;
 use App\Http\Livewire\Admin\Datatable\WithRoles;
 use App\Http\Livewire\Admin\Datatable\WithSorting;
-use App\Models\Company;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection as StatesCollection;
@@ -55,13 +52,10 @@ class UsersDatatable extends Component
         'sorts'
     ];
 
-
     protected $listeners = ['refreshTransactions' => '$refresh'];
 
     public array $filters = [
         'search' => '',
-        'amount-min' => null,
-        'amount-max' => null,
         'date-min' => null,
         'date-max' => null,
     ];
@@ -76,11 +70,9 @@ class UsersDatatable extends Component
         ];
     }
 
-
     public function mount()
     {
         $this->editing = $this->makeBlankUser();
-
     }
 
     private function makeBlankUser(): Model|User
@@ -120,7 +112,6 @@ class UsersDatatable extends Component
         $this->resetValidation();
 
         if ($this->editing->isNot($user)) {
-
             $this->editing = $user->load('roles:id,name');
 
             $this->setDefaultRole();
@@ -135,19 +126,19 @@ class UsersDatatable extends Component
     {
         $this->validate();
 
-        if (!$this->editing->getKey())
-        {
-            $this->editing->password = bcrypt('Str::random(10)');
-            $this->editing->attachTeam(auth()->user()->currentTeam);
-        }
+        if (!$this->editing->getKey()) {
 
+            $this->editing->password = bcrypt(Str::random(10));
+
+            $this->editing->attachTeam(auth()->user()->currentTeam);
+
+            $this->editing->email_verified_at = now();
+        }
 
         $this->editing->save();
 
         if (isset($this->avatar)) {
-
             $this->editing->updateAvatar($this->avatar);
-
         }
 
         $this->editing->syncRoles($this->selectedRole);
@@ -157,9 +148,19 @@ class UsersDatatable extends Component
         $this->notify('The user has been successfully updated');
     }
 
+    public function deleteSelected()
+    {
+        $deleteCount = $this->selectedRowsQuery->count();
+
+        $this->selectedRowsQuery->delete();
+
+        $this->showDeleteModal = false;
+
+        $this->notify('You\'ve deleted ' . $deleteCount . ' users');
+    }
+
     public function getRowsQueryProperty()
     {
-
         $query = User::query()
 
             ->with(['roles:id,name', 'lastLogin'])

@@ -24,18 +24,7 @@ phpcs: ## PRS2 Validation
 	./vendor/bin/php-cs-fixer app/Providers fix --diff
 
 php-cs: ## PRS2 Validation
-	../tools/php-cs-fixer/vendor/bin/php-cs-fixer fix app/Http/Livewire --diff
-	../tools/php-cs-fixer/vendor/bin/php-cs-fixer fix app/Http/Controllers --diff
-	../tools/php-cs-fixer/vendor/bin/php-cs-fixer fix app/Models --diff
-	../tools/php-cs-fixer/vendor/bin/php-cs-fixer fix app/Traits --diff
-	../tools/php-cs-fixer/vendor/bin/php-cs-fixer fix app/Enums --diff
-	../tools/php-cs-fixer/vendor/bin/php-cs-fixer fix app/Listeners --diff
-	../tools/php-cs-fixer/vendor/bin/php-cs-fixer fix app/Events --diff
-	../tools/php-cs-fixer/vendor/bin/php-cs-fixer fix app/View --diff
-	../tools/php-cs-fixer/vendor/bin/php-cs-fixer fix app/Policies --diff
-	../tools/php-cs-fixer/vendor/bin/php-cs-fixer fix app/Observers --diff
-	../tools/php-cs-fixer/vendor/bin/php-cs-fixer fix app/Collections --diff
-	../tools/php-cs-fixer/vendor/bin/php-cs-fixer fix app/Builders --diff
+	../tools/php-cs-fixer/vendor/bin/php-cs-fixer fix app --diff
 	../tools/php-cs-fixer/vendor/bin/php-cs-fixer fix database --diff
 
 rector: ## PRS2 Validation

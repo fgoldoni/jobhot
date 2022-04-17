@@ -9,7 +9,6 @@ trait WithSorting
 
     public string $sortDirection = 'asc';
 
-
     public function sortBy($field)
     {
         $this->sortDirection = $this->sortField === $field

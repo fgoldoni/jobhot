@@ -11,15 +11,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     // get parameters
     $parameters = $containerConfigurator->parameters();
     $parameters->set(Option::PATHS, [
-        __DIR__ . '/app/Http/Livewire',
-        __DIR__ . '/app/Http/Controllers',
-        __DIR__ . '/app/Traits',
-        __DIR__ . '/app/Models',
-        __DIR__ . '/app/Scopes',
-        __DIR__ . '/app/Providers',
-        __DIR__ . '/app/Events',
-        __DIR__ . '/app/Collections',
-        __DIR__ . '/app/Builders',
+        __DIR__ . '/app',
         __DIR__ . '/database',
     ]);
 

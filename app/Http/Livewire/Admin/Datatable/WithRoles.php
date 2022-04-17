@@ -1,6 +1,4 @@
 <?php
-
-
 namespace App\Http\Livewire\Admin\Datatable;
 
 use Illuminate\Database\Eloquent\Collection;

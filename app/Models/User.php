@@ -6,12 +6,15 @@ use App\Traits\Impersonate;
 use App\Traits\WithinDays;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Config;
 use Laravel\Sanctum\HasApiTokens;
 use Mpociot\Teamwork\Traits\UserHasTeams;
 use Nicolaslopezj\Searchable\SearchableTrait;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
@@ -68,7 +71,7 @@ use Spatie\Permission\Traits\HasRoles;
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles, Impersonate, HasAvatar, UserHasTeams, WithinDays, SearchableTrait;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, Impersonate, HasAvatar, UserHasTeams, WithinDays, SearchableTrait, SoftDeletes, LogsActivity;
 
     const Administrator = 'Administrator';
 
@@ -155,5 +158,13 @@ class User extends Authenticatable implements MustVerifyEmail
     public function lastLogin()
     {
         return $this->hasOne(Login::class)->latestOfMany('logged_in_at');
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['name', 'email'])
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs();
     }
 }
