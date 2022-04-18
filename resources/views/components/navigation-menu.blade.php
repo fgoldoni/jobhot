@@ -54,6 +54,10 @@
                                 </x-dropdown-link>
                                 @endImpersonating
 
+                                <x-dropdown-link :href="route('settings')">
+                                    {{ __('Account settings') }}
+                                </x-dropdown-link>
+
                                 <x-dropdown-link href="{{ route('admin.users') }}">
                                     {{ __('Admin') }}
                                 </x-dropdown-link>
@@ -166,6 +170,10 @@
                     </button>
                 </div>
                 <div class="mt-3 space-y-1">
+                    <x-profile-link :href="route('settings')">
+                        {{ __('Account settings') }}
+                    </x-profile-link>
+
                     <x-profile-link :href="route('admin.dashboard')">
                         {{ __('Dashboard') }}
                     </x-profile-link>

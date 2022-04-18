@@ -82,6 +82,10 @@
                                 </x-dropdown-link>
                                 @endImpersonating
 
+                                <x-dropdown-link href="{{ route('settings') }}">
+                                    {{ __('Account settings') }}
+                                </x-dropdown-link>
+
                                 <x-dropdown-link href="{{ route('admin.users') }}">
                                     {{ __('Admin') }}
                                 </x-dropdown-link>

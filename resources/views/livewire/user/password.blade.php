@@ -154,9 +154,63 @@
 
             </x-action-message>
 
-            <x-button wire:loading.attr="disabled"> {{ __('Log Out Other Browser Sessions') }}</x-button>
+            <x-button type="button" wire:loading.attr="disabled" wire:click="showDeleteOtherSession()"> {{ __('Log Out Other Browser Sessions') }}</x-button>
 
         </x-slot>
 
     </x-form-section>
+
+    <form wire:submit.prevent="deleteOtherSession">
+
+        <x-modal.dialog wire:model.defer="showDeleteOtherSessionModal">
+
+            <x-slot name="title">Log Out Other Browser Sessions</x-slot>
+
+            <x-slot name="content">
+
+                <div class="space-y-8 sm:space-y-5">
+
+                    <div>
+
+                        <div class="mt-6 sm:mt-5 space-y-6 sm:space-y-5">
+
+                            <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-center border-t border-gray-200 sm:pt-5">
+
+                                <x-label for="session_password" class="sm:mt-px sm:pt-2">{{ __('Current Password') }} </x-label>
+
+                                <div class="mt-1 sm:mt-0 sm:col-span-2">
+
+                                    <x-input type="password" wire:model.defer="session_password" id="session_password"  placeholder="Current Password" class="max-w-lg w-full"/>
+
+                                    @if ($errors->has('session_password'))
+
+                                        <p class="mt-2 text-sm text-red-600">{{ $errors->first('session_password') }}</p>
+
+                                    @endif
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </x-slot>
+
+            <x-slot name="footer">
+                <x-secondary-button wire:click="$set('showDeleteOtherSessionModal', false)" wire:loading.attr="disabled">
+                    {{ __('Cancel') }}
+                </x-secondary-button>
+
+                <x-button class="ml-3" wire:loading.attr="disabled">
+                    {{ 'Save' }}
+                </x-button>
+            </x-slot>
+        </x-modal.dialog>
+    </form>
+
+
 </div>
