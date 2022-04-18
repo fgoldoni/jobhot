@@ -62,9 +62,7 @@ class Password extends Component
 
     public function deleteOtherSession()
     {
-        $validatedData = $this->validateOnly('current_password');
-
-       dd($validatedData);
+       dd('ok');
     }
 
     public function render()
