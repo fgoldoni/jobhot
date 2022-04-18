@@ -50,6 +50,7 @@ refresh: migrate ## refresh + php artisan module:seed Admin & php artisan module
 	## php artisan module:migrate-refresh Jobs
 	php artisan module:seed Countries
 	php artisan db:seed
+	php artisan module:seed Settings
 	## php artisan module:seed Categories
 	## php artisan module:seed Companies
 	## php artisan module:seed Jobs

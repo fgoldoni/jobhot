@@ -47,25 +47,35 @@ class UsersDatatable extends Component
     public User $editing;
 
     protected $queryString = [
+
         'sortField' => ['except' => 'id'],
+
         'sortDirection' => ['except' => 'asc'],
+
         'sorts'
     ];
 
     protected $listeners = ['refreshTransactions' => '$refresh'];
 
     public array $filters = [
+
         'search' => '',
+
         'date-min' => null,
+
         'date-max' => null,
     ];
 
     public function rules(): array
     {
         return [
+
             'editing.name' => 'required|min:3',
+
             'editing.email' => 'required|max:255|unique:users,email,' . $this->editing->id,
+
             'selectedRole' => 'required|int',
+
             'avatar' => 'nullable|image|mimes:jpg,jpeg,png|max:1024',
         ];
     }
@@ -99,7 +109,9 @@ class UsersDatatable extends Component
         $this->useCachedRows();
 
         if ($this->editing->getKey()) {
+
             $this->editing = $this->makeBlankUser();
+
         }
 
         $this->showEditModal = true;
@@ -112,6 +124,7 @@ class UsersDatatable extends Component
         $this->resetValidation();
 
         if ($this->editing->isNot($user)) {
+
             $this->editing = $user->load('roles:id,name');
 
             $this->setDefaultRole();
@@ -138,7 +151,9 @@ class UsersDatatable extends Component
         $this->editing->save();
 
         if (isset($this->avatar)) {
+
             $this->editing->updateAvatar($this->avatar);
+
         }
 
         $this->editing->syncRoles($this->selectedRole);
