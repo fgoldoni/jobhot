@@ -1,16 +1,10 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
-Route::prefix('settings')->group(function() {
-    Route::get('/', 'SettingsController@index');
+use Modules\Settings\Http\Controllers\SettingsController;
+
+
+Route::prefix('settings')->middleware(['password.confirm'])->controller(SettingsController::class)->group(function () {
+    Route::get('/', 'index')->name('settings');
+    Route::get('/password', 'password')->name('settings.password');
 });

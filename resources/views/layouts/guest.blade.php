@@ -29,6 +29,10 @@
             </section>
 
             {{ $slot }}
+
+            <x-notification />
+
+            @livewire('footer')
         </div>
 
         @livewireScripts

@@ -109,9 +109,7 @@ class UsersDatatable extends Component
         $this->useCachedRows();
 
         if ($this->editing->getKey()) {
-
             $this->editing = $this->makeBlankUser();
-
         }
 
         $this->showEditModal = true;
@@ -124,7 +122,6 @@ class UsersDatatable extends Component
         $this->resetValidation();
 
         if ($this->editing->isNot($user)) {
-
             $this->editing = $user->load('roles:id,name');
 
             $this->setDefaultRole();
@@ -140,7 +137,6 @@ class UsersDatatable extends Component
         $this->validate();
 
         if (!$this->editing->getKey()) {
-
             $this->editing->password = bcrypt(Str::random(10));
 
             $this->editing->attachTeam(auth()->user()->currentTeam);
@@ -151,9 +147,7 @@ class UsersDatatable extends Component
         $this->editing->save();
 
         if (isset($this->avatar)) {
-
             $this->editing->updateAvatar($this->avatar);
-
         }
 
         $this->editing->syncRoles($this->selectedRole);

@@ -8,15 +8,13 @@ function is_impersonating(): bool
         && app('auth')->user()->isImpersonated();
 }
 
-
 function can_impersonate(string $guard = null): bool
 {
     return app('auth')->check()
         && app('auth')->user()->canImpersonate();
 }
 
-if (! function_exists('can_be_impersonated')) {
-
+if (!function_exists('can_be_impersonated')) {
     /**
      * Check whether the specified user can be impersonated.
      *
