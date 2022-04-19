@@ -52,4 +52,3 @@
 
 
 </x-guest-layout>
-
