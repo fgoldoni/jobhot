@@ -9,26 +9,8 @@
                 {{ __('Password') }}
             </x-nav-setting-link>
 
-            <x-nav-setting-link href="{{ route('settings.password') }}" :active="request()->routeIs('settings.password')">
-                {{ __('Notifications') }}
-            </x-nav-setting-link>
-
-
-            <x-nav-setting-link href="{{ route('settings.password') }}" :active="request()->routeIs('settings.password')">
-                {{ __('Password') }}
-            </x-nav-setting-link>
-
-
-            <x-nav-setting-link href="{{ route('settings.password') }}" :active="request()->routeIs('settings.password')">
-                {{ __('Plan') }}
-            </x-nav-setting-link>
-
-            <x-nav-setting-link href="{{ route('settings.password') }}" :active="request()->routeIs('settings.password')">
+            <x-nav-setting-link href="{{ route('settings.billing') }}" :active="request()->routeIs('settings.billing')">
                 {{ __('Billing') }}
-            </x-nav-setting-link>
-
-            <x-nav-setting-link href="{{ route('settings.password') }}" :active="request()->routeIs('settings.password')">
-                {{ __('Team Members') }}
             </x-nav-setting-link>
         </nav>
     </div>

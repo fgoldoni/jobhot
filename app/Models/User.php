@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Config;
+use Laravel\Cashier\Billable;
 use Laravel\Sanctum\HasApiTokens;
 use Mpociot\Teamwork\Traits\UserHasTeams;
 use Nicolaslopezj\Searchable\SearchableTrait;
@@ -71,7 +72,7 @@ use Spatie\Permission\Traits\HasRoles;
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles, Impersonate, HasAvatar, UserHasTeams, WithinDays, SearchableTrait, SoftDeletes, LogsActivity;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, Impersonate, HasAvatar, UserHasTeams, WithinDays, SearchableTrait, SoftDeletes, LogsActivity, Billable;
 
     const Administrator = 'Administrator';
 

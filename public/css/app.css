@@ -1036,6 +1036,12 @@ select {
 .mb-0 {
   margin-bottom: 0px;
 }
+.mb-1 {
+  margin-bottom: 0.25rem;
+}
+.mb-5 {
+  margin-bottom: 1.25rem;
+}
 .box-content {
   box-sizing: content-box;
 }

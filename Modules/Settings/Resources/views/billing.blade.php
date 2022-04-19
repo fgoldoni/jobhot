@@ -38,7 +38,7 @@
 
                         <x-user.settings--navigation></x-user.settings--navigation>
 
-                        @livewire('user.password')
+                        @livewire('user.billing')
 
                     </div>
 
@@ -49,5 +49,7 @@
         </div>
 
     </main>
+
+
 </x-guest-layout>
 

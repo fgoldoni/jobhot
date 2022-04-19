@@ -17,4 +17,9 @@ class SettingsController extends Controller
     {
         return view('settings::password');
     }
+
+    public function billing()
+    {
+        return view('settings::billing');
+    }
 }
