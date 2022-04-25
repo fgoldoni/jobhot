@@ -1,26 +1,64 @@
 <nav class="bg-white shadow" x-data="{ open: false }" @keydown.window.escape="open = false">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
         <div class="flex justify-between h-16">
-            <div class="flex">
+            <div class="flex px-2 lg:px-0">
                 <div class="flex-shrink-0 flex items-center">
                     <a href="{{ url('/') }}">
-                        <img class="block h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=600" alt="Workflow">
+                        <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt="Workflow">
                     </a>
+
                 </div>
-                <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
-                    <!-- Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" -->
+
+                <div class="hidden lg:ml-6 lg:flex lg:space-x-8">
                     <x-nav-link href="{{ route('jobs.index') }}" :active="request()->routeIs('jobs.index')">
-                        {{ __('jobs') }}
+                        {{ __('Jobs') }}
                     </x-nav-link>
 
                     <x-nav-link href="{{ route('companies') }}" :active="request()->routeIs('companies')">
-                        {{ __('companies') }}
+                        {{ __('Companies') }}
                     </x-nav-link>
                 </div>
             </div>
-            <div class="hidden sm:ml-6 sm:flex sm:items-center">
+            @if(!request()->routeIs('home'))
+                <div class="flex-1 flex items-center justify-center px-2 lg:ml-6 lg:justify-end">
+                    @livewire('jobs.search-bar')
+                </div>
+            @endif
+
+            <div class="flex items-center lg:hidden">
+                <!-- Mobile menu button -->
+                <button
+                    @click="open = ! open"
+                    type="button"
+                    class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+                    aria-controls="mobile-menu"
+                    aria-expanded="false">
+                    <span class="sr-only">Open main menu</span>
+                    <!--
+                      Icon when menu is closed.
+
+                      Heroicon name: outline/menu
+
+                      Menu open: "hidden", Menu closed: "block"
+                    -->
+                    <svg :class="{ 'hidden': open, 'block': !(open) }" class="h-6 w-6 block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                    <!--
+                      Icon when menu is open.
+
+                      Heroicon name: outline/x
+
+                      Menu open: "block", Menu closed: "hidden"
+                    -->
+                    <svg :class="{ 'block': open, 'hidden': !(open) }" class="h-6 w-6 hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="hidden lg:ml-4 lg:flex lg:items-center">
                 @auth
-                    <button type="button" class="bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <button type="button" class="flex-shrink-0 bg-white p-1 text-gray-400 rounded-full hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                         <span class="sr-only">View notifications</span>
                         <!-- Heroicon name: outline/bell -->
                         <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -29,7 +67,7 @@
                     </button>
 
                     <!-- Profile dropdown -->
-                    <div class="ml-3 relative border-l border-gray-200 pl-4">
+                    <div class="ml-4 relative flex-shrink-0 border-l border-gray-200 pl-4">
                         <x-dropdown align="right" width="w-60">
                             <x-slot name="trigger">
                                 <button type="button" class="bg-white rounded-full flex items-center text-sm" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
@@ -82,60 +120,21 @@
                             </x-slot>
                         </x-dropdown>
                     </div>
-                @else
-                    <div class="flex-shrink-0">
-                        <x-button class="relative">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="-ml-1 mr-2 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
-                                <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" />
-                            </svg>
-                            <span>Create Job</span>
-                        </x-button>
-                    </div>
-                    <div class="flex-shrink-0 sm:ml-4 sm:border-l border-gray-300">
-                        <x-secondary-button class="ml-4">
-                            <a href="{{ route('login') }}" class="relative inline-flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="-ml-1 mr-2 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd" />
-                                </svg>
-                                <span>Sign In</span>
-                            </a>
-                        </x-secondary-button>
-                    </div>
                 @endauth
 
-
-            </div>
-            <div class="-mr-2 flex items-center sm:hidden">
-                <!-- Mobile menu button -->
-                <button
-                    @click="open = ! open"
-                    type="button"
-                    class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
-                    aria-controls="mobile-menu"
-                    aria-expanded="false">
-                    <span class="sr-only">Open main menu</span>
-                    <!--
-                      Icon when menu is closed.
-
-                      Heroicon name: outline/menu
-
-                      Menu open: "hidden", Menu closed: "block"
-                    -->
-                    <svg :class="{ 'hidden': open, 'block': !(open) }" class="h-6 w-6 block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
-                    <!--
-                      Icon when menu is open.
-
-                      Heroicon name: outline/x
-
-                      Menu open: "block", Menu closed: "hidden"
-                    -->
-                    <svg :class="{ 'block': open, 'hidden': !(open) }" class="h-6 w-6 hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
+                @guest
+                        <div class="w-full flex-none mt-4 sm:mt-0 sm:w-auto sm:ml-auto flex items-center">
+                            <a href="{{ route('register') }}" class="hover:text-gray-400 mr-6">
+                                <span>Documentation</span>
+                            </a>
+                            <a href="{{ route('login') }}" class="group border-l pl-6 border-gray-200 hover:text-indigo-400 flex items-center">
+                                Sign in
+                                <svg aria-hidden="true" width="11" height="10" fill="none" class="flex-none ml-1.5 text-gray-400 group-hover:text-indigo-400">
+                                    <path d="M5.593 9.638L10.232 5 5.593.36l-.895.89 3.107 3.103H0v1.292h7.805L4.698 8.754l.895.884z" fill="currentColor"></path>
+                                </svg>
+                            </a>
+                        </div>
+                @endguest
             </div>
         </div>
     </div>
@@ -188,7 +187,7 @@
                         @csrf
 
                         <x-profile-link :href="route('logout')"
-                                         onclick="event.preventDefault();
+                                        onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                             {{ __('Log Out') }}
                         </x-profile-link>

@@ -26,7 +26,7 @@
     <x-banner></x-banner>
     <section>
         <!-- This example requires Tailwind CSS v2.0+ -->
-        <x-jobs.jobs-navigation-menu></x-jobs.jobs-navigation-menu>
+        <x-navigation-menu></x-navigation-menu>
     </section>
 
     {{ $slot }}

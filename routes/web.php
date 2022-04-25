@@ -21,7 +21,7 @@ Route::get('/impersonate/take/{id}', [ImpersonationController::class, 'take'])->
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
 
 Route::get('/companies', function () {
