@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Component;
 use Modules\Countries\Providers\CountriesServiceProvider;
+use Modules\Plans\Providers\PlansServiceProvider;
 use Modules\Settings\Providers\SettingsServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -20,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->register(ViewServiceProvider::class);
         $this->app->register(CountriesServiceProvider::class);
         $this->app->register(SettingsServiceProvider::class);
+        $this->app->register(PlansServiceProvider::class);
     }
 
     /**

@@ -2,10 +2,19 @@
 
 namespace App\Http\Livewire\User;
 
+use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
+use Modules\Plans\Entities\Plan;
 
 class Billing extends Component
 {
+    public Collection $plans;
+
+    public function mount ()
+    {
+        $this->plans = Plan::all();
+    }
+
     public function setPayment($paymentMethod)
     {
         try {
@@ -23,6 +32,9 @@ class Billing extends Component
 
     public function render()
     {
-        return view('livewire.user.billing');
+        return view('livewire.user.billing', [
+            'subscribed' => auth()->user()->subscribed(),
+            'intent' => auth()->user()->createSetupIntent()
+        ]);
     }
 }

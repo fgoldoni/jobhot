@@ -29,11 +29,16 @@
                     </button>
 
                     <!-- Profile dropdown -->
-                    <div class="ml-3 relative">
+                    <div class="ml-3 relative border-l border-gray-200 pl-4">
                         <x-dropdown align="right" width="w-60">
                             <x-slot name="trigger">
-                                <button type="button" class="bg-white rounded-full flex text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                                <button type="button" class="bg-white rounded-full flex items-center text-sm" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                                     <span class="sr-only">Open user menu</span>
+                                    <p class="font-bold text-xs mr-2 text-gray-700 text-right">
+                                        {{ auth()->user()->name }}
+                                        <br>
+                                        <span class="text-xs text-indigo-600">  {{ ucfirst(auth()->user()->plan->name) }} Plan </span>
+                                    </p>
                                     <img class="h-8 w-8 rounded-full" src="{{ auth()->user()->avatar_url }}" alt="{{ auth()->user()->name }}">
                                 </button>
                             </x-slot>

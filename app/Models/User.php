@@ -6,12 +6,14 @@ use App\Traits\Impersonate;
 use App\Traits\WithinDays;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Config;
 use Laravel\Cashier\Billable;
 use Laravel\Sanctum\HasApiTokens;
+use Modules\Plans\Entities\Plan;
 use Mpociot\Teamwork\Traits\UserHasTeams;
 use Nicolaslopezj\Searchable\SearchableTrait;
 use Spatie\Activitylog\LogOptions;
@@ -167,5 +169,10 @@ class User extends Authenticatable implements MustVerifyEmail
             ->logOnly(['name', 'email'])
             ->logOnlyDirty()
             ->dontSubmitEmptyLogs();
+    }
+
+    public function plan(): BelongsTo
+    {
+        return $this->belongsTo(Plan::class)->withDefault();
     }
 }
