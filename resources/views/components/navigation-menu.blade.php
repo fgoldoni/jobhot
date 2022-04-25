@@ -125,7 +125,7 @@
                 @guest
                         <div class="w-full flex-none mt-4 sm:mt-0 sm:w-auto sm:ml-auto flex items-center">
                             <a href="{{ route('register') }}" class="hover:text-gray-400 mr-6">
-                                <span>Documentation</span>
+                                <span>Don't have an account ?</span>
                             </a>
                             <a href="{{ route('login') }}" class="group border-l pl-6 border-gray-200 hover:text-indigo-400 flex items-center">
                                 Sign in
