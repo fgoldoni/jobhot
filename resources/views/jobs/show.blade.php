@@ -76,7 +76,7 @@
 
                         <div class="mt-2 inline">
 
-                            <a href="#" class="relative inline-flex items-center rounded-full animate-pulse border border-rose-300 px-3 py-0.5">
+                            <a href="#" class="relative inline-flex items-center rounded-full animate-pulse border border-rose-300 bg-rose-100 px-3 py-0.5">
 
                                 <div class="absolute flex-shrink-0 flex items-center justify-center">
 
@@ -177,7 +177,23 @@
 
             <div class="space-y-6 lg:col-start-1 lg:col-span-2">
 
-                <section aria-labelledby="applicant-information-title">
+                <section aria-labelledby="applicant-information-title" class="relative">
+
+                    @if($job->highlight)
+
+                        <div class="pointer-events-none absolute inset-0 rounded-lg border-2 border-yellow-600" aria-hidden="true"></div>
+
+                        <div class="absolute inset-x-0 top-0 transform translate-y-px">
+
+                            <div class="flex justify-end transform -translate-y-1/2">
+
+                                <span class="inline-flex rounded-full bg-yellow-600 px-4 py-1 mr-5 text-sm font-semibold tracking-wider uppercase text-white"> PREMIUM </span>
+
+                            </div>
+
+                        </div>
+
+                    @endif
 
                     <div class="bg-white shadow sm:rounded-lg">
 
@@ -195,7 +211,7 @@
 
                                 <div class="sm:col-span-1">
 
-                                    <dt class="text-sm font-medium text-gray-500">Employment Status</dt>
+                                    <dt class="text-sm font-medium text-gray-500 uppercase">Employment Status</dt>
 
                                     <dd class="mt-1 text-sm">
                                         <div class="flex items-center space-x-2">
@@ -214,7 +230,7 @@
 
                                 <div class="sm:col-span-1">
 
-                                    <dt class="text-sm font-medium text-gray-500">Job Level</dt>
+                                    <dt class="text-sm font-medium text-gray-500 uppercase">Job Level</dt>
 
                                     <dd class="mt-1 text-sm text-gray-900">
 
@@ -236,7 +252,7 @@
 
                                 <div class="sm:col-span-1">
 
-                                    <dt class="text-sm font-medium text-gray-500">Gender</dt>
+                                    <dt class="text-sm font-medium text-gray-500 uppercase">Gender</dt>
 
                                     <dd class="mt-1 text-sm text-gray-900">
 
@@ -260,7 +276,7 @@
 
                                 <div class="sm:col-span-1">
 
-                                    <dt class="text-sm font-medium text-gray-500">Experience</dt>
+                                    <dt class="text-sm font-medium text-gray-500 uppercase">Experience</dt>
 
                                     <dd class="mt-1 text-sm text-gray-900">
 
@@ -284,7 +300,7 @@
 
                                 <div class="sm:col-span-1">
 
-                                    <dt class="text-sm font-medium text-gray-500">Salary</dt>
+                                    <dt class="text-sm font-medium text-gray-500 uppercase">Salary</dt>
 
                                     <dd class="mt-1 text-sm text-gray-900">
 
@@ -300,7 +316,7 @@
 
                                             @if($job->negotiable)
 
-                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-green-100 text-green-800">
+                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-green-100 text-green-800 uppercase">
 
                                                     <svg class="-ml-0.5 mr-1.5 h-2 w-2 text-green-400" fill="currentColor" viewBox="0 0 8 8">
 
@@ -323,7 +339,7 @@
 
                                 <div class="sm:col-span-1">
 
-                                    <dt class="text-sm font-medium text-gray-500">Salary Period</dt>
+                                    <dt class="text-sm font-medium text-gray-500 uppercase">Salary Period</dt>
 
                                     <dd class="mt-1 text-sm text-gray-900">
 
@@ -349,7 +365,7 @@
 
                                 <div class="sm:col-span-1">
 
-                                    <dt class="text-sm font-medium text-gray-500">Published on</dt>
+                                    <dt class="text-sm font-medium text-gray-500 uppercase">Published on</dt>
 
                                     <dd class="mt-1 text-sm text-gray-900">
 
@@ -373,7 +389,7 @@
 
                                 <div class="sm:col-span-1">
 
-                                    <dt class="text-sm font-medium text-gray-500">Job Id </dt>
+                                    <dt class="text-sm font-medium text-gray-500 uppercase">Job Id </dt>
 
                                     <dd class="mt-1 text-sm text-gray-900">
 

@@ -22,48 +22,6 @@
                 </div>
             @endif
 
-            <div class="col-span-6">
-
-                <!-- This example requires Tailwind CSS v2.0+ -->
-                <fieldset>
-                    <div class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-3 sm:gap-x-4">
-
-                        @foreach($plans as $plan)
-                            <!--
-                          Checked: "border-transparent", Not Checked: "border-gray-300"
-                          Active: "border-indigo-500 ring-2 ring-indigo-500"
-                        -->
-                                <label class="relative bg-white border rounded-lg shadow-sm p-4 flex cursor-pointer focus:outline-none">
-                                    <input type="radio" id="{{$plan->name}}-plan"  name="{{$plan->name}}" value="{{$plan->name}}" class="sr-only">
-                                    <div class="flex-1 flex">
-                                        <div class="flex flex-col">
-                                            <span id="project-type-0-label" class="block text-sm font-medium text-gray-900"> {{ ucfirst($plan->name)  }} Plan</span>
-                                            <span id="project-type-0-description-0" class="mt-1 flex items-center text-sm text-gray-500"> {{ $plan->description }} </span>
-                                            <span id="project-type-0-description-1" class="mt-6 text-sm font-medium text-gray-900"> 621 users </span>
-                                        </div>
-                                    </div>
-                                    <!--
-                                      Not Checked: "invisible"
-
-                                      Heroicon name: solid/check-circle
-                                    -->
-                                    <svg class="h-5 w-5 text-indigo-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                                    </svg>
-                                    <!--
-                                      Active: "border", Not Active: "border-2"
-                                      Checked: "border-indigo-500", Not Checked: "border-transparent"
-                                    -->
-                                    <div class="absolute -inset-px rounded-lg border-2 pointer-events-none" aria-hidden="true"></div>
-                                </label>
-                        @endforeach
-
-                    </div>
-                </fieldset>
-
-
-            </div>
-
            <div class="col-span-6">
 
                 <x-label for="card-holder-name"> {{__('Name on Card')}} </x-label>
@@ -83,6 +41,47 @@
                 <div id="card-errors" class="mt-5 text-sm text-red-600"></div>
 
             </div>
+
+           <div class="col-span-6">
+
+                    <fieldset x-data="{ initialCheckedIndex: 0, value: 1, active: 1 }" x-init='{let t=Array.from(document.querySelectorAll("input"));this.value=t[e]?.value;for(let e of t)e.addEventListener("change",(()=>{this.active=e.value})),e.addEventListener("focus",(()=>{this.active=e.value}'>
+                        <legend class="text-base font-medium text-gray-900">Select a mailing list</legend>
+
+                        <div class="space-y-4 mt-5">
+                            @foreach($plans as $plan)
+                                <!--
+                                  Checked: "border-transparent", Not Checked: "border-gray-300"
+                                  Active: "border-indigo-500 ring-2 ring-indigo-500"
+                                -->
+                                <label class="relative block bg-white border rounded-lg shadow-sm px-6 py-4 cursor-pointer sm:flex sm:justify-between focus:outline-none"
+                                       :class="{ 'border-transparent': (value === {{$plan->id}}), 'border-gray-300': !(value === {{$plan->id}}), 'border-indigo-500 ring-2 ring-indigo-500': (active === {{$plan->id}}), 'undefined': !(active === {{$plan->id}}) }">
+                                    <input type="radio" x-model="value" name="plan" value="{{$plan->id}}" class="sr-only">
+                                        <div class="flex items-center">
+                                            <div class="text-sm">
+                                                <p id="server-size-0-label" class="font-medium text-gray-900">{{ ucfirst($plan->name)  }} Plan</p>
+                                                <div id="server-size-0-description-0" class="text-gray-500">
+                                                    <p class="sm:inline">8GB / 4 CPUs</p>
+                                                    <span class="hidden sm:inline sm:mx-1" aria-hidden="true">&middot;</span>
+                                                    <p class="sm:inline">160 GB SSD disk</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="server-size-0-description-1" class="mt-2 flex text-sm sm:mt-0 sm:block sm:ml-4 sm:text-right">
+                                            <div class="font-medium text-gray-900">$40</div>
+                                            <div class="ml-1 text-gray-500 sm:ml-0">/mo</div>
+                                        </div>
+                                        <!--
+                                          Active: "border", Not Active: "border-2"
+                                          Checked: "border-indigo-500", Not Checked: "border-transparent"
+                                        -->
+                                        <div class="absolute -inset-px rounded-lg border-2 pointer-events-none" aria-hidden="true"></div>
+                                    </label>
+                            @endforeach
+                        </div>
+
+                    </fieldset>
+
+                </div>
 
         </x-slot>
 

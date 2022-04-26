@@ -36,17 +36,19 @@
 
                     </p>
 
-                    @if($row->urgent)
+                    @if($row->highlight)
 
-                        <span class="inline-flex animate-pulse absolute -top-3 z-20 right-3 ml-4 font-medium  items-center px-3 py-0.5 rounded-full text-sm font-medium bg-rose-100 text-rose-800">
+                        <div class="pointer-events-none absolute inset-0 rounded-lg border-2 border-yellow-600" aria-hidden="true"></div>
 
-                            <svg class="h-2 w-2 mr-1.5 text-rose-400" fill="currentColor" viewBox="0 0 8 8">
-                                <circle cx="4" cy="4" r="3" />
-                            </svg>
+                        <div class="absolute inset-x-0 top-0 transform translate-y-px">
 
-                            Urgent
+                            <div class="flex justify-end transform -translate-y-1/2">
 
-                        </span>
+                                <span class="inline-flex rounded-full bg-yellow-600 px-4 py-1 mr-5 text-sm font-semibold tracking-wider uppercase text-white"> PREMIUM </span>
+
+                            </div>
+
+                        </div>
 
                     @endif
 
@@ -66,13 +68,35 @@
 
             <ul role="list" class="mt-2 leading-8">
 
+                @if($row->urgent)
+
+                    <li class="inline mr-2">
+
+                        <a href="#" class="relative inline-flex items-center rounded-full animate-pulse border border-rose-300 bg-rose-100 px-3 py-0.5">
+
+                            <div class="absolute flex-shrink-0 flex items-center justify-center">
+
+                                <span class="h-1.5 w-1.5 rounded-full bg-rose-400" aria-hidden="true"></span>
+
+                            </div>
+
+                            <div class="ml-3.5 text-sm font-medium text-rose-400">Urgent</div>
+
+                        </a>
+
+                    </li>
+
+                @endif
+
+
+
                 <li class="inline">
 
                     <a href="#" class="relative inline-flex items-center rounded-full border border-gray-300 px-3 py-0.5">
 
                         <div class="absolute flex-shrink-0 flex items-center justify-center">
 
-                            <span class="h-1.5 w-1.5 rounded-full bg-rose-500" aria-hidden="true"></span>
+                            <span class="h-1.5 w-1.5 rounded-full bg-purple-500" aria-hidden="true"></span>
 
                         </div>
 
