@@ -30,7 +30,7 @@
                             </div>
                         </div>
                         <div id="server-size-0-description-1" class="mt-2 flex text-sm sm:mt-0 sm:block sm:ml-4 sm:text-right">
-                            <div class="font-medium text-gray-900">$40</div>
+                            <div class="font-medium text-gray-900">€ {{ $plan->price }}</div>
                             <div class="ml-1 text-gray-500 sm:ml-0">/mo</div>
                         </div>
 
@@ -108,7 +108,7 @@
                                             </div>
                                         </div>
                                         <div id="server-size-0-description-1" class="mt-2 flex text-sm sm:mt-0 sm:block sm:ml-4 sm:text-right">
-                                            <div class="font-medium text-gray-900">$ {{ $plan->price }}</div>
+                                            <div class="font-medium text-gray-900">€ {{ $plan->price }}</div>
                                             <div class="ml-1 text-gray-500 sm:ml-0">/mo</div>
                                         </div>
 
@@ -165,7 +165,7 @@
                                         </div>
                                     </div>
                                     <div id="server-size-0-description-1" class="mt-2 flex text-sm sm:mt-0 sm:block sm:ml-4 sm:text-right">
-                                        <div class="font-medium text-gray-900">$40</div>
+                                        <div class="font-medium text-gray-900">€ {{ $plan->price }}</div>
                                         <div class="ml-1 text-gray-500 sm:ml-0">/mo</div>
                                     </div>
 
