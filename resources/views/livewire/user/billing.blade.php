@@ -63,6 +63,7 @@
                     <p class="mt-1 text-xs text-gray-500">To update your default payment method, add a new card below:</p>
                 </div>
 
+
                 <div class="col-span-6">
                     <!-- This example requires Tailwind CSS v2.0+ -->
                     <div class="relative">
@@ -79,7 +80,10 @@
                     </div>
 
                 </div>
+
             @endif
+
+           @include('partials.trial')
 
            <div class="col-span-6">
 

@@ -23,7 +23,7 @@ return new class extends Migration
 
         if (Schema::hasTable('users') && !Schema::hasColumn('users', 'plan_id')) {
             Schema::table('users', function (Blueprint $table) {
-                $table->foreignId('plan_id')->after('email')->default(1)->unsigned()->index()->references('id')->on('plans')->onDelete('cascade');
+                $table->foreignId('plan_id')->after('email')->nullable()->unsigned()->index()->references('id')->on('plans')->onDelete('cascade');
             });
         }
     }

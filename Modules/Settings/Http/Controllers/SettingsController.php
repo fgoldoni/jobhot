@@ -22,4 +22,9 @@ class SettingsController extends Controller
     {
         return view('settings::billing');
     }
+
+    public function invoices()
+    {
+        return view('settings::invoices');
+    }
 }

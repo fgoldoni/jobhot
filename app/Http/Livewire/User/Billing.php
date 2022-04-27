@@ -38,6 +38,8 @@ class Billing extends Component
 
                 $user->plan_id = $plan->id;
 
+                $user->trial_ends_at = null;
+
                 $user->save();
 
 

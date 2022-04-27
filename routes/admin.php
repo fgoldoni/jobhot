@@ -5,7 +5,7 @@ use App\Http\Controllers\Admin\CompanyController;
 use App\Http\Controllers\Admin\JobController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth', 'verified', 'password.confirm', 'role:Administrator|Executive'])->prefix('admin')->as('admin.')->group(function () {
+Route::middleware(['auth', 'verified', 'password.confirm', 'role:Administrator|Executive', 'subscriber'])->prefix('admin')->as('admin.')->group(function () {
 
     Route::resource('jobs', JobController::class);
     Route::resource('companies', CompanyController::class);

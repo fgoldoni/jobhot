@@ -75,7 +75,13 @@
                                     <p class="font-bold text-xs mr-2 text-gray-700 text-right">
                                         {{ auth()->user()->name }}
                                         <br>
-                                        <span class="text-xs text-indigo-600">  {{ ucfirst(auth()->user()->plan->name) }} Plan </span>
+
+                                        @if(auth()->user()->subscribed() && auth()->user()->hasRole(\App\Models\User::Executive))
+                                            <span class="text-xs text-indigo-600">  {{ ucfirst(auth()->user()->plan->name) }} Plan </span>
+                                        @elseif(auth()->user()->onTrial())
+                                                <span class="text-xs text-teal-500">  Trial Period </span>
+                                        @endif
+
                                     </p>
                                     <img class="h-8 w-8 rounded-full" src="{{ auth()->user()->avatar_url }}" alt="{{ auth()->user()->name }}">
                                 </button>

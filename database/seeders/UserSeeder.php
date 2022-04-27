@@ -19,11 +19,11 @@ class UserSeeder extends Seeder
 
         $user->assignRole(User::Administrator);
 
-        $user = User::factory()->withPersonalTeam()->create(['name' => 'Executive SG', 'email' => 'fotsa.goldoni@yahoo.fr']);
+        $user = User::factory()->withPersonalTeam()->create(['name' => 'Executive SG', 'trial_ends_at' => now()->addDays(14), 'email' => 'fotsa.goldoni@yahoo.fr']);
 
         $user->assignRole(User::Executive);
 
-        $users = User::factory(10)->withPersonalTeam()->create();
+        $users = User::factory(10)->withPersonalTeam()->create(['trial_ends_at' => now()->addDays(14)]);
 
         foreach ($users as $user) {
             $user->assignRole('Executive');
