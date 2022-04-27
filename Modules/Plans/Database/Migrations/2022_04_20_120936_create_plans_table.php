@@ -16,13 +16,14 @@ return new class extends Migration
         Schema::create('plans', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
+            $table->double('price', 10, 2)->default(0);
             $table->string('key')->unique();
             $table->text('description')->nullable();
         });
 
         if (Schema::hasTable('users') && !Schema::hasColumn('users', 'plan_id')) {
             Schema::table('users', function (Blueprint $table) {
-                $table->foreignId('plan_id')->after('email')->default(1)->unsigned()->index()->references('id')->on('users')->onDelete('cascade');
+                $table->foreignId('plan_id')->after('email')->default(1)->unsigned()->index()->references('id')->on('plans')->onDelete('cascade');
             });
         }
     }

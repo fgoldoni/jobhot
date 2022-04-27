@@ -10,31 +10,74 @@ class Billing extends Component
 {
     public Collection $plans;
 
+    public int $currentPlan;
+
+    public bool $showSwitchModal = false;
+
     public function mount ()
     {
         $this->plans = Plan::all();
+
+        $this->currentPlan = auth()->user()->plan_id ?? 1;
     }
 
     public function setPayment($paymentMethod)
     {
+        $user = auth()->user();
+
         try {
-            if (auth()->user()->subscribed()) {
-                auth()->user()->updateDefaultPaymentMethod($paymentMethod);
+            if ($user->subscribed()) {
+
+                $user->updateDefaultPaymentMethod($paymentMethod);
+
             } else {
-                auth()->user()->newSubscription('default', 'price_1KqBoGGyro9wqcXwIzLk59iq')->create($paymentMethod);
+
+                $plan = Plan::find($this->currentPlan);
+
+                $user->newSubscription('default', $plan->key)->create($paymentMethod);
+
+                $user->plan_id = $plan->id;
+
+                $user->save();
+
+
             }
         } catch (\Exception $exception) {
 
         }
 
-        $this->notify('The User has been successfully updated');
+        $this->notify('The Billing has been successfully updated');
+    }
+
+    public function switch ()
+    {
+
+        $user = auth()->user();
+
+        try {
+            $plan = Plan::find($this->currentPlan);
+
+            $user->subscription()->swap($plan->key);
+
+            $user->plan_id = $plan->id;
+
+            $user->save();
+
+        } catch (\Exception $exception) {
+
+        }
+
+        $this->showSwitchModal = false;
+
+        $this->notify('Successfully switched your plan');
     }
 
     public function render()
     {
         return view('livewire.user.billing', [
             'subscribed' => auth()->user()->subscribed(),
-            'intent' => auth()->user()->createSetupIntent()
+            'intent' => auth()->user()->createSetupIntent(),
+            'plan' => auth()->user()->plan()->first(),
         ]);
     }
 }

@@ -20,6 +20,11 @@
     }
 }
 
+
+.radio-plan:checked > div {
+    @apply border-rose-600;
+}
+
 .textarea {
     width: 100%;
     height: 300px;
