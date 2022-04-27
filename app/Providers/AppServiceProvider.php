@@ -39,12 +39,13 @@ class AppServiceProvider extends ServiceProvider
             $this->dispatchBrowserEvent('notify', $message);
         });
 
-        Component::macro('banner', function ($message) {
+        Component::macro('banner', function ($message, $url = null) {
             session()->put('flash.banner', $message);
 
             $this->dispatchBrowserEvent('banner-message', [
                 'style' => 'success',
                 'message' => $message,
+                'url' => $url,
             ]);
         });
 

@@ -12,7 +12,7 @@
                     </svg>
                 </div>
                 <div class="ml-3">
-                    <h3 class="text-sm font-medium text-teal-800">You are on Trial Period for the {{ auth()->user()->plan?->name }} Plan</h3>
+                    <h3 class="text-sm font-medium text-teal-800">You are on Trial Period for the {{ ucfirst(auth()->user()->plan->value('name')) }} Plan</h3>
                     <div class="mt-2 text-sm text-teal-700">
                         <p>You have {{  auth()->user()->trial_ends_at->diffInDays(now()) }} days left on your trial.</p>
                     </div>

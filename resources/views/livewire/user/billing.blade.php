@@ -15,6 +15,10 @@
 
         <x-slot name="form" class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
 
+            <div class="col-span-6">
+                @include('partials.alert')
+            </div>
+
             @if ($subscribed)
                 <div class="col-span-6">
                     <label class="relative block bg-white border rounded-lg shadow-sm px-6 py-4 cursor-pointer sm:flex sm:justify-between focus:outline-none border-transparent">

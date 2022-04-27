@@ -1,7 +1,7 @@
-@props(['style' => session('flash.bannerStyle', 'success'), 'message' => session('flash.banner')])
+@props(['style' => session('flash.bannerStyle', 'success'), 'message' => session('flash.banner'), 'url' => session('flash.bannerUrl')])
 
 <div x-data="{{ json_encode(['show' => true, 'style' => $style, 'message' => $message]) }}"
-     :class="{ 'bg-indigo-600': style == 'success', 'bg-red-700': style == 'danger', 'bg-gray-500': style != 'success' && style != 'danger' }"
+     :class="{ 'bg-indigo-600': style == 'success', 'bg-red-700': style == 'danger', 'bg-yellow-700': style == 'warning', 'bg-gray-500': style != 'success' && style != 'danger' && style != 'warning' }"
      style="display: none;"
      x-show="show && message"
      x-init="
@@ -16,11 +16,22 @@
             <p class="font-medium text-white">
                 <span class="md:hidden" x-text="message"></span>
                 <span class="hidden md:inline" x-text="message"></span>
-                <span class="block sm:ml-2 sm:inline-block">
-                    @impersonating($guard = null)
-                        <a href="{{ route('impersonate.leave') }}" class="text-white font-bold underline"> Leave impersonate <span aria-hidden="true">&rarr;</span></a>
-                    @endImpersonating
-                </span>
+
+                @if($url)
+                    <span class="block sm:ml-2 sm:inline-block">
+                        @impersonating($guard = null)
+                            <a href="{{ $url }}" class="text-white font-bold underline">
+                                @if($url === route('impersonate.leave'))
+                                    Leave impersonate
+                                @else
+                                    Learn more
+                                @endif
+
+                                <span aria-hidden="true">&rarr;</span>
+                            </a>
+                        @endImpersonating
+                    </span>
+                @endif
             </p>
         </div>
         <div class="absolute inset-y-0 right-0 pt-1 pr-1 flex items-start sm:pt-1 sm:pr-2 sm:items-start">

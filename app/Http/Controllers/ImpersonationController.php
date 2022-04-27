@@ -30,6 +30,7 @@ class ImpersonationController extends Controller
         session()->put($this->getSessionKey(), $originalId);
 
         session()->put('flash.banner', 'You are impersonating ' . User::find($userId)->name);
+        session()->put('flash.bannerUrl', route('impersonate.leave'));
 
         return redirect($this->getTakeRedirectTo());
     }

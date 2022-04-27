@@ -42,13 +42,21 @@ class Billing extends Component
 
                 $user->save();
 
+                session()->remove('flash');
+
+                return redirect()->route('settings.billing')->with(['alert' => 'Successfully updated your billing info', 'type' => 'success']);
 
             }
         } catch (\Exception $exception) {
 
+            info('Something went wrong submitting your billing info');
+
+            return redirect()->route('settings.billing')->with(['alert' => 'Something went wrong submitting your billing info', 'type' => 'error']);
+
         }
 
-        $this->notify('The Billing has been successfully updated');
+        $this->notify('Successfully updated your billing info');
+
     }
 
     public function switch ()
