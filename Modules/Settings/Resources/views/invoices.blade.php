@@ -38,7 +38,7 @@
 
                         <x-user.settings--navigation></x-user.settings--navigation>
 
-
+                        @livewire('user.invoices')
                     </div>
 
                 </div>

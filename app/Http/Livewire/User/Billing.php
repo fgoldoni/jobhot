@@ -14,6 +14,8 @@ class Billing extends Component
 
     public bool $showSwitchModal = false;
 
+    public bool $showCancelModal = false;
+
     public function mount ()
     {
         $this->plans = Plan::all();
@@ -59,6 +61,12 @@ class Billing extends Component
 
     }
 
+    public function cancel ()
+    {
+        auth()->user()->subscription()->cancelNow();
+
+        return redirect()->route('settings.billing')->with(['alert' => 'Successfully cancelled your subscription', 'type' => 'warning']);
+    }
     public function switch ()
     {
 

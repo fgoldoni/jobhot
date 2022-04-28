@@ -138,11 +138,35 @@
 
             </x-action-message>
 
+            @if ($subscribed)
+                <x-button.link  wire:click="$toggle('showCancelModal')" type="button"  wire:loading.attr="disabled" class="mr-5 text-xs text-rose-500  hover:text-rose-700 underline"> {{ __('Cancel Subscription') }}</x-button.link>
+            @endif
+
             <x-button  data-secret="{{ $intent->client_secret }}" type="button" wire:loading.attr="disabled" id="card-button"> {{ __('Save') }}</x-button>
 
         </x-slot>
 
     </x-form-section>
+
+    <form wire:submit.prevent="cancel">
+        <x-confirmation-modal wire:model.defer="showCancelModal">
+            <x-slot name="title">Cancelling Subscription</x-slot>
+
+            <x-slot name="content">
+                <div class="py-8 text-cool-gray-700">Are you sure you want to cancel a subscription ? This action is irreversible.</div>
+            </x-slot>
+
+            <x-slot name="footer">
+                <x-secondary-button wire:click="$set('showCancelModal', false)">
+                    {{ __('Cancel') }}
+                </x-secondary-button>
+
+                <x-button type="submit" class="ml-3" >
+                    {{ 'Confirm' }}
+                </x-button>
+            </x-slot>
+        </x-confirmation-modal>
+    </form>
 
     <form wire:submit.prevent="switch">
         <x-modal.dialog wire:model.defer="showSwitchModal">

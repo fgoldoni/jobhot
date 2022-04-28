@@ -67,4 +67,11 @@ Route::group(['prefix' => 'teams', 'namespace' => 'Teamwork'], function()
     Route::delete('members/{id}/{user_id}', [App\Http\Controllers\Teamwork\TeamMemberController::class, 'destroy'])->name('teams.members.destroy');
 });
 
+Route::get('invoice/{invoice}', function ($invoiceId) {
+    return auth()->user()->downloadInvoice($invoiceId, [
+        'vendor' => 'JobHot',
+        'product' => 'Subscription',
+    ]);
+})->name('invoice');
+
 
